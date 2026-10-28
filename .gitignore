@@ -1,0 +1,14 @@
+.venv/
+venv/
+outputs/
+__pycache__/
+*.pyc
+.env
+.env*
+.cache/
+hf_cache/
+.huggingface/
+huggingface/
+*.safetensors
+*.bin
+*.gguf
