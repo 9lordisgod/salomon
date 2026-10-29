@@ -1,82 +1,84 @@
-# Salomon — the local research agent that protects your sources
+# Salomon
 
-> **For journalists and investigators.** Read leaks, transcripts and notes with an AI that runs on your laptop, never phones home, and refuses to expose who told you what.
+> **A local research agent for journalists and investigators that protects sources.**
 
 ![visibility](https://img.shields.io/badge/repo-private-black)
-![niche](https://img.shields.io/badge/for-journalists%20%26%20investigators-purple)
-![p1](https://img.shields.io/badge/Phase%201%20local%20SLM-gate%20done-lightgrey) ![gate](https://img.shields.io/badge/Phase%201.5%20privacy%20gate-SIGNED-green) ![p2](https://img.shields.io/badge/Phase%202%20agent%20loop-M1%E2%80%93M3%20green-brightgreen)
-![refusal](https://img.shields.io/badge/must--not--echo%20eval%207B-8%2F8-brightgreen)
+![phase](https://img.shields.io/badge/Phase-2%20agent%20capabilities-blue)
+![refusal](https://img.shields.io/badge/refusal%20eval%207B-8%2F8%20signed%20off-brightgreen) ![gate](https://img.shields.io/badge/Phase%201.5%20privacy%20gate-SIGNED-green) ![p2](https://img.shields.io/badge/Phase%202-M1%E2%80%93M3%20green-brightgreen) ![p3](https://img.shields.io/badge/Phase%203-M1%20in%20flight-yellow)
+
+1. **Sources stay local.** Research runs on your machine by default — not in a logged cloud chat.
+2. **Secrets are refused, not stored.** The model won’t echo keys or sensitive material, and it never holds credentials.
+3. **You decide every consequential step.** The agent proposes; policy and you approve before anything is sent, published, or changed.
 
 ```mermaid
 flowchart LR
-    D["📂 Your documents<br/><sub>leaks · notes · transcripts</sub>"] --> S["🛡️ Source shield<br/><sub>names · contacts · identifiers masked</sub>"]
-    S --> M["🧠 Local model<br/><sub>on your laptop · offline · no logs</sub>"]
-    M --> T["🧰 Read-only research tools<br/><sub>output treated as untrusted</sub>"]
-    T --> S
-    M --> P{"📜 Policy"}
-    P --> Y["✋ You approve<br/><sub>save · export · share</sub>"]
+  A["📝 Notes · transcripts · docs"] --> B["🛡️ Sanitizer<br/><sub>strips secrets + PII</sub>"]
+  B --> C["🧠 Local model<br/><sub>on your machine · no logs</sub>"]
+  C --> T["🧰 Read-only tools<br/><sub>hard caps · output untrusted</sub>"]
+  T --> B
+  C --> P{"📜 Policy"}
+  P -->|fail| X["⛔ blocked · plain-language reason"]
+  P -->|pass| H["✋ You approve<br/><sub>outside the model</sub>"]
 ```
 
 ---
 
+## Who it's for
+
+Investigative and freelance journalists, small newsrooms, and researchers working with confidential sources. These are people whose notes, transcripts and documents can identify someone.
+
 ## The problem
 
-Reporters now paste sensitive material into cloud chatbots to keep up — and every paste is a potential source burn.
+Exposing a source can end a career or put a person at risk. Most AI tools add leak surfaces that a reporter can't see or control.
 
-| Today | What goes wrong |
+| Failure mode | What it costs |
 |---|---|
-| ☁️ Leaked documents uploaded to cloud AI | Copies sit in provider logs, reachable by subpoena or breach |
-| 🗣️ Interview notes and transcripts summarized remotely | Source names, phone numbers and metadata leave the newsroom |
-| 💉 Agents read hostile PDFs, emails and web pages | A planted instruction can make the agent leak or misreport |
-| 🤖 AI tools "helpfully" quote identifying details back | One careless export exposes a confidential source |
+| Interview notes pasted into a cloud chatbot | The text sits in provider logs and retention, where it can be subpoenaed, breached or used for training |
+| The assistant repeats a name, number or document detail it was told to protect | The source is identified in a draft, a summary or a shared file |
+| An agent reads a web page or a leaked document that contains hidden instructions | The injection steers what the agent does next |
+| An agent holds your email or storage credentials | One bad completion sends, uploads or changes something you never approved |
+| Remote inference that "just trusts" the host | No proof that the operator can't read the request |
 
-## What Salomon does
+## How Salomon handles it
 
-1. **Runs on your machine.** A small local model (Qwen2.5-7B-class, quantized) — offline by default, prompt logs off, fails closed when the network isn't allowed.
-2. **Shields sources.** A sanitizer masks names, contacts, secrets and identifiers on every boundary; a CI-gated **must-not-echo** eval fails the build if the model repeats protected details.
-3. **Treats documents as hostile.** Everything the agent reads — leaks, emails, web pages, tool output — is wrapped as untrusted data. Prompt-injection is a tested gate (R3).
-4. **Researches safely.** An agent loop with hard step/tool caps and read-only tools: summarize, cross-reference, build timelines. Anything that saves, exports or shares is **propose-only** and needs your approval.
-5. **Never trusts a remote model blindly.** If you ever opt into a bigger remote model, a fail-closed verifier refuses any environment it can't verify. No proof → stays local.
+- **Local-first, fail closed.** It runs on your hardware by default with logs off. Offline mode fails closed on a cache miss.
+- **Refuse / must-not-echo.** A tuned 7B-class model is gated by a refusal eval that fails CI on any secret echo, crime assist or prompt-injection slip.
+- **Sanitizer on every boundary.** Secrets and PII are stripped from input and before anything leaves the device. All tool output is wrapped as untrusted data.
+- **Read-only tools, hard caps.** The agent loop enforces step and tool limits. Anything that would send, publish or change something is **propose-only**.
+- **Credentials outside the model.** The host holds them. The model never sees raw keys, tokens or passwords.
+- **Plain-language refusals.** When Salomon refuses or strips something, it says why.
+- **Optional confidential compute (future).** If a bigger model is needed, remote calls go only to an environment that passes a fail-closed verification check. No proof means no call. No provider is named or required.
 
-## Why it matters
-
-| | Cloud AI assistant | **Salomon** |
-|---|---|---|
-| **Where documents go** | Uploaded, logged | Stay on your device |
-| **Source identities** | Freely quoted back | Masked; echo is a CI failure |
-| **Hostile documents** | Instructions obeyed | Treated as untrusted data |
-| **Actions** | Model output → action | Model proposes → policy → you approve |
-| **Remote compute** | Trust the provider | Verified or refused |
-
----
+**Salomon is not:** a replacement for editorial, legal or source-protection judgment, a cloud service, or an agent that acts without your approval.
 
 ## Where we are
 
 ```mermaid
 flowchart LR
-  P1["Phase 1<br/>Local model + refusal eval<br/>✅ gate done"] --> G{{"Phase 1.5<br/>privacy gate ✅"}}
-  G --> P2["Phase 2<br/>Safe agent loop<br/>🟩 M1–M3 green"]
-  P2 --> P3["Phase 3<br/>Journalist research MVP<br/>⬜"]
-  P3 --> P4["Phase 4<br/>Newsroom hardening<br/>⬜"]
+  P1["Phase 1<br/>Small model that refuses<br/>✅ gate · ⏸ dataset parked"] --> G{{"Phase 1.5<br/>privacy gate 1–5 ✅"}}
+  G --> P2["Phase 2<br/>Agent loop · sanitizer · caps<br/>🟩 M1–M3 green"]
+  P2 --> P3["Phase 3<br/>Journalist MVP · M1 in flight<br/>🟨"]
+  P3 --> P4["Phase 4<br/>Hardening · optional confidential compute<br/>⬜"]
 ```
 
-- **Phase 1 — local model that won't leak.** Qwen2.5-7B-Instruct + QLoRA harness; refusal / must-not-echo eval **8/8** on 7B (`docs/signoffs/SECURITY_SIGNOFF_REFUSAL_7B.md`); R3 near-echo cleared. Dataset expansion parked at 362 seed rows.
-- **Phase 1.5 — privacy merge gate.** Threat model, fail-closed remote-verify client (kept as a pattern), sanitizer, policy stub, refusal eval — items (1)–(5) **signed off**.
-- **Phase 2 — safe agent loop.** Hard caps, read-only tools, TS sanitizer on `role:tool` output, multi-step chaining (M1–M3 **green**). Propose-only action pattern reviewed; execute/sign never opened.
-- **Next — Phase 3:** local document ingest, source-protection layer, research workspace (CLI first). See [ROADMAP.md](ROADMAP.md).
+- **Phase 1 (gate done).** Qwen2.5-7B-Instruct + QLoRA harness. The refusal eval passes **8/8** on 7B (`docs/signoffs/SECURITY_SIGNOFF_REFUSAL_7B.md`), and the R3 near-echo delta is cleared. Dataset expansion is **parked** at 362 seed rows. When it unparks, the data gets refreshed toward sources, PII and secrets in journalism.
+- **Phase 1.5 (signed).** Threat model, fail-closed verified-remote client, sanitizer, policy stub and refusal eval: items (1)–(5) are signed off in `docs/signoffs/`.
+- **Phase 2 (M1–M3 green).** Agent loop with hard caps, TS sanitizer on `role:tool` output, multi-step read-only tool chaining, and a reviewed propose-only pattern. Execute/sign was never opened. Today's read-only tools come from the archived track. Research web dogfood is **Phase 3 M1 in flight** (local ask path). Ingest/mask (M2) and propose-save (M3) are **not shipped**.
+- **Archived prior work:** an earlier crypto/on-chain framing. See [docs/archive/crypto-near-track.md](docs/archive/crypto-near-track.md).
 
-Earlier crypto / on-chain experiments are **parked** — index in [`docs/archive/crypto/`](docs/archive/crypto/README.md).
+Status of record: [STATUS.md](STATUS.md) · plan: [ROADMAP.md](ROADMAP.md) · design: [ARCHITECTURE.md](ARCHITECTURE.md).
 
 ## Repo map
 
 ```
 .
-├── README.md  ARCHITECTURE.md  ROADMAP.md  STATUS.md  PROGRESS.md  SECURITY.md
-├── docs/                  acceptance · threat-models · reviews · signoffs · notes · archive  (index: docs/README.md)
-├── phase1-slm/            local model config, dataset builder, QLoRA, refusal eval, inference
-├── phase1.5-attestation/  fail-closed remote-verify client (pattern)
-├── phase2/                agent loop, read-only tools, sanitizer, propose-only pattern
-└── privacy/               sanitizer + policy stubs
+├── README.md  ARCHITECTURE.md  ROADMAP.md  STATUS.md  PROGRESS.md
+├── SECURITY.md  .gitignore
+├── docs/            archive · acceptance · threat-models · reviews · signoffs · notes  (index: docs/README.md)
+├── phase1.5-attestation/   fail-closed remote-verify client + model allowlist
+├── phase2/          agent loop, read-only tools, sanitizer, propose-only pattern
+├── privacy/         sanitizer + policy/spend stubs
+└── phase1-slm/      model config, dataset builder, QLoRA, refusal eval, local inference
 ```
 
 ## Quickstart (phase1-slm)
@@ -90,19 +92,19 @@ make test-safety    # harness unit tests (no GPU)
 make eval-refusal   # CI safety gate (exit 1 on any fail)
 make dryrun         # tiny LoRA on CPU
 ```
-For the 7B gate, open `notebooks/eval_refusal_7b_colab.ipynb` in Colab with a GPU runtime and **Run all**.
+For the 7B gate, open `notebooks/eval_refusal_7b_colab.ipynb` in Colab, choose a GPU runtime, then **Run all**.
 
-## Principles
+## Security principles
 
-- **Sources first.** Identifying details never leave the device and never get echoed.
+- **No secrets in the model, ever.** Keys and credentials live outside it; anything consequential needs policy plus your approval.
 - **Fail closed.** No verification → no remote call. Policy fail → no action. Secret-scan hit → no dataset.
-- **Local by default.** Offline, logs off.
-- **Every document is untrusted.** Leaks, emails, pages and tool output are possible injection.
+- **Local first.** Offline by default, prompt logs off, PII stripped before any remote call.
+- **Everything the agent reads is untrusted.** Web pages, emails, files and tool output are treated as possible injection.
 
 ## Docs
 
-[ARCHITECTURE](ARCHITECTURE.md) · [ROADMAP](ROADMAP.md) · [STATUS](STATUS.md) · [SECURITY](SECURITY.md) · [Product niche](docs/notes/PRODUCT_NICHE.md) · [docs index](docs/README.md)
+[ARCHITECTURE](ARCHITECTURE.md) · [ROADMAP](ROADMAP.md) · [STATUS](STATUS.md) · [SECURITY](SECURITY.md) · [phase1-slm/README](phase1-slm/README.md) · [Archived crypto track](docs/archive/crypto-near-track.md)
 
 ---
 
-🔒 Private until the architecture and security model are stable. Contains no secrets, real keys or user PII.
+🔒 This repo stays **private** until the architecture and security model are stable. It contains no secrets, real keys, user PII or source material.

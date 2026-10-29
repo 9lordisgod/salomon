@@ -2,6 +2,16 @@
 
 > **Niche (main `f9d75fd`, 2026-10-29):** Salomon is a local research agent for journalists and investigators that protects sources. Crypto archived under `docs/archive/`. Entries below remain history.
 
+## Thu Oct 29, 2026, ~15:58 PDT — PS S1 SOFT CLEAR (Docs Lead)
+- PS re-skim: **S1 SOFT CLEAR** for M1 dogfood copy after Frontend fixes (`DEMO · REMOTE`, `DEMO · stub · not a local model`; no Source-safe chrome). S2 ACCEPT unchanged. Main `62c5a80` + `339cb05` (prior `9f89ed9`). Stamp addendum in `docs/reviews/SECURITY_SOFT_SKIM_SALOMON_APP_M1_RESKIM.md`. `PHASE3_M1_COPY_FIXES.md` path → `apps/web/README.md`. M2/M3 not claimed.
+
+## Thu Oct 29, 2026, ~15:42 PDT — PS soft-skim on main `9f89ed9` (Docs Lead)
+- Lead pushed PS soft-skim bundle: main **`9f89ed9`**. Includes `docs/reviews/SECURITY_SOFT_SKIM_SALOMON_APP_M1.md` + `docs/notes/PHASE3_M1_COPY_FIXES.md` (and related). Frontend UI copy still pending for S1 re-clear.
+
+## Thu Oct 29, 2026, ~15:41 PDT — S1 copy align (Docs Lead)
+- Lead: align apps/web (salomon-app) README + docs; Frontend owns UI strings.
+- Fixed `salomon-app/README.md` (no Source-safe H1; M1 vs M2/M3 split). Expanded `docs/notes/PHASE3_M1_COPY_FIXES.md` with exact Shell/layout/page/mode drop-ins. Clarified M1 smoke success bar (mask = M2).
+
 ## Thu Oct 29, 2026, ~15:40 PDT — PS soft skim salomon-app M1 (Docs Lead)
 - Privacy & Safety: runbook checklist OK. **S2 ACCEPT** (local ask fail-closed). **S1 SOFT DENY** for public-demo wording until residuals: Source-safe chrome; Protections card M2/M3 overclaim; stub badged as LOCAL; Research subtitle mask claim.
 - Stamp: `docs/reviews/SECURITY_SOFT_SKIM_SALOMON_APP_M1.md` (Docs Lead ack). Coordinating copy with Frontend. No M2/M3 claims; dataset PARKED.
@@ -280,3 +290,4 @@
 - Landed `phase1-slm/scripts/ask_local.py`, `fetch_gguf.sh`, `smoke_ask_refusal.sh`, `docs/notes/PHASE3_M1_LOCAL_GGUF.md`, `requirements-local.txt`.
 - Conceptual smoke: `test_safety_unit` 20/20; secret scrub exit 2. No item-(5) re-sign. 7B GGUF fetch explicit; llama-cpp-python may need wheel/toolchain.
 - Platform wraps ask_local; Release checksums primary filename `Qwen2.5-7B-Instruct-Q4_K_M.gguf`.
+- 2026-10-29 Model: ask_local.py --json + source_care prompt path landed for Runtime LocalCompleter (spawn-per-ask; exits 0/2/3/4).
