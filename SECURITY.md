@@ -36,5 +36,5 @@ Privacy-first personal / agent AI. Owners: **Privacy & Safety** (reviews, accept
 ## Review mandate
 Privacy & Safety reviews any change touching training data, inference (local or remote), tools, attestation, policy, secret handling, or logging. Findings go to the Lead Architect as short actionable notes.
 
-## Archived (prior on-chain track — history only)
-Before the 2026-10-29 AI-first pivot, the project targeted NEAR: NEAR AI Cloud as the attested remote provider, NEAR read-only RPC tools, function-call access keys, Chain Signatures / Intents (M4 propose-only stubs, G1+G2 ACCEPTED, G3 never opened). Not product scope. Evidence files are retained unchanged.
+## Archived (prior crypto / NEAR track — history only)
+Before the 2026-10-29 AI-first pivot, an on-chain / Intents settlement track and a named cloud TEE provider were in scope. **Not product scope.** Evidence retained under [`docs/archive/near/`](docs/archive/near/) · track note [`docs/archive/crypto-near-track.md`](docs/archive/crypto-near-track.md).

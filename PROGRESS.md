@@ -1,6 +1,10 @@
 # Progress Log
 
-> **Niche (main `f9d75fd`, 2026-10-29):** Salomon is a local research agent for journalists and investigators that protects sources. Crypto archived under `docs/archive/`. Entries below remain history.
+> **Niche (main `f9d75fd`, 2026-10-29):** Salomon is a local research agent for journalists and investigators that protects sources. Crypto/NEAR track archived: `docs/archive/near/` · `docs/archive/crypto-near-track.md`. Entries below remain history.
+
+## Thu Oct 29, 2026, ~16:25 PDT — NEAR purge tip `03ded0a` + docs scrub (Docs Lead; handed to Lead, not pushed)
+- Lead purge tip **`03ded0abda98dbc778d98caa1c28bda4076ced64`**: intents/NEAR tools deleted; evidence moved to `docs/archive/near/` (11 files); track note `docs/archive/crypto-near-track.md`.
+- Docs scrub of live surfaces (README, ARCHITECTURE, ROADMAP, SECURITY, STATUS, PROGRESS, phase2/README) pending Lead push. Framing A + README hero held; R3 near-echo and `NEAR_PRIVACY_*` history kept.
 
 ## Thu Oct 29, 2026, ~16:07 PDT — Tip `5be6454` hybrid/framing amend (Docs Lead)
 - Main tip **`5be6454`**: HYBRID_TRUST_BOUNDARIES, FRAMING soft one-liner, SECURITY_SOFT_SKIM_FRAMING, SECURITY_REFLECTION_HYBRID. Prior claims tip `7301381`. README hero held.
