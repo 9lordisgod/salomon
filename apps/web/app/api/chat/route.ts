@@ -45,12 +45,37 @@ export async function POST(req: Request) {
   }
 
   if (mode === 'gateway') {
-    const result = streamText({
-      model: process.env.SALOMON_MODEL || DEFAULT_GATEWAY_MODEL,
-      instructions: SYSTEM_PROMPT,
-      messages: await convertToModelMessages(safe),
-    });
-    return createUIMessageStreamResponse({ stream: toUIMessageStream({ stream: result.stream }), headers });
+    try {
+      const result = streamText({
+        model: process.env.SALOMON_MODEL || DEFAULT_GATEWAY_MODEL,
+        instructions: SYSTEM_PROMPT,
+        messages: await convertToModelMessages(safe),
+        onError: ({ error }) => { console.error('[salomon gateway]', error); },
+      });
+      return createUIMessageStreamResponse({
+        stream: toUIMessageStream({
+          stream: result.stream,
+          onError: (error) => {
+            const msg = error instanceof Error ? error.message : String(error);
+            if (/credit card|customer_verification|free credits/i.test(msg)) {
+              return 'REMOTE GATEWAY needs a payment method on the Vercel AI Gateway account before it can answer (free credits unlock after a card is added). This request left nothing local.';
+            }
+            if (/api key|unauthorized|401|403/i.test(msg)) {
+              return 'REMOTE GATEWAY rejected the API key. Check AI_GATEWAY_API_KEY in .env.local — never commit it.';
+            }
+            return `REMOTE GATEWAY error: ${msg.slice(0, 280)}`;
+          },
+        }),
+        headers,
+      });
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e);
+      const reply = /credit card|customer_verification/i.test(msg)
+        ? 'REMOTE GATEWAY needs a payment method on the Vercel AI Gateway account before it can answer (free credits unlock after a card is added).'
+        : `REMOTE GATEWAY failed: ${msg.slice(0, 280)}`;
+      const r = streamText({ model: textModel(reply), prompt: 'gateway-error' });
+      return createUIMessageStreamResponse({ stream: toUIMessageStream({ stream: r.stream }), headers });
+    }
   }
 
   // local / stub / demo: offline Runtime askLocal (fail closed), streamed for UX.
