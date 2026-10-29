@@ -1,4 +1,4 @@
-# Phase 3 M1 — salomon-app copy fixes (Docs Lead × Frontend)
+# Phase 3 M1 — apps/web (salomon-app) copy fixes (Docs Lead × Frontend)
 
 **Source:** `docs/reviews/SECURITY_SOFT_SKIM_SALOMON_APP_M1.md` (S1 SOFT DENY)  
 **When:** 2026-10-29 ~15:41 PDT  
@@ -8,7 +8,7 @@
 > Local research agent for journalists/investigators that protects sources.
 
 ## Docs done
-- [`/workspace/salomon-app/README.md`](../../../salomon-app/README.md) — dropped “source-safe” H1; M1 vs M2/M3 claims split; stub ≠ LOCAL.
+- [`apps/web/README.md`](../../apps/web/README.md) (synced from `/workspace/salomon-app/README.md`) — dropped “source-safe” H1; M1 vs M2/M3 claims split; stub ≠ LOCAL.
 
 ## Frontend — exact drop-ins (you own these files)
 
@@ -76,3 +76,23 @@ Keep propose≠act; add one line: “Approvals UI is dogfood for M3 — not a sh
 
 ## Claims bar
 `docs/notes/PHASE3_MVP_RUNBOOK.md`. S2 ask path ACCEPT — do not weaken fail-closed `/api/ask`. Re-ping Privacy & Safety after landing.
+
+## Soft copy — Sources page (PS, M1 window; M2 NOT OPEN)
+
+Frontend owns `app/sources/page.tsx`. Suggested drop-ins (demo heuristic, not M2):
+
+### Subtitle (was: "Only the masked version ever leaves this page…")
+```tsx
+<p className="mt-1 text-sm text-zinc-400">
+  Demo mask heuristic in this browser — it can miss. Research may still use a labeled remote path when configured.
+  The mask map stays local; this is <strong>not</strong> M2 source-ID masking.
+</p>
+```
+
+### Empty map row (was: "No identifying details detected.")
+```tsx
+<tr><td colSpan={3} className="py-3 text-zinc-500">No matches in this demo heuristic — that does not mean none are present.</td></tr>
+```
+
+Bar for real mask: `docs/acceptance/PHASE3_M2_SOURCE_MASK_ACCEPT.md` (criteria only until Lead opens M2).
+
