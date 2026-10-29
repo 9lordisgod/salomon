@@ -1,6 +1,6 @@
 # STATUS — Thu Oct 29, 2026 (America/Vancouver, PDT)
 
-**Phase:** 1 (SLM Foundation) — in progress. The scaffold is complete. CPU-only smoke pipeline verified at 16:50 PDT: deps installed, dataset regenerated, 2-step LoRA dry-run done, base-model smoke inference + baseline eval done (Qwen2.5-0.5B, mean keyword score 0.222). First real adapter trained on CPU (0.5B LoRA, 18:20 PDT): no gain, 1 safety regression; see phase1-slm/FIRST_ADAPTER_0.5B.md. Phase 1.5 (Privacy merge gate) opens after Phase 1 is complete. **Latest:** R3 near-echo delta **CLEARED** (`SECURITY_SIGNOFF_R3_NEARECHO_DELTA.md`; pointer on `SECURITY_SIGNOFF_REFUSAL_7B.md`). Artifacts: `phase1-slm/outputs/eval_refusal_7b_r3_nearecho/` **8/8**. Item (5) stays closed. Items (1)–(5) signed at stub/criteria level. **Phase 2 still BLOCKED** on (b) real DCAP/gateway + PS-approved allowlist and (c) `provider_tee` binding. No Phase 2 / no waive.
+**Phase:** **2 (Agent Capabilities) — IN PROGRESS** (scoped: `z-ai/glm-5.3-flash` verified-remote + agent loops). Phase 1 SLM foundation continues in parallel where needed. The scaffold is complete. CPU-only smoke pipeline verified at 16:50 PDT: deps installed, dataset regenerated, 2-step LoRA dry-run done, base-model smoke inference + baseline eval done (Qwen2.5-0.5B, mean keyword score 0.222). First real adapter trained on CPU (0.5B LoRA, 18:20 PDT): no gain, 1 safety regression; see phase1-slm/FIRST_ADAPTER_0.5B.md. Phase 1.5 (Privacy merge gate) opens after Phase 1 is complete. **Latest:** Soft polish **CLOSED** — (1) formal remote refusal stamp **8/8** (`SECURITY_SIGNOFF_GLM_LIVE_REFUSAL.md`); (2) `compose_file_sha256` migration **MERGE APPROVED** (`SECURITY_SIGNOFF_COMPOSE_FILE_SHA256_MIGRATION.md`). `role:tool` sanitizer PS-accepted. M1–M3 GREEN.
 
 ## Files
 - ARCHITECTURE.md, ROADMAP.md, STATUS.md, PROGRESS.md
@@ -24,12 +24,12 @@ SECURITY_REVIEW_PHASE1.md landed (Privacy Security). Lead Architect calls:
 - Fixes for transformers 5.x: finetune_qlora.py (`warmup_ratio` -> `warmup_steps`), local_inference.py (apply_chat_template returns BatchEncoding, so take input_ids).
 
 ## Next steps
-0. **Phase 2 blockers (no waive):** (b) real DCAP/gateway/GPU verifier plugs + PS-approved (non-`test_only`) allowlist before live remote; (c) `provider_tee` response-signature binding on the completions path. ~~(a) R3 near-echo~~ **CLEARED** — `SECURITY_SIGNOFF_R3_NEARECHO_DELTA.md`. See `SECURITY_SIGNOFF_ATTESTATION_ITEM2.md`.
+0. **Phase 2 IN PROGRESS** — **M1–M3 GREEN** + soft polish **CLOSED** (formal GLM refusal stamp 8/8; compose_file_sha256 MERGE APPROVED; role:tool sanitizer PS-accepted).
 1. Get a GPU host for the real QLoRA run (7B, 4-bit). Then do a full-data 0.5B LoRA run on CPU and compare tuned vs. baseline eval.
-2. Expand the dataset toward 2–5k curated examples (current seed far above the early 44; still short of target).
+2. Expand the dataset toward 2–5k curated examples. **Now 362 rows (18% of 2k)** after batch5 (+47 crypto/NEAR/privacy/onchain fundamentals, 2026-10-29 10:05 PDT). `make data` now runs `scripts/dataset_check.py` (schema + duplicate-prompt gate, exit 1 on fail). Next: batch6 NEAR dev depth (near-sdk-rs patterns, NEP-141 storage, Chain Signatures derivation paths) + multi-turn examples (dataset is all single-turn).
 3. ~~Phase 1.5 stub/criteria items (1)–(5)~~ — all SIGNED OFF at stub/criteria level.
-4. Pin `transformers<6` / `>=5` in requirements.txt, now that the scripts target the 5.x API.
-5. **No Phase 2** until blockers (a)(b)(c) clear. No waive.
+4. ~~Pin `transformers<6` / `>=5`~~ — done (`transformers>=5,<6` in requirements.txt).
+5. Phase 2 scope stays narrow: GLM pin only; M3 GREEN (more read-only tools + multi-step caps; no writes/sign); widen only when Lead expands scope.
 
 ## Security hardening — done (SLM Engineer, Wed Oct 28 2026, PDT)
 PHASE1_SCRIPT_FIXES.md items 1–3 are implemented. Smoke/dry-run status is tracked separately and these changes don't verify it.
@@ -110,3 +110,75 @@ PHASE1_SCRIPT_FIXES.md items 1–3 are implemented. Smoke/dry-run status is trac
 - Artifacts: `phase1-slm/outputs/eval_refusal_7b_r3_nearecho/` (summary.md + results.jsonl) — recomputed **8/8 PASS**. Unit suite 20/20.
 - Item (5) stays **closed** (not reopened).
 - Remaining Phase 2 blockers: (b) real DCAP/gateway + PS-approved allowlist; (c) `provider_tee` binding. **No Phase 2 / no waive.**
+
+- [2026-10-29 09:09 PDT] SLM: **reject Abliterated** for privacy product path (`SLM_POSITION_ABLITERATED_DEEPSEEK.md`). Conflicts with Phase 1 refusal bar. Prefer non-abliterated attested capture of DeepSeek-V4.1-Flash-1017 (or other model_id). Item (6) G3 — no SLM accept. Phase 2 still blocked on allowlist + provider_tee.
+
+- [2026-10-29 09:10 PDT] Lead + SLM: Abliterated **REJECTED** for privacy product path (confirmed). First prod pin must be non-abliterated. See `SLM_POSITION_ABLITERATED_DEEPSEEK.md`.
+
+- [2026-10-29 09:12 PDT] SLM: no objection to first privacy TEE pin on non-abliterated `z-ai/glm-5.3-flash` (capability fit OK); require refusal-suite run on that model before refusal claims. Note: `SLM_NOTE_GLM53_FLASH_ALLOWLIST.md`.
+
+## Phase 1.5 item (6) — APPROVED (2026-10-29 09:16 PDT)
+- Privacy Security **APPROVED** item (6) production allowlist entry for **`z-ai/glm-5.3-flash`** (non-abliterated). Evidence: `SECURITY_SIGNOFF_PRE_PHASE2_ITEM6_GLM.md`.
+- Approver fields: `privacy_security_approver` = "Privacy Security"; `effective_from` = `2026-10-29T17:00:00Z`.
+- **Rejected:** Abliterated DeepSeek / Qwen (G3). Do not pin those.
+- AE merges exact JSON entry via PR only; `allowlist/measurements.json` stays empty until that PR. Redeploy / new instance_id ⇒ DENY until new PS-approved entry.
+- Soft follow-up (non-blocking for this pin): run refusal suite on live GLM before making refusal *claims*.
+- At sign-off time Phase 2 was Lead-gated; **Lead later opened Phase 2** (2026-10-29) scoped to GLM verified-remote + agent loops. Item (6) remains APPROVED. Soft: GLM refusal suite still follow-up.
+
+## Phase 2 — OPENED / IN PROGRESS (2026-10-29 09:23 PDT)
+- Lead Architect **opened Phase 2** (America/Vancouver). Status: **IN PROGRESS**.
+- **Scope:** `z-ai/glm-5.3-flash` verified-remote inference + agent loops (not a blanket open of all Phase 2 checklist items).
+- Item (6) remains **APPROVED** (`SECURITY_SIGNOFF_PRE_PHASE2_ITEM6_GLM.md`).
+- Soft follow-up: refusal suite on live GLM before refusal *claims*.
+
+## Phase 2 M1 — GREEN (2026-10-29 10:03 PDT)
+- **M1 GREEN:** verified-remote against allowlisted `z-ai/glm-5.3-flash` (digest-only). Evidence: `phase1.5-attestation/EVIDENCE_PHASE2_M1_VERIFIED_REMOTE_GLM.md` (happy path PASS; negatives DENY fail-closed; `npm test` 101/101).
+- **Residual (updated):** Second-instance residual for pinned `19aea169…` + `7bb9af0a…` **CLEARED** (`SECURITY_SIGNOFF_PHASE2_SECOND_INSTANCE_GLM.md`; `measurements.json` **two** entries). Unknown instances still **DENY+retry**. (Earlier DENY-until-retry / DRAFT posture superseded by append — see Phase 2 second-pin section.)
+- Phase 2 is **no longer Lead-gated** (already IN PROGRESS). Soft follow-up: refusal suite on live GLM before refusal *claims*.
+
+## Phase 2 M2 — LANDED (2026-10-29 10:06 PDT)
+- **M2 landed:** agent loop vs `z-ai/glm-5.3-flash` only. Evidence: `phase2/EVIDENCE_PHASE2_M2_AGENT_LOOP.md` (mocks 15/15 + typecheck; live `--no-tool` + `view_account near` smoke OK).
+- **Gaps (noted at land; later closed):** live 2nd-instance path was mock-only at M2 land; early TS sanitizer preceded parity port — see dual-instance + sanitizer section below.
+- Second-instance residual for pinned `19aea169…` + `7bb9af0a…` **CLEARED** after append (see below). Unknown instances still **DENY+retry**.
+
+## Phase 2 M2 — security skim OK (2026-10-29 10:09 PDT)
+- Privacy Security **accepted** M2 for Phase 2 continue. Evidence: `SECURITY_REVIEW_PHASE2_M2.md` (injection wrapping + attest retry bounds fail-closed; soft residuals only).
+- Recomputed at review: phase2 tests 15/15.
+
+## Phase 2 — second GLM allowlist entry APPROVED + appended (2026-10-29 10:09 PDT)
+- Privacy Security **APPROVED** second non-`test_only` entry for instance `7bb9af0a…` (`SECURITY_SIGNOFF_PHASE2_SECOND_INSTANCE_GLM.md`, `effective_from` 2026-10-29T17:10:00Z). Exact entry: `allowlist/APPROVED_z-ai_glm-5.3-flash_instance_7bb9af0a.entry.json`.
+- AE **appended** to `phase1.5-attestation/allowlist/measurements.json` — now **two** entries (`19aea169…` untouched + `7bb9af0a…`). First pin sign-off remains `SECURITY_SIGNOFF_PRE_PHASE2_ITEM6_GLM.md`.
+- Second-instance residual for pinned `19aea169…` + `7bb9af0a…` **CLEARED** (`SECURITY_SIGNOFF_PHASE2_SECOND_INSTANCE_GLM.md`; `measurements.json` **two** entries). Unknown instances still **DENY+retry**.
+
+## Phase 2 — dual-instance live + sanitizer TS port (2026-10-29 10:12 PDT)
+- **Done:** dual-instance live smoke (both pins `19aea169…` + `7bb9af0a…` pass) + live DENY negatives + sanitizer TS parity port. Evidence: `phase2/EVIDENCE_PHASE2_DUAL_INSTANCE_AND_SANITIZER.md`; sanitizer notes: `phase2/SANITIZER.md` (parity vs `privacy/` on 17 vectors; phase2 vitest 18/18).
+- Prior soft gaps (mock-only dual path; Python sanitizer not wired) **closed** by this work. Source of truth remains `privacy/`; TS is the in-loop port.
+- Soft later (post dual-instance): refusal suite; `compose_file_sha256` schema — see M3 section.
+
+## Phase 2 M3 — scope locked (2026-10-29 10:13 PDT)
+- Lead **locked M3 scope**: more read-only tools (`view_access_key_list`, bounded `view_state`, `block`, `gas_price`) + multi-step tool chaining with hard caps; UNTRUSTED+sanitizer; **no** writes/sign; **GLM pin only**.
+- Constraints: UNTRUSTED tool envelope + sanitizer; **no** writes/sign; `z-ai/glm-5.3-flash` pin only.
+
+## Phase 2 M3 — GREEN (2026-10-29 10:16 PDT)
+- **M3 GREEN.** Evidence: `phase2/EVIDENCE_PHASE2_M3_MULTI_TOOL.md` (multi-step live **PASS**; digest-only; measurements.json untouched, 2 PS pins).
+- Tools in scope: `view_access_key_list`, bounded `view_state`, `block`, `gas_price` (plus prior `view_account`); multi-step chaining with hard caps; UNTRUSTED+sanitizer; no writes/sign; GLM only.
+- Soft polish **CLOSED** — see sections below (formal refusal stamp + compose merge stamp).
+
+## Phase 2 M3 — security skim OK (2026-10-29 ~10:17 PDT)
+- Privacy Security **accepted** M3 (`SECURITY_REVIEW_PHASE2_M3.md`) — continue; soft residuals only (then addressed in soft polish below). Recomputed phase2 tests 30/30 at skim.
+
+## Soft polish — GLM live refusal FORMALLY STAMPED (2026-10-29 10:25 PDT)
+- Live verified-remote refusal suite on `z-ai/glm-5.3-flash`: **8/8 PASS**. Artifacts: `phase1-slm/outputs/eval_refusal_glm_live/`.
+- Soft review: `SECURITY_REVIEW_GLM_LIVE_REFUSAL.md`. **Formal remote stamp:** `SECURITY_SIGNOFF_GLM_LIVE_REFUSAL.md` (production remote refusal path). Does **not** replace item (5) Qwen 7B; does **not** waive attestation/CM pins.
+
+## Soft polish — compose_file_sha256 MERGE APPROVED (2026-10-29 10:25 PDT)
+- Schema + verify **ACCEPTED** / **GREEN** (`SECURITY_ACCEPTANCE_COMPOSE_FILE_SHA256.md`, `SECURITY_REACK_COMPOSE_FILE_SHA256.md`).
+- GLM migration applied to **both** allowlist entries (`compose_file_sha256` = `904054f5…`). Evidence: `phase1.5-attestation/EVIDENCE_COMPOSE_FILE_SHA256_MIGRATION.md` (measurements sha256 `784e4d2e…`; phase1.5 112/112, phase2 38/38).
+- Privacy Security **MERGE APPROVED / STAMPED** (`SECURITY_SIGNOFF_COMPOSE_FILE_SHA256_MIGRATION.md`).
+
+## Soft polish — role:tool sanitizer PS-accepted (2026-10-29)
+- Privacy Security **accepted** soft sanitizer for wrapped `role:tool` UNTRUSTED envelopes (`SECURITY_REVIEW_PHASE2_SOFT_SANITIZER.md`). Approach A: relax only base64_blob / hex_key_64+ inside valid envelopes; PEM/secrets still reject; `SanitizerRejected` → `AgentDenied`.
+
+## Soft polish — CLOSED (2026-10-29 10:25 PDT)
+- Lead soft-polish track **done**: (1) `SECURITY_SIGNOFF_GLM_LIVE_REFUSAL.md` formal remote stamp 8/8; (2) `SECURITY_SIGNOFF_COMPOSE_FILE_SHA256_MIGRATION.md` MERGE APPROVED; plus prior `role:tool` sanitizer PS-accepted.
+
