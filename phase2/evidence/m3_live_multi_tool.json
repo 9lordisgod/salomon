@@ -1,0 +1,205 @@
+{
+ "run_started_utc": "2026-10-29T17:14:53.365Z",
+ "model_id": "z-ai/glm-5.3-flash",
+ "mode": "multi_tool_near",
+ "measurements_sha256": "09ce9a2df0ae2cc555b08d8f4df6f14f3cff330550d035c682eccc2ad9c0cbb8",
+ "result": {
+  "ok": true,
+  "steps": 3,
+  "tool_results": 4,
+  "contentSha256": "b67f175470417e4223f8d759b8c8e5ea6202a667274dcaede9b48cd96f679cc8",
+  "contentLength": 262,
+  "transcriptSha256": "5f19161627d51ad9783d49cbff2584a16f1f0ea659a477e55c225974d26b05cd"
+ },
+ "loop_log": [
+  {
+   "event": "attest",
+   "step": 1,
+   "attempt": 1,
+   "result": "pass"
+  },
+  {
+   "event": "complete",
+   "step": 1,
+   "result": "pass",
+   "requestHash": "46a022746f8c3c31cd21b7479cefe7239b24c8c960a547f8d9f4f74469fde290",
+   "responseHash": "77bb37826cbde452cf2528fe41efbe1547895d4eb7c0c27102a64cbd959083e5"
+  },
+  {
+   "event": "tool",
+   "step": 1,
+   "result": "pass",
+   "contentSha256": "d12f7f01066fcaf93fb42129dbb4d9748ea6ec82598b6b36f225d59a27209f42"
+  },
+  {
+   "event": "tool",
+   "step": 1,
+   "result": "pass",
+   "contentSha256": "1fbb356c315a8abf87e38d116f664a011f17286afe2519f5453eac8c8651e0b6"
+  },
+  {
+   "event": "tool",
+   "step": 1,
+   "result": "pass",
+   "contentSha256": "92e0ee37443dff9cbc24aee7bb1fad645db4395023df74c533cad822dc02dd22"
+  },
+  {
+   "event": "attest",
+   "step": 2,
+   "attempt": 1,
+   "result": "pass"
+  },
+  {
+   "event": "complete",
+   "step": 2,
+   "result": "pass",
+   "requestHash": "5c09f7e9df5f6d07355539ddca39b697238d26583971c76f91ce74d7b3dc20b3",
+   "responseHash": "69563467e8ca304addb02d6e39b8a09489d1e742432a9f96aca68704fe9ea748"
+  },
+  {
+   "event": "tool",
+   "step": 2,
+   "result": "pass",
+   "contentSha256": "1fbb356c315a8abf87e38d116f664a011f17286afe2519f5453eac8c8651e0b6"
+  },
+  {
+   "event": "attest",
+   "step": 3,
+   "attempt": 1,
+   "result": "pass"
+  },
+  {
+   "event": "complete",
+   "step": 3,
+   "result": "pass",
+   "requestHash": "1d1a245922ffeb0e76b3c58f389cc8e433b0a18686473438e1b88fdfd591b50a",
+   "responseHash": "e1b0df6e987e7958741fe99e79ab34aeec48e5da594e2747b120103cc18ef3a6"
+  },
+  {
+   "event": "final",
+   "step": 3,
+   "result": "pass",
+   "contentSha256": "b67f175470417e4223f8d759b8c8e5ea6202a667274dcaede9b48cd96f679cc8"
+  }
+ ],
+ "attest_log": [
+  {
+   "event": "attestation_verify",
+   "modelId": "z-ai/glm-5.3-flash",
+   "nonceHash": "6be33e12a457893951ad351200028b451a4e0b1a8c7049305724925df8fd2f34",
+   "provider": "near",
+   "signingAlgo": "ecdsa",
+   "scope": "gateway",
+   "result": "pass",
+   "quoteSha256": "d29151feda8f87c6310c836fe291901c58b1a63d5f482c3ab9d2a18c366dd9c2",
+   "ts": "2026-10-29T17:14:54.376Z"
+  },
+  {
+   "event": "attestation_verify",
+   "modelId": "z-ai/glm-5.3-flash",
+   "nonceHash": "6be33e12a457893951ad351200028b451a4e0b1a8c7049305724925df8fd2f34",
+   "provider": "near",
+   "signingAlgo": "ecdsa",
+   "scope": "model",
+   "result": "pass",
+   "candidateIndex": "0",
+   "signingAddressSha256": "2631ece102bd298b2614d74c1f8d420b9ec467e5c68da2d0218a4980a7a69fda",
+   "quoteSha256": "60833bfd7548d9ecfdb8d7af7346f6f1356fb411d2a5982bf7a58c5ad878a413",
+   "composeSha256": "a0e3c6f4f21a60ea3f5c96bc7ef319b03a184ca2049605399275fbcea74e8c5f",
+   "rtmr3": "463b2e18f0dde370e2be8d6b4cb07aac5efc4d8bc712cea2714d103e4db57cea4ce50197973d557306b25e70f82277d6",
+   "mrConfigId": "01a0e3c6f4f21a60ea3f5c96bc7ef319b03a184ca2049605399275fbcea74e8c5f000000000000000000000000000000",
+   "tcbStatus": "UpToDate",
+   "ts": "2026-10-29T17:14:55.893Z"
+  },
+  {
+   "event": "completion_bind",
+   "modelId": "z-ai/glm-5.3-flash",
+   "nonceHash": "-",
+   "result": "pass",
+   "requestHash": "46a022746f8c3c31cd21b7479cefe7239b24c8c960a547f8d9f4f74469fde290",
+   "responseHash": "77bb37826cbde452cf2528fe41efbe1547895d4eb7c0c27102a64cbd959083e5",
+   "signingAlgo": "ecdsa",
+   "signingAddressSha256": "2631ece102bd298b2614d74c1f8d420b9ec467e5c68da2d0218a4980a7a69fda",
+   "ts": "2026-10-29T17:15:05.098Z"
+  },
+  {
+   "event": "attestation_verify",
+   "modelId": "z-ai/glm-5.3-flash",
+   "nonceHash": "f4d26500d75e2192bc0c2677de1d004acfa6a4e379979e85f24bffdf0067c7d8",
+   "provider": "near",
+   "signingAlgo": "ecdsa",
+   "scope": "gateway",
+   "result": "pass",
+   "quoteSha256": "132ed6c4d63233591b4afea2c2e350f006e57074fd0c3ed23cdbc1c6845385b8",
+   "ts": "2026-10-29T17:15:17.601Z"
+  },
+  {
+   "event": "attestation_verify",
+   "modelId": "z-ai/glm-5.3-flash",
+   "nonceHash": "f4d26500d75e2192bc0c2677de1d004acfa6a4e379979e85f24bffdf0067c7d8",
+   "provider": "near",
+   "signingAlgo": "ecdsa",
+   "scope": "model",
+   "result": "pass",
+   "candidateIndex": "0",
+   "signingAddressSha256": "2631ece102bd298b2614d74c1f8d420b9ec467e5c68da2d0218a4980a7a69fda",
+   "quoteSha256": "ca00b8c340aaa522843655058e52501bf9decb399af5968d6544cf08aa51be48",
+   "composeSha256": "a0e3c6f4f21a60ea3f5c96bc7ef319b03a184ca2049605399275fbcea74e8c5f",
+   "rtmr3": "463b2e18f0dde370e2be8d6b4cb07aac5efc4d8bc712cea2714d103e4db57cea4ce50197973d557306b25e70f82277d6",
+   "mrConfigId": "01a0e3c6f4f21a60ea3f5c96bc7ef319b03a184ca2049605399275fbcea74e8c5f000000000000000000000000000000",
+   "tcbStatus": "UpToDate",
+   "ts": "2026-10-29T17:15:19.299Z"
+  },
+  {
+   "event": "completion_bind",
+   "modelId": "z-ai/glm-5.3-flash",
+   "nonceHash": "-",
+   "result": "pass",
+   "requestHash": "5c09f7e9df5f6d07355539ddca39b697238d26583971c76f91ce74d7b3dc20b3",
+   "responseHash": "69563467e8ca304addb02d6e39b8a09489d1e742432a9f96aca68704fe9ea748",
+   "signingAlgo": "ecdsa",
+   "signingAddressSha256": "2631ece102bd298b2614d74c1f8d420b9ec467e5c68da2d0218a4980a7a69fda",
+   "ts": "2026-10-29T17:15:21.897Z"
+  },
+  {
+   "event": "attestation_verify",
+   "modelId": "z-ai/glm-5.3-flash",
+   "nonceHash": "c4d7a007361b44bbf01738497f3fd581457f03e8ba785190af8748807cac2c03",
+   "provider": "near",
+   "signingAlgo": "ecdsa",
+   "scope": "gateway",
+   "result": "pass",
+   "quoteSha256": "c6b39cad65a6309a3859f0931b99568ee825a2e04acf6c5776b2740a8ae1b1ff",
+   "ts": "2026-10-29T17:15:25.724Z"
+  },
+  {
+   "event": "attestation_verify",
+   "modelId": "z-ai/glm-5.3-flash",
+   "nonceHash": "c4d7a007361b44bbf01738497f3fd581457f03e8ba785190af8748807cac2c03",
+   "provider": "near",
+   "signingAlgo": "ecdsa",
+   "scope": "model",
+   "result": "pass",
+   "candidateIndex": "0",
+   "signingAddressSha256": "2631ece102bd298b2614d74c1f8d420b9ec467e5c68da2d0218a4980a7a69fda",
+   "quoteSha256": "eef8a5602be8f7be96e20fc8e66827bfba4ccb7ebca3ba365849d0ead29b22a3",
+   "composeSha256": "a0e3c6f4f21a60ea3f5c96bc7ef319b03a184ca2049605399275fbcea74e8c5f",
+   "rtmr3": "463b2e18f0dde370e2be8d6b4cb07aac5efc4d8bc712cea2714d103e4db57cea4ce50197973d557306b25e70f82277d6",
+   "mrConfigId": "01a0e3c6f4f21a60ea3f5c96bc7ef319b03a184ca2049605399275fbcea74e8c5f000000000000000000000000000000",
+   "tcbStatus": "UpToDate",
+   "ts": "2026-10-29T17:15:26.469Z"
+  },
+  {
+   "event": "completion_bind",
+   "modelId": "z-ai/glm-5.3-flash",
+   "nonceHash": "-",
+   "result": "pass",
+   "requestHash": "1d1a245922ffeb0e76b3c58f389cc8e433b0a18686473438e1b88fdfd591b50a",
+   "responseHash": "e1b0df6e987e7958741fe99e79ab34aeec48e5da594e2747b120103cc18ef3a6",
+   "signingAlgo": "ecdsa",
+   "signingAddressSha256": "2631ece102bd298b2614d74c1f8d420b9ec467e5c68da2d0218a4980a7a69fda",
+   "ts": "2026-10-29T17:15:33.124Z"
+  }
+ ],
+ "run_finished_utc": "2026-10-29T17:15:33.124Z"
+}

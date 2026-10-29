@@ -1,0 +1,12 @@
+{
+  "name": "@near-privacy-ai/phase2-agent-loop",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Phase 2 M2: GLM-only verified agent loop with read-only NEAR tools. Reuses ../phase1.5-attestation toolchain (no own node_modules).",
+  "scripts": {
+    "test": "../phase1.5-attestation/node_modules/.bin/vitest run --root .",
+    "typecheck": "../phase1.5-attestation/node_modules/.bin/tsc --noEmit -p .",
+    "demo": "../phase1.5-attestation/node_modules/.bin/vite-node src/runDemo.ts"
+  }
+}
