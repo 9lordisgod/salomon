@@ -1,0 +1,13 @@
+{
+  "name": "@salomon/phase3-platform",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Salomon Phase 3 M1 platform: GGUF path discovery, cred vault boundary, offlineAsk, LocalCompleter. Reuses ../phase1.5-attestation toolchain.",
+  "main": "src/index.ts",
+  "exports": { ".": "./src/index.ts" },
+  "scripts": {
+    "test": "../phase1.5-attestation/node_modules/.bin/vitest run --root .",
+    "typecheck": "../phase1.5-attestation/node_modules/.bin/tsc --noEmit -p ."
+  }
+}

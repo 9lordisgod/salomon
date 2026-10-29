@@ -1,5 +1,5 @@
 {
-  "name": "@near-privacy-ai/attestation-verify",
+  "name": "@salomon/attestation-verify",
   "version": "0.1.0-stub",
   "private": true,
   "type": "module",
