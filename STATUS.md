@@ -8,8 +8,17 @@
 - **M0 DONE** — Scope lock: Lead approved the Phase 3 journalist MVP brief (`docs/notes/PRODUCT_NICHE.md`, Product brief).
 - **M1 IN FLIGHT** — Local run path: offline/local `ask` end-to-end (fail closed if model missing). **Primary surface = Next.js web + API** (`POST /api/ask`); CLI secondary. Runbook: `docs/notes/PHASE3_MVP_RUNBOOK.md`.
 
-**Latest (~15:58 PDT):** PS **S1 SOFT CLEAR** after Frontend copy (`DEMO · REMOTE` / `DEMO · stub` badges; no Source-safe chrome) — main `62c5a80` (S1 copy-align docs) + `339cb05` (Frontend runtime/mode); stamp `docs/reviews/SECURITY_SOFT_SKIM_SALOMON_APP_M1_RESKIM.md`. S2 still ACCEPT. M1 still **IN FLIGHT**; M2/M3 **not shipped**. Open soft notes: gateway must not outrank stub; confirm `apps/web` = salomon-app tree. Prior: skim `9f89ed9`.
+**Latest (~16:05 PDT):** Claims fold ready (awaiting Lead push): PRODUCT_NICHE; ARCHITECTURE web+`/api/ask` primary + PS sanitizer tighten (secrets today, source-ID = M2); README M1-in-flight honesty; ROADMAP GGUF pin/scripts only; Product accept + M2 criteria (not open); Frontend desk `/api/ask` `16c4d50` + Sources soft-copy `973883a`. M1 not green until offline smoke. PS Sources+desk soft CLEAR stamped (`SECURITY_SOFT_SKIM_SALOMON_APP_SOURCES_RESKIM.md`).
 
+**Prior (~15:58 PDT):** PS **S1 SOFT CLEAR** after Frontend copy (`DEMO · REMOTE` / `DEMO · stub` badges; no Source-safe chrome) — main `62c5a80` (S1 copy-align docs) + `339cb05` (Frontend runtime/mode); stamp `docs/reviews/SECURITY_SOFT_SKIM_SALOMON_APP_M1_RESKIM.md`. S2 still ACCEPT. M1 still **IN FLIGHT**; M2/M3 **not shipped**. Frontend closed PS soft note 1: desk → /api/ask default (`16c4d50`); gateway only on explicit REMOTE. Sources soft-copy `973883a`. Soft note 2 still open: confirm apps/web = salomon-app. Prior: skim `9f89ed9`.
+
+
+
+### Framing A LOCKED (yoxi, 2026-10-29 ~16:04 PDT) — STATUS fold (Docs)
+- **Framing LOCKED:** source-protected research agent — local = privacy floor + default; optional verified remote only after **mask→sanitize→attest→complete**; no auto-fallback; no cloud-by-default.
+- Design note: `docs/notes/FRAMING_SOURCE_PROTECTED_DRAFT.md` (Product; Lead+PS).
+- **README hero unchanged** until Docs fold + PS soft-clear of claim language (migration target one-liner is in that note — not landed).
+- Sequence unchanged: **M1-live → M2 mask → hybrid spike later.** Crypto parked. **Do not claim hybrid shipped.** Demo gateway ≠ verified remote. M2 still NOT OPEN; M1 not green.
 
 ### Model Engineer niche reflection (2026-10-29 ~15:58 PDT)
 - M1 `ask_local.py --json` + `configs/source_care_system.txt` live for LocalCompleter (exits 0/2/3/4). Pin: `salomon-qwen25-7b-instruct-Q4_K_M.gguf` (bartowski single-file); split/Abliterated refuse. **Weight fetch APPROVED** (yoxi 2026-10-29) — Release/ME fetching pinned GGUF; Runtime owns live smoke after verify.
@@ -48,7 +57,7 @@ docs/reviews/SECURITY_REVIEW_PHASE1.md landed (Privacy Security). Lead Architect
 - Fixes for transformers 5.x: finetune_qlora.py (`warmup_ratio` -> `warmup_steps`), local_inference.py (apply_chat_template returns BatchEncoding, so take input_ids).
 
 ## Next steps
-0. **PS S1 SOFT CLEAR** (reskim stamp) — M1 dogfood copy OK. Soft notes open: desk `/api/chat` vs `/api/ask`; confirm `apps/web` = salomon-app. S2 ACCEPT. Do not claim M2/M3.
+0. **PS S1 SOFT CLEAR** (reskim stamp) — M1 dogfood copy OK. Soft note 1 closed (desk → /api/ask `16c4d50`; Sources `973883a`). PS **Sources + desk soft CLEAR** (stamp `docs/reviews/SECURITY_SOFT_SKIM_SALOMON_APP_SOURCES_RESKIM.md`; SHAs `16c4d50`/`973883a` verified). Soft residual: confirm remote apps/web = salomon-app. S2 ACCEPT. M2 NOT OPEN. Do not claim M1 green / M2/M3.
 0b. **Phase 3 M1 IN FLIGHT:** local offline `ask` — primary Next.js web+API; CLI secondary. Runbook `docs/notes/PHASE3_MVP_RUNBOOK.md`. M0 scope lock DONE. Do not claim M2 ingest/mask or M3 propose-save. Dataset PARKED. Follow-up: SECURITY + phase READMEs niche align; Privacy soft-review before overclaim.
 1. Get a GPU host for the real QLoRA run (7B, 4-bit). Then do a full-data 0.5B LoRA run on CPU and compare tuned vs. baseline eval.
 2. **PARKED (user, via Lead 2026-10-29 ~11:44 PDT):** no 2k / multi-turn expansion. Seed stays at **362** rows. Gate item (5) stays **SIGNED**. Resume only when unparked. Note: seed content is crypto/NEAR-heavy; Lead answer: refresh toward privacy AI for journalism (sources/PII/secrets) when unparked.
