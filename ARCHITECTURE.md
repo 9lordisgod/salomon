@@ -1,5 +1,21 @@
 # Architecture — NEAR Privacy AI
 
+
+## Diagram
+```mermaid
+flowchart LR
+  U[User] --> S[Sanitizer<br/>local-first]
+  S --> M[SLM core<br/>Qwen2.5-7B + QLoRA]
+  M --> A[Agent loop<br/>read-only tools]
+  A --> P{Policy engine<br/>schema · simulate · limits}
+  P -->|approved| SG[Signer<br/>HW wallet / TEE / MPC]
+  M -.remote, attested only.-> T[NEAR AI Cloud TEE]
+  SG --> I[NEAR Intents]
+  SG --> C[Chain Signatures]
+  A --> CR[Staking-for-credits]
+```
+> Fail-closed at every arrow: no attestation → no remote call; no policy pass → no signature.
+
 ## Layers
 1. **SLM core** — Qwen2.5-7B-Instruct + QLoRA adapter specialized in crypto analysis, privacy tooling, cypherpunk concepts, on-chain reasoning. Runs locally by default (privacy-first).
 2. **Agent layer (Phase 2)** — tool-calling loop (TypeScript/Python) with read-only data tools first (RPC queries, explorer/indexer lookups). Write actions go through a policy engine, never directly from model output.
@@ -31,6 +47,7 @@ Local first. Send data out as little as possible. Do not keep prompt logs by def
 
 ## Phases
 1. SLM foundation (data, QLoRA, eval, local inference) — **in progress**
+1.5. Privacy merge gate — **OPEN** (item 5 refusal eval SIGNED OFF: 7B Colab 8/8, Privacy Security)
 2. Agent tools + private inference
 3. Contracts, Intents, Chain Signatures, Agent Market, credits
 4. Privacy hardening, policy engine, production docs
