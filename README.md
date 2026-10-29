@@ -5,7 +5,7 @@
 
 ![visibility](https://img.shields.io/badge/repo-private-black)
 ![phase](https://img.shields.io/badge/Phase-2%20agent%20capabilities-blue)
-![gate](https://img.shields.io/badge/Phase%201.5%20stubs-SIGNED-green) ![p2](https://img.shields.io/badge/Phase%202-IN%20PROGRESS%20(M1%E2%80%93M3%20green)-brightgreen)
+![p1](https://img.shields.io/badge/Phase%201%20SLM-gate%20done%20%C2%B7%20dataset%20parked-lightgrey) ![gate](https://img.shields.io/badge/Phase%201.5%20stubs-SIGNED-green) ![p2](https://img.shields.io/badge/Phase%202-IN%20PROGRESS%20(M1%E2%80%93M3%20green)-brightgreen)
 ![refusal](https://img.shields.io/badge/refusal%207B%20%2B%20live%20GLM-8%2F8%20signed%20off-brightgreen)
 ![pin](https://img.shields.io/badge/remote%20model-z--ai%2Fglm--5.3--flash%20pinned-purple)
 
@@ -107,7 +107,7 @@ The model **proposes**. It never signs. Every arrow fails closed. Details: [ARCH
 
 ```mermaid
 flowchart LR
-  P1["Phase 1<br/>SLM foundation<br/>🟦 in progress"] --> G{{"Phase 1.5<br/>gate 1–5 ✅"}}
+  P1["Phase 1<br/>SLM foundation<br/>✅ gate done · ⏸ dataset parked"] --> G{{"Phase 1.5<br/>gate 1–5 ✅"}}
   G --> P2["Phase 2<br/>Agent + private inference<br/>🟩 M1–M3 green"]
   P2 --> P3["Phase 3<br/>Contracts · Intents · Chain Sigs<br/>⬜"]
   P3 --> P4["Phase 4<br/>Hardening + production<br/>⬜"]
