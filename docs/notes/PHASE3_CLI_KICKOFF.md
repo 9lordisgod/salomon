@@ -3,8 +3,10 @@
 **When:** 2026-10-29 ~15:23 PDT (America/Vancouver)  
 **Owner:** Frontend Engineer  
 **Status:** **P3-M1 IN PROGRESS (Lead assigned)** — scope: local `ask` only (`phase3-cli/`); mask map / approve UX deferred to M2–M3.
-**Surface (Lead, 2026-10-29):** web Ask app (Next.js + thin local `/api/ask`) is **primary**; this CLI is a **secondary** thin client of the same local runtime.  
 **Product:** Salomon — a local research agent for journalists and investigators that protects sources (`docs/notes/PRODUCT_NICHE.md`)
+
+> **Scope amend (Product+Lead 2026-10-29 ~15:40 PDT):** MVP primary surface is **Next.js web + API** (local `ask`). This CLI kickoff is **secondary**. See `PHASE3_WEB_STACK.md` and `PHASE3_MVP_RUNBOOK.md`. M1 = offline/local `ask` only — not approval stub as hero.
+
 
 ## Goal
 Ship a **local-first research CLI for journalists** that wraps the Phase 2 agent loop with:
