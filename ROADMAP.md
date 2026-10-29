@@ -1,4 +1,6 @@
 # Roadmap
+> **Product niche (locked 2026-10-29):** a local research agent for journalists and investigators that protects sources. See `docs/notes/PRODUCT_NICHE.md`.
+
 **Current: Phase 2 — agent loop + safe tools + sanitizer (M1–M3 GREEN)** · Phase 1 gate done · dataset PARKED · Phase 1.5 (1)–(5) SIGNED · **Lead pivot 2026-10-29: AI-first; crypto/on-chain track archived**
 
 ```mermaid
@@ -41,19 +43,21 @@ Owners: Privacy Security owns gate acceptance and reviews every Phase 2 PR touch
 - [x] **M4 G2** — propose-only stubs ACCEPTED / MERGE STAMPED (`SECURITY_REVIEW_PHASE2_M4_G2.md`; evidence `phase2/EVIDENCE_PHASE2_M4_G2_STUBS.md`). `.env.example` filled + **RE-ACKED** (`SECURITY_REACK_M4_ENV_EXAMPLE.md`). Soft `verifier_mainnet_on_testnet` **ACCEPT** (`SECURITY_REVIEW_PHASE2_M4_SOFT_VERIFIER_TESTNET.md`; phase2 **59/59**); reack residual CLOSED. Propose sketch **GREEN**. Settlement mainnet-only / G3. Soft polish **pushed / done** salomon **`79c0f99`** (prior G2 `34a2466`).
 - [ ] **M4 G3** — execute/sign/simulate — **NOT opened**
 
-## Phase 3 — Local-first product
-- [ ] GGUF / llama.cpp quantized export for on-device use
-- [ ] Personal-agent UX (CLI first) with read-only tools and propose-only actions
-- [ ] Credential store outside the model; approval flow for any state-changing tool
+## Phase 3 — Local research agent for journalists (MVP)
+- [ ] GGUF / llama.cpp quantized export so the model runs on a reporter's laptop, offline
+- [ ] Research workspace (CLI first): ingest local documents (PDF, notes, transcripts), summarize, cross-reference, build timelines
+- [ ] Source-protection layer: detect and mask source identities, contacts and identifying details before anything leaves the device; refuse to echo them into exports
+- [ ] Untrusted-input handling for leaked documents, web pages and emails (injection-safe tool output, already proven in Phase 2)
+- [ ] Propose-only actions (save, export, share) with explicit approval; no network by default
 
-## Phase 4 — Hardening + optional confidential compute
-- [ ] Local prompt sanitizer/rewriter beyond stub
-- [ ] Durable policy engine (limits, allowlists)
-- [ ] Optional remote inference on verified confidential compute (provider unnamed; fail-closed verify client already exists)
-- [ ] Deployment guides, threat model refresh, open-source release
+## Phase 4 — Newsroom hardening
+- [ ] Durable policy engine (allowlists, export rules, per-project isolation)
+- [ ] Encrypted local project vaults; audit log that never records source identities
+- [ ] Optional remote inference only on verified confidential compute (fail-closed verify client already exists)
+- [ ] Threat model refresh for journalist adversaries (device seizure, subpoena, targeted phishing); deployment guides; open-source release
 
 ## Archived — prior on-chain track (parked 2026-10-29, Lead pivot)
-Not the product. Kept as engineering history; evidence files are untouched.
+Not the product. Kept as engineering history; evidence files are untouched. Index: `docs/archive/crypto/README.md`.
 - near-sdk contracts (agent registry, credits/staking, access control) — never started
 - Intents-based settlement — M4 G1/G2 propose-only stubs ACCEPTED (`phase2/EVIDENCE_PHASE2_M4_G2_STUBS.md`, `SECURITY_REVIEW_PHASE2_M4_G2.md`, soft verifier `SECURITY_REVIEW_PHASE2_M4_SOFT_VERIFIER_TESTNET.md`; salomon `79c0f99`); G3 never opened
 - Chain Signatures, Agent Market, staking-for-credits — never started
