@@ -4,7 +4,7 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { runAgentLoop, AgentDenied, type LocalCompleterLike, type ToolExecutor, type LoopLog } from "../../phase2/src/agentLoop.js";
 import { redact, sanitizeForRemote, SanitizerRejected, type ChatMessage, type Redaction } from "../../phase2/src/sanitize.js";
-import { wrapUntrusted } from "../../phase2/src/tools/nearReadOnly.js";
+import { wrapUntrusted } from "../../phase2/src/tools/untrusted.js";
 import { DEFAULT_LOCAL_MODEL } from "./localModel.js";
 import { createSpawnCompleter, type Backend } from "./localCompleter.js";
 import { REASONS, toReason, type ReasonCode } from "./reasons.js";
