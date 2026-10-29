@@ -64,7 +64,21 @@ export function sanitizeForRemote(text: unknown, cfg: SanitizerConfig = {}): San
 
 export class SanitizerRejected extends Error { constructor(public reasons: string[]) { super("sanitizer_rejected"); } }
 const PUBKEY_RX = /\b(?:ed25519|secp256k1):[1-9A-HJ-NP-Za-km-z]{32,}\b/g;
+/**
+ * TS-only M4 rule key_material_in_context (applies to EVERY role incl. wrapped role:tool; never relaxed).
+ * Secret-length only: ed25519 secret = 64 bytes (~86-88 base58); public ed25519 (32 bytes, ~43-44) is NOT matched.
+ * secp256k1 secrets (32B) are indistinguishable by length from public data, so they are caught only when labelled.
+ */
+const KEY_MATERIAL_RULES: RegExp[] = [
+  /ed25519:[1-9A-HJ-NP-Za-km-z]{80,}/,
+  /-----BEGIN [A-Z ]*PRIVATE KEY-----/,
+  /\b(?:private[_ ]?key|secret[_ ]?key|signing[_ ]?key|seed[_ ]?phrase|mnemonic|xprv)\b\\?["']?\s*[:=]\s*\\?["']?[^\s"'\\]{8,}/i,
+  /\bsecp256k1:[1-9A-HJ-NP-Za-km-z]{40,46}\b(?=[^\n]{0,40}\b(?:secret|private)\b)|\b(?:secret|private)\b[^\n]{0,40}secp256k1:[1-9A-HJ-NP-Za-km-z]{40,46}\b/i,
+  /\bxprv[1-9A-HJ-NP-Za-km-z]{100,}/,
+];
+export function keyMaterialInContext(t: string): boolean { return KEY_MATERIAL_RULES.some((rx) => rx.test(t)) || bip39Like(t); }
 export function redact(s: string, cfg: SanitizerConfig = {}): string {
+  if (keyMaterialInContext(s)) throw new SanitizerRejected(["secret:key_material_in_context"]);
   const r = sanitizeForRemote(s, cfg); if (!r.ok) throw new SanitizerRejected(r.reasons);
   return r.text.replace(PUBKEY_RX, "[REDACTED_KEY]");
 }
