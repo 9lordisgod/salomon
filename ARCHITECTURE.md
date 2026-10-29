@@ -1,53 +1,42 @@
-# Architecture — NEAR Privacy AI
+# Architecture — Salomon (privacy-first personal / agent AI)
 
+> Reframed 2026-10-29 (Lead pivot): AI-first, local-first. Prior crypto/on-chain integration is archived — see the end of this file.
 
 ## Diagram
 ```mermaid
 flowchart LR
-  U[User] --> S[Sanitizer<br/>local-first]
-  S --> M[SLM core<br/>Qwen2.5-7B + QLoRA]
-  M --> A[Agent loop<br/>read-only tools]
-  A --> P{Policy engine<br/>schema · simulate · limits}
-  P -->|approved| SG[Signer<br/>HW wallet / TEE / MPC]
-  M -.remote, attested only.-> T[NEAR AI Cloud TEE]
-  SG --> I[NEAR Intents]
-  SG --> C[Chain Signatures]
-  A --> CR[Staking-for-credits]
+  U[User] --> S[Sanitizer<br/>local]
+  S --> M[Small model core<br/>Qwen2.5-7B + QLoRA]
+  M --> A[Agent loop<br/>hard step/tool caps]
+  A --> T[Tools<br/>read-only first]
+  T -->|untrusted output| S
+  A --> P{Policy<br/>schema · limits}
+  P -->|approved| H[Human approval<br/>outside the model]
+  M -.optional, verified only.-> C[Confidential compute<br/>future, unnamed]
 ```
-> Fail-closed at every arrow: no attestation → no remote call; no policy pass → no signature.
+> Fail-closed at every arrow: no verification → no remote call; no policy pass → no action; secret detected → refuse, don't echo.
 
 ## Layers
-1. **SLM core** — Qwen2.5-7B-Instruct + QLoRA adapter specialized in crypto analysis, privacy tooling, cypherpunk concepts, on-chain reasoning. Runs locally by default (privacy-first).
-2. **Agent layer (Phase 2)** — tool-calling loop (TypeScript/Python) with read-only data tools first (RPC queries, explorer/indexer lookups). Write actions go through a policy engine, never directly from model output.
-3. **NEAR integration (Phase 3)**
-   - **NEAR AI Cloud private inference** — TEE-backed (Intel TDX / NVIDIA confidential computing) OpenAI-compatible endpoint, with attestation that can be checked. Used when local hardware is not enough.
-   - **Agent Market** — list agents, accept jobs, escrow/payment flows via the official SDK.
-   - **NEAR Intents** — outcome-based/cross-chain execution: the agent states the *desired outcome*, solvers fill it.
-   - **Chain Signatures** — MPC-signed transactions on other chains from a NEAR account. Requests get signed only after policy checks.
-   - **Staking-for-credits** — Rust/near-sdk contract: stake → inference credits, metered usage.
-4. **Privacy hardening (Phase 4)** — local prompt sanitization/rewriting, TEE paths, unlinkable payments, minimal logging.
+1. **Small model core** — Qwen2.5-7B-Instruct + QLoRA (Qwen2.5-0.5B for CPU smoke). Tuned and gated to refuse secret echo, crime assist and prompt injection (refusal eval R1/R2/R3, CI exit 1 on any fail). Runs locally by default.
+2. **Sanitizer** — strips PII and secrets on input and before any remote call; also wraps `role:tool` output as untrusted data (`privacy/sanitizer.py`, TS parity in `phase2/SANITIZER.md`).
+3. **Agent layer** — tool-calling loop with hard step/tool caps. Read-only tools first. Anything that would change state is **propose-only**: the model emits a structured proposal, policy checks it, a human approves. The model never holds keys or credentials.
+4. **Policy engine** — schema validation, allowlists, rate and spend limits (`privacy/policy_spend.py` stub; counters non-durable).
+5. **Remote inference (optional)** — only when local hardware isn't enough, and only to environments that pass a fail-closed verification client (`phase1.5-attestation/`) with a pinned allowlist. Future direction: hardware-backed confidential compute, provider unnamed.
 
 ## Privacy principles
-Local first. Send data out as little as possible. Do not keep prompt logs by default. Check attestation before sending to remote inference. Strip PII and addresses before any remote call when the user wants that.
+Local first. Send as little as possible. No prompt logs by default. Verify before any remote call. Treat everything the agent reads — web, email, files, tool output — as hostile input.
 
-## Security & key management (RISKS FLAGGED)
-- **The model never holds raw private keys.** Keys stay in a separate signer: a hardware wallet, a TEE enclave, or a Chain Signatures MPC request path.
-- Every transaction the model proposes goes: proposal → schema validation → simulation → policy engine (allowlists, per-tx and daily spend limits, rate limits) → human or threshold approval above limits → signer.
-- Prompt injection through on-chain data (memos, token names, contract metadata) is a known threat. Treat it as untrusted input.
-- Use function-call access keys with tight allowances on NEAR instead of full-access keys.
-- Compliance: privacy tools (mixers, shielded pools) have jurisdiction-dependent legal status. The model teaches concepts and must not help launder funds.
+## Security & key management
+- The model never holds raw keys, tokens or passwords. Credentials live in a separate store the model can't read.
+- Proposal → schema validation → policy (allowlists, limits) → human approval above thresholds → execution outside the model.
+- The model may explain privacy concepts but refuses to help with fraud, laundering or credential theft.
 
-## Assumptions (to verify against official docs before Phase 2/3 code)
-- A1: NEAR AI Cloud exposes an OpenAI-compatible API with TEE attestation endpoints (per docs.near.ai). The exact routes are not encoded yet.
-- A2: The Agent Market SDK package name, API and escrow semantics are not checked yet. Phase 3 must read the official repo first.
-- A3: The Intents contract (`intents.near`) and solver relay API are to be confirmed in docs.near.org/chain-abstraction/intents.
-- A4: Chain Signatures MPC contract IDs (mainnet/testnet) and the `sign` request format are to be confirmed in docs.near.org/chain-abstraction/chain-signatures.
-- A5: Staking-for-credits is our own contract design, not a NEAR primitive.
-- A6: "IronClaw" concepts are referenced in the brief. Look up the details before using them.
+## Phases (summary; see ROADMAP.md)
+1. Small model + refusal eval — gate done; dataset parked
+1.5. Privacy merge gate — items (1)–(5) signed off
+2. Agent loop, tools, sanitizer — M1–M3 green; propose-only pattern kept as safe tooling
+3. Local-first product (packaging, quantized export, personal-agent UX)
+4. Hardening + optional confidential compute
 
-## Phases
-1. SLM foundation (data, QLoRA, eval, local inference) — **in progress**
-1.5. Privacy merge gate — **OPEN** (item 5 refusal eval SIGNED OFF: 7B Colab 8/8, Privacy Security)
-2. Agent tools + private inference
-3. Contracts, Intents, Chain Signatures, Agent Market, credits
-4. Privacy hardening, policy engine, production docs
+## Archived prior work (not the product)
+The original scaffold targeted on-chain crypto: a specific cloud TEE inference provider, on-chain read tools, intents-based settlement, MPC chain signing, smart contracts, an agent marketplace and staking-for-credits. Phase 2 M4 produced a reviewed propose-only stub set for that path (`phase2/DESIGN_M4_NEAR_INTENTS.md`, `phase2/EVIDENCE_PHASE2_M4_G2_STUBS.md`); execute/sign (G3) was never opened. Evidence stays in place as engineering history. Original assumptions A1–A6 are retired with it.

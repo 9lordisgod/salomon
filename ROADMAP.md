@@ -1,23 +1,25 @@
 # Roadmap
-**Current: Phase 2 — M4 propose sketch GREEN** · G2 ACCEPTED · soft polish **CLOSED** · settlement mainnet/G3 · Phase 1 gate done · dataset PARKED · Phase 1.5 (1)–(5) SIGNED · (6) APPROVED
+**Current: Phase 2 — agent loop + safe tools + sanitizer (M1–M3 GREEN)** · Phase 1 gate done · dataset PARKED · Phase 1.5 (1)–(5) SIGNED · **Lead pivot 2026-10-29: AI-first; crypto/on-chain track archived**
 
 ```mermaid
 flowchart LR
-  P1[Phase 1<br/>SLM foundation<br/>continues] --> G{{Phase 1.5<br/>1–5 ✅ · 6 APPROVED}}
-  G --> P2[Phase 2<br/>M4 propose GREEN<br/>fail-closed Verifier]
-  P2 --> P3[Phase 3<br/>NEAR contracts · Intents · Chain Sigs]
-  P3 --> P4[Phase 4<br/>Privacy hardening + prod]
+  P1[Phase 1<br/>Small model + refusal<br/>gate done · dataset parked] --> G{{Phase 1.5<br/>privacy gate 1–5 ✅}}
+  G --> P2[Phase 2<br/>Agent loop · tools · sanitizer<br/>M1–M3 GREEN]
+  P2 --> P3[Phase 3<br/>Local-first product]
+  P3 --> P4[Phase 4<br/>Hardening + optional confidential compute]
+  P2 -.archived.-> X[On-chain track<br/>parked]
 ```
 
-## Phase 1 — SLM Foundation
+## Phase 1 — Small model that refuses to leak
 - [x] Model choice (Qwen2.5-7B-Instruct; Llama-3.1-8B alt) — configs/model_config.yaml
 - [x] Seed dataset builder + 40+ seed examples, 10+ eval prompts
 - [x] QLoRA fine-tune script, eval harness, local inference CLI
-- [ ] Expand dataset to 2–5k curated examples (docs, NEPs, privacy papers, on-chain traces) — **PARKED** 2026-10-29 (user via Lead): no 2k / multi-turn for now; seed 362; resume only when unparked
+- [ ] Expand dataset to 2–5k curated examples — **PARKED**; on unpark = **privacy AI** (privacy / refusal / safe personal AI), not crypto/NEAR SLM (Lead pivot 2026-10-29 ~15:16 PDT). Seed 362. See `docs/notes/SLM_PIVOT_PRIVACY_FIRST.md`
 - [ ] First adapter trained + baseline vs. tuned eval report (0.5B CPU report landed 18:20 PDT, no gain; 7B GPU run pending)
 - [ ] GGUF/llama.cpp quantized export for local use
 
 ## Phase 1.5 — Privacy merge gate (Lead decision, Oct 28 2026)
+> Reframed 2026-10-29: this is a privacy merge gate for local-first + optional verified remote compute, not a product dependency on any specific cloud provider. Sign-offs below are unchanged.
 Opens after Phase 1 is complete. Stub/criteria items **(1)–(5) SIGNED OFF**. R3 near-echo **CLEARED**. Item **(6) APPROVED** — `z-ai/glm-5.3-flash` allowlist now **two** entries (`19aea169…` via `docs/signoffs/SECURITY_SIGNOFF_PRE_PHASE2_ITEM6_GLM.md`; `7bb9af0a…` via `docs/signoffs/SECURITY_SIGNOFF_PHASE2_SECOND_INSTANCE_GLM.md`, effective_from 2026-10-29T17:10:00Z; Abliterated DeepSeek/Qwen rejected). Phase 2 **IN PROGRESS**: **M1 GREEN** + **M2 landed** + **M3 GREEN** (`EVIDENCE_PHASE2_M3_MULTI_TOOL.md`; multi-step live PASS) + dual-instance live + sanitizer TS. Unknown instances DENY+retry. Soft polish **CLOSED**: formal GLM refusal stamp 8/8 (`docs/signoffs/SECURITY_SIGNOFF_GLM_LIVE_REFUSAL.md`); `compose_file_sha256` **MERGE APPROVED** (`docs/signoffs/SECURITY_SIGNOFF_COMPOSE_FILE_SHA256_MIGRATION.md`); `role:tool` sanitizer PS-accepted. M3 skim OK (`docs/reviews/SECURITY_REVIEW_PHASE2_M3.md`).
 - [x] (1) Threat model doc — SIGNED OFF (docs/threat-models/THREAT_MODEL_PHASE1.5.md filled, Oct 29 2026). See docs/signoffs/SECURITY_SIGNOFF_PHASE1.5_1_3_4.md
 - [x] (2) Attestation verify client, fail-closed — SIGNED OFF Privacy Security (phase1.5-attestation/ 15/15, Oct 29 2026). Bar: docs/acceptance/ATTESTATION_ACCEPTANCE.md. Evidence: docs/signoffs/SECURITY_SIGNOFF_ATTESTATION_ITEM2.md. (a) R3 CLEARED; item (6) GLM allowlist APPROVED; Phase 2 **M1 GREEN** + **M2 landed**; provider_tee binding demonstrated on M1 happy path.
@@ -28,24 +30,31 @@ Opens after Phase 1 is complete. Stub/criteria items **(1)–(5) SIGNED OFF**. R
 
 Owners: Privacy Security owns gate acceptance and reviews every Phase 2 PR touching tools, remote inference, or keys. Agent Engineer implements attestation verify. SLM Engineer owns refusal eval harness updates.
 
-## Phase 2 — Agent Capabilities (**M4 propose sketch GREEN** — G2 ACCEPTED · M1–M3 GREEN)
-**Scope now:** `z-ai/glm-5.3-flash` verified-remote + agent loops. **M1–M3 GREEN** + soft polish CLOSED. **M4** G1+G2 ACCEPTED / merge-stamped; propose sketch **GREEN** (fail-closed empty Verifier in `phase2/.env.example`). Intents settlement stays **mainnet-only / G3**. **G3 NOT opened.** Soft polish on salomon `79c0f99`. Phase 1 gate done; dataset PARKED. Allowlist: two GLM pins; unknown instances DENY+retry.
+## Phase 2 — Agent loop, safe tools, sanitizer (M1–M3 GREEN)
+> Reframed 2026-10-29: M4 (propose-only stubs) is kept as a **safe-tooling pattern** and its on-chain settlement target is **archived**. G3 (execute/sign) was never opened and is not planned.
+**Scope now:** agent loop + safe tools + sanitizer. **M1–M3 GREEN** + soft polish CLOSED. Verified-remote pattern kept (provider archived). **M4** propose-only stubs archived as a safe-tooling pattern (G1+G2 ACCEPTED; soft verifier ACCEPT; salomon `79c0f99`); **G3 never opened**. Phase 1 gate done; dataset PARKED. Allowlist pins remain engineering history.
 - [x] Tool schema + read-only tools — M2 `view_account`; **M3** `view_access_key_list`, bounded `view_state`, `block`, `gas_price` (multi-step live PASS)
 - [x] Agent loop (TS) with injection-safe tool output handling — **M2 landed** + skim OK; dual-instance live; TS sanitizer; **M3** multi-step chaining w/ hard caps
-- [x] NEAR AI Cloud private inference backend with attestation check — **M1 GREEN**; two pins live-verified; unknown instances DENY+retry
+- [x] Verified-remote inference backend with fail-closed attestation check (archived provider; pattern kept) — **M1 GREEN**; two pins live-verified; unknown instances DENY+retry
 - [x] **M3 GREEN** — more read-only tools + multi-step chaining w/ hard caps; UNTRUSTED+sanitizer; no writes/sign; GLM only (`EVIDENCE_PHASE2_M3_MULTI_TOOL.md`)
 - [x] **M4 G1** — design ACCEPTED (`SECURITY_REVIEW_PHASE2_M4_G1.md`; gate `SECURITY_GATE_PHASE2_M4.md`)
-- [x] **M4 G2** — propose-only stubs ACCEPTED / MERGE STAMPED (`SECURITY_REVIEW_PHASE2_M4_G2.md`; evidence `phase2/EVIDENCE_PHASE2_M4_G2_STUBS.md`). `.env.example` filled + **RE-ACKED** (`SECURITY_REACK_M4_ENV_EXAMPLE.md`). Soft `verifier_mainnet_on_testnet` **ACCEPT** (`SECURITY_REVIEW_PHASE2_M4_SOFT_VERIFIER_TESTNET.md`; phase2 **59/59**); reack residual CLOSED. Propose sketch **GREEN**. Settlement mainnet-only / G3. salomon soft polish `79c0f99` (prior G2 `34a2466`).
+- [x] **M4 G2** — propose-only stubs ACCEPTED / MERGE STAMPED (`SECURITY_REVIEW_PHASE2_M4_G2.md`; evidence `phase2/EVIDENCE_PHASE2_M4_G2_STUBS.md`). `.env.example` filled + **RE-ACKED** (`SECURITY_REACK_M4_ENV_EXAMPLE.md`). Soft `verifier_mainnet_on_testnet` **ACCEPT** (`SECURITY_REVIEW_PHASE2_M4_SOFT_VERIFIER_TESTNET.md`; phase2 **59/59**); reack residual CLOSED. Propose sketch **GREEN**. Settlement mainnet-only / G3. Soft polish **pushed / done** salomon **`79c0f99`** (prior G2 `34a2466`).
 - [ ] **M4 G3** — execute/sign/simulate — **NOT opened**
 
-## Phase 3 — NEAR Integration
-- [ ] near-sdk Rust contracts: agent registry, credits/staking, access control
-- [ ] Intents-based execution / settlement — **mainnet-only / G3** (no official Intents testnet Verifier); Phase 2 **M4** propose sketch GREEN with fail-closed empty Verifier
-- [ ] Chain Signatures signing via policy engine (testnet)
-- [ ] Agent Market listing + job/escrow handling
-- [ ] CLI/frontend
+## Phase 3 — Local-first product
+- [ ] GGUF / llama.cpp quantized export for on-device use
+- [ ] Personal-agent UX (CLI first) with read-only tools and propose-only actions
+- [ ] Credential store outside the model; approval flow for any state-changing tool
 
-## Phase 4 — Privacy & Production
-- [ ] Local prompt sanitizer/rewriter
-- [ ] Policy engine (spend limits, allowlists, simulation)
-- [ ] Deployment guides, threat model, open-source release
+## Phase 4 — Hardening + optional confidential compute
+- [ ] Local prompt sanitizer/rewriter beyond stub
+- [ ] Durable policy engine (limits, allowlists)
+- [ ] Optional remote inference on verified confidential compute (provider unnamed; fail-closed verify client already exists)
+- [ ] Deployment guides, threat model refresh, open-source release
+
+## Archived — prior on-chain track (parked 2026-10-29, Lead pivot)
+Not the product. Kept as engineering history; evidence files are untouched.
+- near-sdk contracts (agent registry, credits/staking, access control) — never started
+- Intents-based settlement — M4 G1/G2 propose-only stubs ACCEPTED (`phase2/EVIDENCE_PHASE2_M4_G2_STUBS.md`, `SECURITY_REVIEW_PHASE2_M4_G2.md`, soft verifier `SECURITY_REVIEW_PHASE2_M4_SOFT_VERIFIER_TESTNET.md`; salomon `79c0f99`); G3 never opened
+- Chain Signatures, Agent Market, staking-for-credits — never started
+- Cloud-TEE provider as product backend — demoted; attestation client kept as a generic fail-closed pattern
