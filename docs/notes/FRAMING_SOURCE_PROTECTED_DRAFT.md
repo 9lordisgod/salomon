@@ -2,14 +2,14 @@
 
 **Status:** LOCKED by yoxi (2026-10-29) as product framing direction.  
 **Audience:** Lead Architect · Privacy & Safety. **Docs STATUS fold:** applied ~16:05 PDT (README hero still held).  
-**Not shipping yet:** Do **not** rewrite README hero or public copy until Docs folds the STATUS note and PS soft-clears claim language.  
+**Not shipping yet:** Do **not** rewrite README hero or public copy until Docs folds the STATUS note. **PS SOFT CLEAR** 2026-10-29 (soft edits applied: one-liner + Do-list name mask+attest).  
 **Owner:** Product · **Date:** 2026-10-29 ~16:04 PDT (America/Vancouver)
 
 ---
 
 ## One-liner (locked framing — not yet the public hero)
 
-> **Source-protected research agent for journalists** — local by default; heavier work only on verified remote after sanitize.
+> **Source-protected research agent for journalists** — local by default; heavier work only on verified remote after mask, sanitization, and attestation.
 
 Niche who/job unchanged: journalists and investigators; protect sources. Crypto remains parked.
 
@@ -83,7 +83,7 @@ Dataset stays **PARKED** until Lead unparks (then journalism / source-protection
 ### Do
 - “Local by default.”
 - “Optional verified remote after sanitization and verification.”
-- “Sources / identifying details stay on your device unless you opt into a verified path — and even then, only masked + sanitized payloads leave.”
+- “Sources / identifying details stay on your device unless you opt into a verified path — and even then, only masked, sanitized, and attested payloads leave.”
 - “Salomon proposes; you approve.”
 - “Fail closed if the local model is missing.”
 - Label modes: `LOCAL` · `VERIFIED REMOTE` · `DEMO · stub` · `DEMO · remote (not verified)`.
@@ -97,24 +97,17 @@ Dataset stays **PARKED** until Lead unparks (then journalism / source-protection
 - Implying Salomon replaces editorial, legal, or source-protection judgment.
 
 ### Public hero
-Keep current Lead-approved hero until Docs folds STATUS and PS clears updated claim language:
+STATUS fold + PS soft-clear done. Keep current public hero until Docs lands the migration one-liner:
 
 > Local research agent for journalists/investigators that protects sources.
 
-Migration target (after Docs + PS): the one-liner at the top of this note.
+Migration target (Docs, when Lead opens README): the PS-corrected one-liner at the top of this note.
 
 ---
 
-## Suggested STATUS note (Docs — fold when ready; not applied by Product)
+## STATUS note
 
-```text
-Framing LOCKED (yoxi 2026-10-29): source-protected research agent —
-local = privacy floor + default; optional verified remote only after
-mask→sanitize→attest→complete; no auto-fallback; no cloud-by-default.
-Design note: docs/notes/FRAMING_SOURCE_PROTECTED_DRAFT.md (Lead+PS).
-README hero unchanged until Docs fold + PS soft-clear. Sequence:
-M1-live → M2 mask → hybrid spike later. Crypto parked.
-```
+Folded by Docs ~16:05 PDT. Soft-edit reminder for any one-liner quotes: say **mask, sanitization, and attestation** (not sanitize alone). README hero still held.
 
 ---
 
@@ -128,6 +121,9 @@ M1-live → M2 mask → hybrid spike later. Crypto parked.
 ---
 
 ## Related
+
+- `docs/notes/HYBRID_TRUST_BOUNDARIES.md`
+- `docs/acceptance/PHASE3_M2_SOURCE_MASK_ACCEPT.md`
 
 - Niche: `docs/notes/PRODUCT_NICHE.md` (land if missing) · Runbook: `PHASE3_MVP_RUNBOOK.md`
 - M1 product bar: `PHASE3_M1_PRODUCT_ACCEPTANCE.md`
