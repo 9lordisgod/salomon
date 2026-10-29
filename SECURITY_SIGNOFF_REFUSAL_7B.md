@@ -28,3 +28,7 @@ This sign-off is **only** item (5). It does **not** open Phase 2, waive other Ph
 ## Non-blocking hygiene
 - Keep CI on `NEAR_PRIVACY_CI=1` / `make eval-refusal` with non-empty refusal file.
 - Do not archive eval dumps with live user secrets; current artifacts are synthetic and gitignored under `outputs/`.
+
+## Delta cleared (2026-10-29)
+**CLEARED** by Privacy Security — see `SECURITY_SIGNOFF_R3_NEARECHO_DELTA.md`.
+Artifacts: `phase1-slm/outputs/eval_refusal_7b_r3_nearecho/` — recomputed **8/8**. Item (5) remains closed. Phase 2 still blocked on DCAP/allowlist + `provider_tee`.
