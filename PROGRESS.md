@@ -1,6 +1,18 @@
 # Progress Log
 
+> **Niche (main `f9d75fd`, 2026-10-29):** Salomon is a local research agent for journalists and investigators that protects sources. Crypto archived under `docs/archive/`. Entries below remain history.
+
+## Thu Oct 29, 2026, ~15:35 PDT — Phase 3 OPEN · M1 in flight (Docs Lead)
+- Lead opened **Phase 3 M1** (journalist MVP). **M0 OPENED** (niche + Product brief locked on main `f9d75fd`). **M1 IN FLIGHT**: local CLI research agent shell + approval stub; kickoff `docs/notes/PHASE3_CLI_KICKOFF.md`.
+- STATUS/ROADMAP/PROGRESS updated: Phase line → 3 M1; niche banners included for Lead push. Product language from `docs/notes/PRODUCT_NICHE.md` (approved brief). No engineering status invented beyond Lead open.
+- Phase 2 remains M1–M3 GREEN foundation; M4 propose-only pattern reused for approvals.
+
 > **Lead pivot — Thu Oct 29, 2026, ~15:16 PDT (America/Vancouver).** Salomon is now a **fully AI project**: privacy-first personal / agent AI, small models that refuse to leak secrets, local-first inference, safe agent tools + sanitizer, no keys in the model, optional future confidential compute (unnamed). The crypto/on-chain narrative is **archived** — Intents, Chain Signatures, contracts, tokens, staking-for-credits, and cloud-TEE attestation as a product. Phase 1 SLM/refusal and Phase 2 agent/sanitizer remain engineering assets. Entries below are kept verbatim as history.
+
+## Thu Oct 29, 2026, ~15:26 PDT — niche lock + narrative rewrite (Docs Lead)
+- Lead locked the niche: journalists / investigators. The Product brief (Lead-approved) is applied, with the one-liner and three hero bullets used verbatim.
+- README hero, ARCHITECTURE (includes a research-workflow mapping table that marks what is built vs. planned), STATUS header/Next steps, and ROADMAP (header, mermaid, Phase 3 = local research agent, out-of-scope list) rewritten.
+- New `docs/archive/crypto-near-track.md` consolidates the on-chain/NEAR/Intents/Chain Sigs/staking narrative with evidence pointers and SHAs (`34a2466`, `79c0f99`). Crypto paragraphs trimmed from the README/ARCHITECTURE/ROADMAP surface. No evidence files deleted. No engineering status changed. Draft not pushed.
 
 ## Thu Oct 29, 2026, ~15:23 PDT — AI-first push landed + follow-up pass (Docs Lead)
 - Push landed: salomon main **`bcf2d07`** (prior batch `4464e5c`).
@@ -238,3 +250,7 @@
 - Dataset expansion when unparked = **privacy AI**, not crypto SLM. **NEAR AI Cloud out of narrative.**
 - Dataset remains **PARKED** (seed 362). Item (5) stays SIGNED. No scrub of historical crypto rows while parked.
 - Note: `docs/notes/SLM_PIVOT_PRIVACY_FIRST.md`. STATUS / ROADMAP Phase 1 expand line updated. ARCHITECTURE SLM layer retargeted.
+
+## Thu Oct 29, 2026 ~15:29 PDT — niche push `f9d75fd` (Docs Lead banners)
+- Lead: niche push already on main **`f9d75fd`**. No further full rewrite of README/ARCHITECTURE/ROADMAP.
+- STATUS + PROGRESS: one-line niche banners drafted for Lead push (this workspace). Docs Lead does not push.

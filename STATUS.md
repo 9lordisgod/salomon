@@ -1,10 +1,14 @@
-# STATUS — Thu Oct 29, 2026 (America/Vancouver, PDT) — Lead pivot 15:16 PDT: AI-first
+# STATUS — Thu Oct 29, 2026 (America/Vancouver, PDT) — Phase 3 M1 in flight
 
-**Product:** Salomon — privacy-first personal / agent AI. Small models that refuse to leak secrets, local-first inference, safe agent tools + sanitizer, no keys in the model; optional future confidential compute (unnamed). Crypto/on-chain narrative **archived** (Lead pivot, 2026-10-29 ~15:16 PDT).
+> **Niche (main `f9d75fd`):** Salomon is a local research agent for journalists and investigators that protects sources. Crypto archived under `docs/archive/`.
 
-**Phase:** **2 (agent loop, tools, sanitizer) — IN PROGRESS.** Phase 1 gate done (7B refusal 8/8); dataset **PARKED** at 362 seed rows. Phase 1.5 privacy gate (1)–(5) SIGNED. Phase 2 M1–M3 **GREEN**. M4 propose-only stubs (G1+G2 ACCEPTED, soft verifier ACCEPT, phase2 59/59, salomon `79c0f99`) are **archived as a safe-tooling pattern**, not product; G3 never opened.
+**Product:** Salomon: *A local research agent for journalists and investigators that protects sources.* Who: investigative reporters, newsroom researchers, fact-checkers, independent investigators, NGO researchers. Job: read, summarize and cross-reference sensitive material on the reporter's own machine. Promise: sources, contacts and identifying details never leave the device, never get echoed into output, and never reach a remote model without verification. Product niche locked: `docs/notes/PRODUCT_NICHE.md` (main `f9d75fd`). Crypto/on-chain archived at `docs/archive/crypto/`.
 
-**Latest (15:23 PDT):** AI-first push landed on salomon main **`bcf2d07`** (prior batch `4464e5c`). Follow-up pass reframes SECURITY.md, phase1-slm/README.md, phase2/README.md, docs/README.md AI-first (draft, not pushed). No engineering status changed. Earlier entries below are history and still use the original on-chain framing.
+**Phase:** **3 (journalist research MVP) — M1 IN FLIGHT.** Phase 1 gate done (7B refusal 8/8). Dataset **PARKED** at 362 seed rows. Phase 1.5 (1)–(5) SIGNED. Phase 2 M1–M3 **GREEN**. M4 propose-only pattern (G1+G2 ACCEPTED, salomon `79c0f99`) reused for approvals; G3 never opened.
+- **M0 OPENED** — Phase 3 kicked off (Lead); niche + Product brief locked.
+- **M1 IN FLIGHT** — journalist MVP: **web Ask app is the primary surface** (Next.js + thin local `/api/ask`, offline-first, fail-closed); CLI `salomon ask` is a secondary thin client of the same runtime (approval stub; read-only notes/docs/transcripts path). Kickoff: `docs/notes/PHASE3_CLI_KICKOFF.md`.
+
+**Latest (~15:35 PDT):** Lead opened **Phase 3 M1** (journalist MVP). STATUS/PROGRESS niche banners + Phase 3 M0/M1 note drafted for Lead push (base narrative `f9d75fd`). Phase 2 remains M1–M3 GREEN engineering foundation.
 
 ## Lead answers (2026-10-29)
 1. Product docs say generic **verified-remote** / unnamed confidential compute; the archived provider is named only in archive sections.
@@ -38,9 +42,9 @@ docs/reviews/SECURITY_REVIEW_PHASE1.md landed (Privacy Security). Lead Architect
 - Fixes for transformers 5.x: finetune_qlora.py (`warmup_ratio` -> `warmup_steps`), local_inference.py (apply_chat_template returns BatchEncoding, so take input_ids).
 
 ## Next steps
-0. **Lead pivot (2026-10-29 ~15:16 PDT):** AI-first narrative. On-chain items (Intents, Chain Signatures, contracts, tokens, staking-for-credits, cloud-TEE provider as product) are **parked/archived**. Await Lead direction for the next Phase 2/3 milestone (e.g. non-chain read-only tools, local-first packaging).
+0. **Phase 3 M1 IN FLIGHT (Lead ~15:32 PDT):** journalist research MVP — local CLI + approval stub (`docs/notes/PHASE3_CLI_KICKOFF.md`). M0 opened (niche locked, `docs/notes/PRODUCT_NICHE.md`). When the dataset unparks, refresh toward sources/PII/secrets in journalism. Follow-up: align SECURITY.md and phase READMEs to the niche.
 1. Get a GPU host for the real QLoRA run (7B, 4-bit). Then do a full-data 0.5B LoRA run on CPU and compare tuned vs. baseline eval.
-2. **PARKED (user, via Lead 2026-10-29 ~11:44 PDT):** no 2k / multi-turn expansion. Seed stays at **362** rows. Gate item (5) stays **SIGNED**. Resume only when unparked. Note: seed content is crypto/NEAR-heavy; Lead answer: refresh toward general privacy AI when unparked.
+2. **PARKED (user, via Lead 2026-10-29 ~11:44 PDT):** no 2k / multi-turn expansion. Seed stays at **362** rows. Gate item (5) stays **SIGNED**. Resume only when unparked. Note: seed content is crypto/NEAR-heavy; Lead answer: refresh toward privacy AI for journalism (sources/PII/secrets) when unparked.
 3. ~~Phase 1.5 items (1)–(5)~~ — SIGNED OFF.
 4. ~~Pin `transformers>=5,<6`~~ — done.
 5. Archived: M4 G1+G2 ACCEPTED propose-only stubs (salomon `79c0f99`); G3 not opened and not planned.
