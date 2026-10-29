@@ -1,22 +1,27 @@
 import { describe, it, expect } from "vitest";
+import { createHash } from "node:crypto";
 import { mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import {
   AttestationClient, AttestationError, DigestLogger, MockQuoteVerifier, MockGatewayVerifier, StubFailClosedVerifier,
-  expectedMrConfigId, expectedReportData, replayRtmr, verifyReport, loadAllowlist, nonceHash, DEFAULT_POLICY,
+  expectedMrConfigId, expectedReportData, replayRtmr, recomputeImr3Digests, imr3EventDigest, verifyReport, assertPlugsProductionReady,
+  DcapQuoteVerifier, DcapGatewayVerifier, NrasGpuVerifier, StubFailClosedResponseBinder, assertBoundCompletion, loadAllowlist, nonceHash, DEFAULT_POLICY,
   type MeasurementPolicy, type DigestLogRecord, type AllowlistEntry,
 } from "../src/index.js";
 
 const ADDR = "0x" + "ab".repeat(20);
 const COMPOSE = '{"services":{"vllm":{}}}';
-const EVENTS = [{ imr: 3, digest: "11".repeat(48) }, { imr: 0, digest: "22".repeat(48) }, { imr: 3, digest: "33".repeat(48) }];
+const EVENTS = [{ imr: 3, event_type: 134217729, event: "app-id", event_payload: "11".repeat(20), digest: "" },
+  { imr: 0, event_type: 1, event: "ignored", event_payload: "" },
+  { imr: 3, event_type: 134217729, event: "compose-hash", event_payload: "33".repeat(32) }];
+const IMR3_DIGESTS = recomputeImr3Digests(EVENTS);
 const { composeSha256, mrConfigId } = expectedMrConfigId(COMPOSE);
 const RTMR3 = replayRtmr(EVENTS);
 const MODEL = "deepseek-ai/DeepSeek-V3.1";
 const policy: MeasurementPolicy = { ...DEFAULT_POLICY };
 const TEST_ENTRY: AllowlistEntry = { model_id: MODEL, mrconfigid: mrConfigId, app_compose_sha256: composeSha256, rtmr3: RTMR3,
-  event_log_digests: ["11".repeat(48), "33".repeat(48)], effective_from: "2026-01-01T00:00:00Z", notes: "unit-test fixture",
+  event_log_digests: IMR3_DIGESTS, effective_from: "2026-01-01T00:00:00Z", notes: "unit-test fixture",
   privacy_security_approver: "test-fixture-not-approved", test_only: true };
 const dir = mkdtempSync(join(tmpdir(), "attest-"));
 const TEST_AL = join(dir, "measurements.json");
@@ -26,11 +31,21 @@ writeFileSync(EMPTY_AL, JSON.stringify({ entries: [] }));
 const allowlist = loadAllowlist(TEST_AL, { allowTestOnly: true, env: {} });
 
 const mkAtt = (nonce: string, over: Record<string, unknown> = {}) => ({ signing_address: ADDR, intel_quote: "deadbeef",
-  event_log: EVENTS, info: { app_compose: COMPOSE }, request_nonce: nonce, ...over });
+  event_log: EVENTS, info: { app_compose: COMPOSE }, request_nonce: nonce, compose_manager_attestation: mkCm(nonce), ...over });
+// G4: CM evidence is required on the verified path; tests carry a mock CM whose quote ("cafe") the mock routes.
+const CM_AH = "c".repeat(64);
+const mkCm = (nonce: string) => ({ quote: "cafe", nonce, nonce_source: "client", actions_hash: CM_AH, report_data: CM_AH + nonce,
+  actions: [{ action: "compose_up", file: "prod/a.yaml", file_sha256: "d".repeat(64), tag: "v1", commit: "e".repeat(40) }] });
 const mkReport = (nonce: string, atts: unknown[] = [mkAtt(nonce)], gw: unknown = { request_nonce: nonce }) =>
   ({ gateway_attestation: gw, model_attestations: atts }) as any;
-const mock = (nonce: string, over: Record<string, unknown> = {}, gpuOk = true) => new MockQuoteVerifier({ tcbStatus: "UpToDate", advisoryIds: [],
-  reportData: expectedReportData(ADDR, nonce), rtmr3: RTMR3, mrConfigId, ...over } as any, { iUnderstandThisIsTestOnly: true, gpuOk });
+const mock = (nonce: string, over: Record<string, unknown> = {}, gpuOk = true) => {
+  const m = new MockQuoteVerifier({ tcbStatus: "UpToDate", advisoryIds: [],
+    reportData: expectedReportData(ADDR, nonce), rtmr3: RTMR3, mrConfigId, ...over } as any, { iUnderstandThisIsTestOnly: true, gpuOk });
+  const base = m.verifyQuote.bind(m);
+  (m as any).verifyQuote = async (q?: string) => q === "cafe"
+    ? { ok: true, tcbStatus: "UpToDate", advisoryIds: [], reportData: CM_AH + nonce, rtmr3: "00".repeat(48), mrConfigId: "00".repeat(48) } : base();
+  return m;
+};
 const gwOk = new MockGatewayVerifier(true, { iUnderstandThisIsTestOnly: true });
 const N = "a".repeat(64);
 const mkLogger = (lines: string[] = []) => new DigestLogger((l) => lines.push(l));
@@ -66,7 +81,22 @@ describe("fail-closed verify", () => {
     await expect(verifyReport(mkReport(N), MODEL, N, deps(mock(N), { allowlist: [{ ...allowlist[0], rtmr3: "ff".repeat(48) }] }))).rejects.toMatchObject({ check: "allowlist" });
     expect(() => loadAllowlist(EMPTY_AL, { allowTestOnly: true, env: {} })).toThrow(/empty/);
     expect(() => loadAllowlist(join(dir, "nope.json"))).toThrow(AttestationError);
-    expect(() => loadAllowlist("allowlist/measurements.json")).toThrow(/empty/); // repo file ships empty
+    // Item (6) + Phase2 second instance: two PS-approved GLM pins (not empty deny-all).
+    const shipped = loadAllowlist("allowlist/measurements.json");
+    expect(shipped).toHaveLength(2);
+    expect(shipped[0]).toMatchObject({
+      model_id: "z-ai/glm-5.3-flash",
+      privacy_security_approver: "Privacy Security",
+      effective_from: "2026-10-29T17:00:00Z",
+      rtmr3: "463b2e18f0dde370e2be8d6b4cb07aac5efc4d8bc712cea2714d103e4db57cea4ce50197973d557306b25e70f82277d6",
+    });
+    expect(shipped[1]).toMatchObject({
+      model_id: "z-ai/glm-5.3-flash",
+      privacy_security_approver: "Privacy Security",
+      effective_from: "2026-10-29T17:10:00Z",
+      rtmr3: "e0f6c83eec48dfbfdb41d438a96783bcde1de18a1ac73705e2a8e24c2bc2051cbbf05ec0e856fed86498316a1b3e1bec",
+    });
+    expect(shipped.every((e) => e.test_only !== true)).toBe(true);
   });
   it("test_only entries never load without opt-in or in production", () => {
     expect(() => loadAllowlist(TEST_AL, { env: {} })).toThrow(/empty/);
@@ -117,10 +147,11 @@ describe("AttestationClient", () => {
     };
   const env = { NEAR_AI_CLOUD_API_KEY: "test-key-not-real" };
 
-  it("default client (empty repo allowlist + stub verifiers) denies and never becomes ready", async () => {
+  it("default client (shipped GLM allowlist + stub verifiers) denies and never becomes ready", async () => {
     const lines: string[] = [];
     const c = new AttestationClient({ env, fetchImpl: fetchFor((n) => mkReport(n)), logger: mkLogger(lines) });
-    await expect(c.verifyForModel(MODEL)).rejects.toMatchObject({ check: "allowlist_load" });
+    // Allowlist loads (item 6 pin present); stubs still fail closed before remote use.
+    await expect(c.verifyForModel(MODEL)).rejects.toMatchObject({ check: "gateway", reason: "gateway_verifier_not_configured" });
     expect(() => c.assertReadyForRemoteInference(MODEL)).toThrow(AttestationError);
     const c2 = new AttestationClient({ env, allowlistPath: TEST_AL, allowTestOnly: true, fetchImpl: fetchFor((n) => mkReport(n)), logger: mkLogger(lines) });
     await expect(c2.verifyForModel(MODEL)).rejects.toMatchObject({ check: "gateway", reason: "gateway_verifier_not_configured" });
@@ -142,7 +173,7 @@ describe("AttestationClient", () => {
     const seen: any = {};
     let qv: MockQuoteVerifier | undefined;
     const f = fetchFor((n) => { qv = mock(n); return mkReport(n); }, seen);
-    const lazy = { name: "lazy", verifyQuote: () => qv!.verifyQuote(), verifyGpu: () => qv!.verifyGpu() };
+    const lazy = { name: "lazy", verifyQuote: (q: string) => (qv as any)!.verifyQuote(q), verifyGpu: () => qv!.verifyGpu() };
     const c = new AttestationClient({ env, fetchImpl: f, quoteVerifier: lazy, gpuVerifier: lazy, gatewayVerifier: gwOk,
       allowlistPath: TEST_AL, allowTestOnly: true, logger: mkLogger() });
     const set = await c.verifyForModel(MODEL);
@@ -153,5 +184,79 @@ describe("AttestationClient", () => {
     expect(Object.fromEntries(u.searchParams)).toMatchObject({ model: MODEL, provider: "near", signing_algo: "ecdsa", include_tls_fingerprint: "false" });
     expect(seen.headers["x-no-aliasing"]).toBe("true");
     expect(() => c.assertReadyForRemoteInference("other-model")).toThrow();
+  });
+});
+
+describe("RTMR3 recompute (NEAR docs)", () => {
+  const sha384 = (...p: (Buffer | string)[]) => { const h = createHash("sha384"); p.forEach((x) => h.update(x)); return h.digest(); };
+  it("happy recompute matches independent LE32 computation", () => {
+    const t = Buffer.from([0x01, 0x00, 0x00, 0x08]); // 134217729 = 0x08000001 LE
+    const d0 = sha384(t, ":", Buffer.from("app-id", "utf8"), ":", Buffer.from("11".repeat(20), "hex"));
+    expect(imr3EventDigest(EVENTS[0] as any).equals(d0)).toBe(true);
+    const d1 = sha384(t, ":", Buffer.from("compose-hash", "utf8"), ":", Buffer.from("33".repeat(32), "hex"));
+    const r = sha384(sha384(Buffer.alloc(48), d0), d1).toString("hex");
+    expect(replayRtmr(EVENTS as any)).toBe(r);
+  });
+  it("matching provided digest accepted; empty digest uses recomputed", () => {
+    const withDigest = EVENTS.map((e) => e.imr === 3 ? { ...e, digest: "0x" + imr3EventDigest(e as any).toString("hex").toUpperCase() } : e);
+    expect(replayRtmr(withDigest as any)).toBe(RTMR3);
+  });
+  it("digest mismatch → DENY (also via verifyReport)", async () => {
+    const bad = EVENTS.map((e, i) => i === 0 ? { ...e, digest: "11".repeat(48) } : e);
+    expect(() => replayRtmr(bad as any)).toThrow(/digest mismatch/);
+    await expect(verifyReport(mkReport(N, [mkAtt(N, { event_log: bad })]), MODEL, N, deps())).rejects.toMatchObject({ check: "rtmr3_replay" });
+  });
+  it("payload tamper / missing event_type / bad hex → DENY", () => {
+    expect(replayRtmr(EVENTS.map((e, i) => i === 2 ? { ...e, event_payload: "34".repeat(32) } : e) as any)).not.toBe(RTMR3);
+    expect(() => replayRtmr([{ imr: 3, event: "x", event_payload: "" }] as any)).toThrow(/event_type/);
+    expect(() => replayRtmr([{ imr: 3, event_type: 1, event: "x", event_payload: "zz" }] as any)).toThrow(/hex/);
+  });
+});
+
+describe("nvidia_payload exact-string hash", () => {
+  const PAYLOAD = '{"nonce":"' + N + '", "evidence_list":[]}'; // note non-canonical spacing
+  const gpuEntry = (sha: string) => { const f = join(dir, "gpu-" + sha.slice(0, 8) + ".json");
+    writeFileSync(f, JSON.stringify({ entries: [{ ...TEST_ENTRY, gpu_evidence_sha256: sha }] })); return loadAllowlist(f, { allowTestOnly: true, env: {} }); };
+  it("pins sha256 of exact received string bytes (not JSON.stringify)", async () => {
+    const exact = createHash("sha256").update(Buffer.from(PAYLOAD, "utf8")).digest("hex");
+    const restringified = createHash("sha256").update(JSON.stringify(JSON.parse(PAYLOAD))).digest("hex");
+    expect(exact).not.toBe(restringified);
+    await expect(verifyReport(mkReport(N, [mkAtt(N, { nvidia_payload: PAYLOAD })]), MODEL, N, deps(mock(N), { allowlist: gpuEntry(exact) }))).resolves.toHaveLength(1);
+    await expect(verifyReport(mkReport(N, [mkAtt(N, { nvidia_payload: PAYLOAD })]), MODEL, N, deps(mock(N), { allowlist: gpuEntry(restringified) })))
+      .rejects.toMatchObject({ check: "allowlist" });
+  });
+  it("object payload with GPU pin present → fail closed", async () => {
+    const exact = createHash("sha256").update(PAYLOAD).digest("hex");
+    await expect(verifyReport(mkReport(N, [mkAtt(N, { nvidia_payload: JSON.parse(PAYLOAD) })]), MODEL, N, deps(mock(N), { allowlist: gpuEntry(exact) })))
+      .rejects.toMatchObject({ check: "nvidia" });
+  });
+});
+
+describe("production plug guard", () => {
+  const prod = { NODE_ENV: "production" };
+  it("prod refuses default stubs and stub binder (Dcap/Nras now real and allowed)", () => {
+    expect(() => new AttestationClient({ env: prod, autoWireProductionPlugs: false })).toThrow(/unwired_plug_forbidden_in_production/);
+    expect(() => new AttestationClient({ env: prod })).not.toThrow(); // auto-wired real plugs pass guard
+    expect(() => new AttestationClient({ env: {}, requireProductionPlugs: true })).not.toThrow();
+    expect(() => new AttestationClient({ env: prod, gpuVerifier: new StubFailClosedVerifier() })).toThrow(/unwired_plug_forbidden_in_production/); // explicit stub still refused
+    expect(() => new AttestationClient({ env: prod, quoteVerifier: new DcapQuoteVerifier(), gpuVerifier: new NrasGpuVerifier(),
+      gatewayVerifier: new DcapGatewayVerifier(), responseBinder: new StubFailClosedResponseBinder() })).toThrow(/unwired_plug_forbidden_in_production: responseBinder=stub-fail-closed-response-binder/);
+    expect(() => new AttestationClient({ env: {}, requireProductionPlugs: true, quoteVerifier: new StubFailClosedVerifier() })).toThrow(/unwired_plug_forbidden_in_production/);
+  });
+  it("prod refuses mocks; binder slot checked", () => {
+    const fake = (name: string) => ({ name }) as any;
+    expect(() => assertPlugsProductionReady({ quoteVerifier: mock(N), gpuVerifier: fake("nras-gpu-verifier"), gatewayVerifier: fake("dcap-gateway-verifier") })).toThrow(/quoteVerifier=mock-tests-only/);
+    expect(() => assertPlugsProductionReady({ quoteVerifier: fake("dcap-quote-verifier"), gpuVerifier: fake("nras-gpu-verifier"), gatewayVerifier: fake("dcap-gateway-verifier"),
+      responseBinder: new StubFailClosedResponseBinder() })).toThrow(/responseBinder/);
+    expect(() => assertPlugsProductionReady({ quoteVerifier: fake("dcap-quote-verifier"), gpuVerifier: fake("nras-gpu-verifier"), gatewayVerifier: fake("dcap-gateway-verifier") }, { requireBinder: true })).toThrow(/responseBinder=default-stub/);
+    expect(() => assertPlugsProductionReady({ quoteVerifier: fake("dcap-quote-verifier"), gpuVerifier: fake("nras-gpu-verifier"), gatewayVerifier: fake("dcap-gateway-verifier"), responseBinder: fake("noble-response-binder") }, { requireBinder: true })).not.toThrow();
+  });
+  it("non-prod default stays StubFailClosed (constructs)", () => {
+    expect(() => new AttestationClient({ env: {} })).not.toThrow();
+  });
+  it("assertBoundCompletion refuses stub/default binder under NODE_ENV=production", async () => {
+    const prev = process.env.NODE_ENV; process.env.NODE_ENV = "production";
+    try { await expect(assertBoundCompletion([], {} as any)).rejects.toMatchObject({ reason: "unwired_plug_forbidden_in_production" }); }
+    finally { process.env.NODE_ENV = prev; }
   });
 });
