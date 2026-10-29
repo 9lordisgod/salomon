@@ -1,0 +1,21 @@
+{
+  "schema": "salomon.phase3-runtime.manifest/v1",
+  "product": "Salomon",
+  "milestone": "Phase3-M1",
+  "created": "EXAMPLE-only",
+  "owner": "Release Engineer",
+  "model": {
+    "base_id": "PIN_BASE_MODEL_ID",
+    "adapter": "base-only",
+    "license": "PIN_LICENSE",
+    "quant": "Q4_K_M",
+    "format": "gguf",
+    "runtime": "llama.cpp"
+  },
+  "artifact": {
+    "filename": "PIN_BASENAME.gguf",
+    "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "bytes": 0
+  },
+  "notes": "Example only. Not a release artifact."
+}

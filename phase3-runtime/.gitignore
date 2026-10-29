@@ -1,0 +1,13 @@
+# Large release binaries — never commit
+*.gguf
+*.bin
+*.safetensors
+*.tar
+*.tar.gz
+*.zip
+artifacts/**
+!artifacts/.gitkeep
+!artifacts/MANIFEST.json
+!artifacts/SHA256SUMS
+!artifacts/MANIFEST.example.json
+!artifacts/SHA256SUMS.example

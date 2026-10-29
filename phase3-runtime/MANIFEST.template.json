@@ -1,0 +1,25 @@
+{
+  "schema": "salomon.phase3-runtime.manifest/v1",
+  "product": "Salomon",
+  "milestone": "Phase3-M1",
+  "created": "YYYY-MM-DD",
+  "owner": "Release Engineer",
+  "model": {
+    "base_id": "PIN_BASE_MODEL_ID",
+    "adapter": "PIN_ADAPTER_OR_BASE_ONLY",
+    "license": "PIN_LICENSE",
+    "quant": "PIN_QUANT",
+    "format": "gguf",
+    "runtime": "llama.cpp"
+  },
+  "artifact": {
+    "filename": "PIN_BASENAME.gguf",
+    "sha256": "PIN_SHA256_AFTER_CHECKSUM",
+    "bytes": 0
+  },
+  "source": {
+    "export_recipe": "scripts/export_gguf.md",
+    "config_ref": "phase1-slm/configs/model_config.yaml"
+  },
+  "notes": "Fill after Model Engineer pin + export. Never claim refusal-gate scores unless Eval Lead re-runs on this GGUF."
+}
