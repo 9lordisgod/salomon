@@ -9,13 +9,26 @@
 ![refusal](https://img.shields.io/badge/refusal%20eval%207B-8%2F8%20signed%20off-brightgreen)
 ![phase2](https://img.shields.io/badge/Phase%202-not%20started-lightgrey)
 
-```
-┌──────────────┬──────────────┬──────────────┬──────────────┬──────────────┐
-│  🧠 LOCAL SLM │ 🛡️ SANITIZER  │ 🔐 TEE (opt.) │ 📜 POLICY     │ ✍️ SIGNER     │
-│ on your box  │ strips PII   │ attested or  │ simulate +   │ HW / TEE /   │
-│ no logs      │ & secrets    │ refused      │ spend limits │ MPC — not AI │
-└──────────────┴──────────────┴──────────────┴──────────────┴──────────────┘
-          model proposes  ─────────────────────────────►  human/policy disposes
+```mermaid
+flowchart LR
+    subgraph P["🤖 MODEL PROPOSES"]
+        A["🧠 Local SLM<br/><sub>on your box · no logs</sub>"]
+    end
+    subgraph G["🛡️ GUARDS CHECK"]
+        B["🛡️ Sanitizer<br/><sub>strips PII + secrets</sub>"]
+        C["🔐 TEE (optional)<br/><sub>attested or refused</sub>"]
+    end
+    subgraph D["👤 HUMAN / POLICY DISPOSES"]
+        E["📜 Policy<br/><sub>simulate + spend limits</sub>"]
+        F["✍️ Signer<br/><sub>HW / TEE / MPC — not AI</sub>"]
+    end
+    A --> B --> C --> E --> F
+    classDef ai fill:#ede9fe,stroke:#7c3aed,stroke-width:2px,color:#1e1b4b
+    classDef guard fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e
+    classDef human fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d
+    class A ai
+    class B,C guard
+    class E,F human
 ```
 
 ---
