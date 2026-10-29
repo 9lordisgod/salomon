@@ -104,3 +104,75 @@
 - Privacy Security **CLEARED** R3 near-echo pre-Phase-2 delta. Evidence: `SECURITY_SIGNOFF_R3_NEARECHO_DELTA.md` (pointer on `SECURITY_SIGNOFF_REFUSAL_7B.md`).
 - Artifacts: `phase1-slm/outputs/eval_refusal_7b_r3_nearecho/` **8/8**. Item (5) stays closed.
 - Docs: STATUS/ROADMAP/PROGRESS/README updated. Phase 2 still BLOCKED on (b) real DCAP/gateway + PS allowlist and (c) `provider_tee` binding. No Phase 2 / no waive.
+
+- [2026-10-29 09:09 PDT] SLM: **reject Abliterated** for privacy product path (`SLM_POSITION_ABLITERATED_DEEPSEEK.md`). Conflicts with Phase 1 refusal bar. Prefer non-abliterated attested capture of DeepSeek-V4.1-Flash-1017 (or other model_id). Item (6) G3 — no SLM accept. Phase 2 still blocked on allowlist + provider_tee.
+
+- [2026-10-29 09:10 PDT] Lead + SLM: Abliterated **REJECTED** for privacy product path (confirmed). First prod pin must be non-abliterated. See `SLM_POSITION_ABLITERATED_DEEPSEEK.md`.
+
+- [2026-10-29 09:12 PDT] SLM: no objection to first privacy TEE pin on non-abliterated `z-ai/glm-5.3-flash`; refusal suite on GLM still required. `SLM_NOTE_GLM53_FLASH_ALLOWLIST.md`.
+
+## Thu Oct 29, 2026 (PDT) — item (6) GLM allowlist APPROVED
+- Privacy Security **APPROVED** Phase 1.5 item (6) production allowlist entry for `z-ai/glm-5.3-flash` (`effective_from` 2026-10-29T17:00:00Z). Evidence: `SECURITY_SIGNOFF_PRE_PHASE2_ITEM6_GLM.md`.
+- Abliterated DeepSeek/Qwen **rejected**. AE merges exact entry via PR only (`measurements.json` empty until then).
+- Soft follow-up: refusal suite on live GLM before refusal claims (non-blocking for this pin).
+- Docs: STATUS/PROGRESS/ROADMAP updated. At the time Phase 2 was still Lead-gated; Lead later opened Phase 2 (see next entry).
+
+## Thu Oct 29, 2026 (PDT) — Phase 2 OPENED / IN PROGRESS
+- Lead Architect **opened Phase 2** (America/Vancouver). Status: **IN PROGRESS**.
+- Scope: `z-ai/glm-5.3-flash` verified-remote + agent loops.
+- Item (6) remains **APPROVED**. Soft follow-up: GLM refusal suite before refusal claims.
+- Docs: STATUS/ROADMAP/PROGRESS updated.
+
+## Thu Oct 29, 2026 (PDT) — Phase 2 M1 GREEN / M2 in progress
+- **M1 GREEN:** verified-remote `z-ai/glm-5.3-flash` (digest-only). Evidence: `phase1.5-attestation/EVIDENCE_PHASE2_M1_VERIFIED_REMOTE_GLM.md` (happy path PASS; fail-closed negatives DENY; npm test 101/101).
+- Residual clarified: PS posture: **DENY-until-retry** for second GLM instance `7bb9af0a…` (`SECURITY_DECISION_PHASE2_M1_SECOND_INSTANCE.md`); second pin only after full capture review (DRAFT with PS: `EVIDENCE_PHASE2_SECOND_INSTANCE_DRAFT.md` / `allowlist/DRAFT_z-ai_glm-5.3-flash_instance_7bb9af0a.*`) — **not** an open approve-next.
+- **M2** agent-loop: was in progress at this write (see next entry for landed).
+- Phase 2 is **no longer Lead-gated** (already IN PROGRESS). Soft: GLM refusal suite before refusal claims.
+- Docs: STATUS/ROADMAP/PROGRESS updated.
+
+- [2026-10-29 10:05 PDT] Lead (routine, Phase 1 dataset item): added `phase1-slm/scripts/dataset_check.py` (schema check, normalized duplicate-user-prompt gate, tag balance, progress vs 2k target; exit 1 on fail) and wired it into `make data`. Added `phase1-slm/data/extra/domain_batch5_fundamentals.jsonl` (+47 curated rows: crypto fundamentals — hashes, Merkle, signatures, Ed25519/secp256k1, nonces, PoW/PoS, multisig, MPC, stablecoins, oracles, AMMs, bridges, rollups, approvals; NEAR access keys/function-call keys for agents, yocto, implicit accounts, async cross-contract calls, receipts, staking pools, AI Cloud attestation; privacy metadata/TEE/local inference; onchain heuristics/honeypots/sybil). Checker caught 3 duplicate prompts in the draft batch, dropped. Rebuilt seed: 315 -> **362** (secret scan 0 hits after one reword of a bip39-like run), dataset_check OK, test_safety_unit 20/20. crypto tag 13 -> 35. Assumption: facts are general knowledge, not re-verified against live NEAR docs. Next: batch6 NEAR dev depth + first multi-turn examples; GPU still deferred for 7B QLoRA.
+
+## Thu Oct 29, 2026 (PDT) — Phase 2 M2 landed
+- **M2 landed:** agent loop vs `z-ai/glm-5.3-flash`. Evidence: `phase2/EVIDENCE_PHASE2_M2_AGENT_LOOP.md` (mocks 15/15 + typecheck; live `--no-tool` + `view_account near` smoke; measurements.json unchanged).
+- **Gaps:** live 2nd-instance retry **mock-only**; `privacy/` Python sanitizer **not wired** (TS sanitizer in-loop).
+- Second-instance was **DRAFT with PS** / DENY-until-retry at this write (later **APPROVED + appended** — see next entry).
+- Docs: STATUS/ROADMAP/PROGRESS updated (incl. residual wording clarify).
+
+## Thu Oct 29, 2026 (PDT) — M2 security skim OK + second GLM pin APPROVED/appended
+- Privacy Security **accepted** M2 (`SECURITY_REVIEW_PHASE2_M2.md`) — Phase 2 continue; soft residuals only.
+- Second GLM allowlist entry **APPROVED** (`SECURITY_SIGNOFF_PHASE2_SECOND_INSTANCE_GLM.md`, effective_from 2026-10-29T17:10:00Z) and **appended** to `measurements.json` — now **two** entries (`19aea169…` + `7bb9af0a…`).
+- Second-instance residual for pinned `19aea169…` + `7bb9af0a…` **CLEARED** (`SECURITY_SIGNOFF_PHASE2_SECOND_INSTANCE_GLM.md`; `measurements.json` **two** entries). Unknown instances still **DENY+retry**.
+- Docs: STATUS/ROADMAP/PROGRESS updated.
+
+## Thu Oct 29, 2026 (PDT) — dual-instance live + sanitizer TS; Lead → M3
+- Dual-instance live smoke + live DENY + sanitizer TS parity port **done**. Evidence: `phase2/EVIDENCE_PHASE2_DUAL_INSTANCE_AND_SANITIZER.md`; `phase2/SANITIZER.md` (17-vector parity vs `privacy/`; phase2 vitest 18/18).
+- Prior soft gaps closed: mock-only dual path; Python sanitizer not wired (TS port is in-loop; `privacy/` remains source of truth).
+- Soft residuals: live GLM refusal suite before refusal *claims*; `compose_file_sha256` schema (allowlist/attest).
+- Lead continuing Phase 2 → **M3** (scope locked in next entry).
+- Docs: STATUS/ROADMAP/PROGRESS updated.
+
+## Thu Oct 29, 2026 (PDT) — M3 scope locked
+- Lead **locked M3 scope**. **M3 scope (Lead-locked):** more read-only tools (`view_access_key_list`, bounded `view_state`, `block`, `gas_price`) + multi-step tool chaining with hard caps; UNTRUSTED+sanitizer; **no** writes/sign; **GLM pin only**. AE building; evidence pending.
+- Constraints: UNTRUSTED+sanitizer; no writes/sign; GLM pin only.
+- Soft later (not M3 blockers): live GLM refusal suite before refusal *claims*; `compose_file_sha256` schema (allowlist/attest).
+- Docs: STATUS/ROADMAP/PROGRESS updated. (Later: **M3 GREEN** — see next entry.)
+
+## Thu Oct 29, 2026 (PDT) — Phase 2 M3 GREEN
+- **M3 GREEN.** Evidence: `phase2/EVIDENCE_PHASE2_M3_MULTI_TOOL.md` (multi-step live **PASS**; digest-only).
+- Tools: `view_access_key_list`, bounded `view_state`, `block`, `gas_price` (+ prior `view_account`); UNTRUSTED+sanitizer; no writes/sign; GLM only.
+- Soft polish followed (refusal / compose_file_sha256 / role:tool sanitizer) — see next entries.
+- Docs: STATUS/ROADMAP/PROGRESS updated.
+
+## Thu Oct 29, 2026 (PDT) — M3 security skim OK
+- Privacy Security **accepted** M3 (`SECURITY_REVIEW_PHASE2_M3.md`). Soft residuals noted then closed/advanced in soft polish.
+
+## Thu Oct 29, 2026 (PDT) — Soft polish: refusal 8/8, compose_file_sha256, role:tool sanitizer
+- GLM live refusal suite **8/8 PASS** → soft review then **formal stamp** (see next entry). Artifacts: `phase1-slm/outputs/eval_refusal_glm_live/`.
+- `compose_file_sha256` schema GREEN + migration both pins — merge stamp in next entry.
+- `role:tool` sanitizer **PS-accepted** (`SECURITY_REVIEW_PHASE2_SOFT_SANITIZER.md`).
+- Docs: STATUS/PROGRESS updated.
+
+## Thu Oct 29, 2026 (PDT) — Soft polish CLOSED
+- (1) **FORMALLY STAMPED** live GLM remote refusal 8/8 — `SECURITY_SIGNOFF_GLM_LIVE_REFUSAL.md` (does not replace item 5 Qwen 7B).
+- (2) `compose_file_sha256` migration **MERGE APPROVED** — `SECURITY_SIGNOFF_COMPOSE_FILE_SHA256_MIGRATION.md` (measurements sha256 `784e4d2e…`).
+- Soft polish track **done**. Docs: STATUS/PROGRESS/ROADMAP updated.
