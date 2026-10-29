@@ -34,7 +34,7 @@ flowchart LR
 | Send, publish, upload, change | Propose → policy → reporter approval | Pattern **reviewed** (Phase 2 M4 propose-only). No research write tools built. Execute was never opened |
 | Credentials (mail, storage) | Host-side store, never in the model | Rule enforced in design. Store **not built** (Phase 3) |
 
-Read-only tools shipped in Phase 2 are from the archived track. They prove the loop, caps and sanitizer but are not research tools.
+Phase 2's read-only tool pattern (allowlist guards, caps, untrusted envelopes) proves the loop, caps and sanitizer but are not research tools.
 
 ## Security principles
 - The model never holds raw keys, tokens or passwords.
@@ -49,4 +49,4 @@ Read-only tools shipped in Phase 2 are from the archived track. They prove the l
 3. Local research agent: Next.js web + `POST /api/ask` primary; CLI secondary; notes/docs ingest (M2), credential store, propose-only approval (M3) — M2/M3 not shipped
 4. Hardening + optional confidential compute
 
-Archived prior work: [docs/archive/crypto-near-track.md](docs/archive/crypto-near-track.md).
+Archived prior work: [docs/archive/crypto-near-track.md](docs/archive/crypto-near-track.md) · [docs/archive/near/](docs/archive/near/).

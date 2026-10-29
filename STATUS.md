@@ -1,14 +1,16 @@
 # STATUS — Thu Oct 29, 2026 (America/Vancouver, PDT) — Phase 3 M1 in flight
 
-> **Niche (main `f9d75fd`):** Salomon is a local research agent for journalists and investigators that protects sources. Crypto archived under `docs/archive/`.
+> **Niche (main `f9d75fd`):** Salomon is a local research agent for journalists and investigators that protects sources. Crypto/NEAR track archived: `docs/archive/near/` · `docs/archive/crypto-near-track.md`.
 
-**Product:** Salomon: *A local research agent for journalists and investigators that protects sources.* Who: investigative reporters, newsroom researchers, fact-checkers, independent investigators, NGO researchers. Job: read, summarize and cross-reference sensitive material on the reporter's own machine. Promise (target across M1–M3; M1 = local ask only): sources, contacts and identifying details never leave the device, never get echoed into output, and never reach a remote model without verification. Product niche locked: `docs/notes/PRODUCT_NICHE.md` (main `f9d75fd`). Crypto/on-chain archived at `docs/archive/crypto/`.
+**Product:** Salomon: *A local research agent for journalists and investigators that protects sources.* Who: investigative reporters, newsroom researchers, fact-checkers, independent investigators, NGO researchers. Job: read, summarize and cross-reference sensitive material on the reporter's own machine. Promise (target across M1–M3; M1 = local ask only): sources, contacts and identifying details never leave the device, never get echoed into output, and never reach a remote model without verification. Product niche locked: `docs/notes/PRODUCT_NICHE.md` (main `f9d75fd`). Crypto/NEAR track archived: `docs/archive/near/` · `docs/archive/crypto-near-track.md`.
 
 **Phase:** **3 (journalist research MVP) — M1 IN FLIGHT.** Phase 1 gate done (7B refusal 8/8). Dataset **PARKED** at 362 seed rows. Phase 1.5 (1)–(5) SIGNED. Phase 2 M1–M3 **GREEN**. M4 propose-only pattern (G1+G2 ACCEPTED, salomon `79c0f99`) reused for approvals; G3 never opened.
 - **M0 DONE** — Scope lock: Lead approved the Phase 3 journalist MVP brief (`docs/notes/PRODUCT_NICHE.md`, Product brief).
 - **M1 IN FLIGHT** — Local run path: offline/local `ask` end-to-end (fail closed if model missing). **Primary surface = Next.js web + API** (`POST /api/ask`); CLI secondary. Runbook: `docs/notes/PHASE3_MVP_RUNBOOK.md`.
 
-**Latest (~16:07 PDT):** Framing/hybrid amend tip **`5be6454`** — `HYBRID_TRUST_BOUNDARIES` + FRAMING soft edits (one-liner: mask+sanitize+attest) + `SECURITY_SOFT_SKIM_FRAMING` + `SECURITY_REFLECTION_HYBRID`. Prior claims tip `7301381` (via `a6f1d23`). README hero held. M1 not green; M2 eng NOT OPEN; hybrid not shipped. Residual: confirm apps/web = salomon-app.
+**Latest (~16:25 PDT):** NEAR/chain purge tip **`03ded0a`** (`03ded0abda98dbc778d98caa1c28bda4076ced64`). Crypto/NEAR/Intents track archived at [`docs/archive/near/`](docs/archive/near/) + [`docs/archive/crypto-near-track.md`](docs/archive/crypto-near-track.md). Docs scrub: README / ARCHITECTURE / ROADMAP / SECURITY / STATUS / PROGRESS + `phase2/README` — AI framing only; no live NEAR tool/Intents narrative (handed to Lead; not pushed). Framing A unchanged; README hero still held; M1 not green; M2 eng NOT OPEN; hybrid not shipped. Residual: apps/web = salomon-app confirm.
+
+**Prior (~16:07 PDT):** STATUS/PROGRESS amend tip **`cff07cc`** (cites hybrid/framing **`5be6454`**; prior claims fold **`7301381`**). Framing A LOCKED; README hero held; M1 not green; M2 eng NOT OPEN; hybrid not shipped. Residual: apps/web = salomon-app confirm.
 
 **Prior (~15:58 PDT):** PS **S1 SOFT CLEAR** after Frontend copy (`DEMO · REMOTE` / `DEMO · stub` badges; no Source-safe chrome) — main `62c5a80` (S1 copy-align docs) + `339cb05` (Frontend runtime/mode); stamp `docs/reviews/SECURITY_SOFT_SKIM_SALOMON_APP_M1_RESKIM.md`. S2 still ACCEPT. M1 still **IN FLIGHT**; M2/M3 **not shipped**. Frontend closed PS soft note 1: desk → /api/ask default (`16c4d50`); gateway only on explicit REMOTE. Sources soft-copy `973883a`. Soft note 2 still open: confirm apps/web = salomon-app. Prior: skim `9f89ed9`.
 
@@ -18,7 +20,7 @@
 - **Framing LOCKED:** source-protected research agent — local = privacy floor + default; optional verified remote only after **mask→sanitize→attest→complete**; no auto-fallback; no cloud-by-default.
 - Design note: `docs/notes/FRAMING_SOURCE_PROTECTED_DRAFT.md`. Trust boundaries: `docs/notes/HYBRID_TRUST_BOUNDARIES.md`. PS skim **SOFT CLEAR**: `docs/reviews/SECURITY_SOFT_SKIM_FRAMING_SOURCE_PROTECTED.md` (one-liner soft-edit: after mask, sanitization, and attestation).
 - **README hero unchanged** until Lead opens it. Locked one-liner (Product+PS): `Source-protected research agent for journalists — local by default; heavier work only on verified remote after mask, sanitization, and attestation.` Tips **`5be6454`** (hybrid/framing) · **`7301381`** (claims fold).
-- Sequence: **M1-live → M2 mask → hybrid spike later.** Crypto parked. **Do not claim hybrid shipped.** Demo gateway ≠ verified remote. M2 eng still NOT OPEN; M1 not green.
+- Sequence: **M1-live → M2 mask → hybrid spike later.** Crypto/NEAR track archived. **Do not claim hybrid shipped.** Demo gateway ≠ verified remote. M2 eng still NOT OPEN; M1 not green.
 
 ### Model Engineer niche reflection (2026-10-29 ~15:58 PDT)
 - M1 `ask_local.py --json` + `configs/source_care_system.txt` live for LocalCompleter (exits 0/2/3/4). Pin: `salomon-qwen25-7b-instruct-Q4_K_M.gguf` (bartowski single-file); split/Abliterated refuse. **Weight fetch APPROVED** (yoxi 2026-10-29) — Release/ME fetching pinned GGUF; Runtime owns live smoke after verify.
@@ -60,7 +62,7 @@ docs/reviews/SECURITY_REVIEW_PHASE1.md landed (Privacy Security). Lead Architect
 0. **PS S1 SOFT CLEAR** (reskim stamp) — M1 dogfood copy OK. Soft note 1 closed (desk → /api/ask `16c4d50`; Sources `973883a`). PS **Sources + desk soft CLEAR** (stamp `docs/reviews/SECURITY_SOFT_SKIM_SALOMON_APP_SOURCES_RESKIM.md`; SHAs `16c4d50`/`973883a` verified). Soft residual: confirm remote apps/web = salomon-app. S2 ACCEPT. M2 NOT OPEN. Do not claim M1 green / M2/M3.
 0b. **Phase 3 M1 IN FLIGHT:** local offline `ask` — primary Next.js web+API; CLI secondary. Runbook `docs/notes/PHASE3_MVP_RUNBOOK.md`. M0 scope lock DONE. Do not claim M2 ingest/mask or M3 propose-save. Dataset PARKED. Follow-up: SECURITY + phase READMEs niche align; Privacy soft-review before overclaim.
 1. Get a GPU host for the real QLoRA run (7B, 4-bit). Then do a full-data 0.5B LoRA run on CPU and compare tuned vs. baseline eval.
-2. **PARKED (user, via Lead 2026-10-29 ~11:44 PDT):** no 2k / multi-turn expansion. Seed stays at **362** rows. Gate item (5) stays **SIGNED**. Resume only when unparked. Note: seed content is crypto/NEAR-heavy; Lead answer: refresh toward privacy AI for journalism (sources/PII/secrets) when unparked.
+2. **PARKED (user, via Lead 2026-10-29 ~11:44 PDT):** no 2k / multi-turn expansion. Seed stays at **362** rows. Gate item (5) stays **SIGNED**. Resume only when unparked. Note: seed still crypto-heavy (archived domain); Lead answer: refresh toward privacy AI for journalism (sources/PII/secrets) when unparked.
 3. ~~Phase 1.5 items (1)–(5)~~ — SIGNED OFF.
 4. ~~Pin `transformers>=5,<6`~~ — done.
 5. Archived: M4 G1+G2 ACCEPTED propose-only stubs (salomon `79c0f99`); G3 not opened and not planned.

@@ -3,16 +3,16 @@
 > **A local research agent for journalists and investigators that protects sources.**
 
 ![visibility](https://img.shields.io/badge/repo-private-black)
-![phase](https://img.shields.io/badge/Phase-2%20agent%20capabilities-blue)
-![refusal](https://img.shields.io/badge/refusal%20eval%207B-8%2F8%20signed%20off-brightgreen) ![gate](https://img.shields.io/badge/Phase%201.5%20privacy%20gate-SIGNED-green) ![p2](https://img.shields.io/badge/Phase%202-M1%E2%80%93M3%20green-brightgreen) ![p3](https://img.shields.io/badge/Phase%203-M1%20in%20flight-yellow)
+![phase](https://img.shields.io/badge/Phase%203-M1%20in%20flight-orange)
+![refusal](https://img.shields.io/badge/refusal%20eval%207B-8%2F8%20signed%20off-brightgreen) ![gate](https://img.shields.io/badge/Phase%201.5%20privacy%20gate-SIGNED-green) ![p2](https://img.shields.io/badge/Phase%202-M1%E2%80%93M3%20green-brightgreen)
 
-1. **Sources stay local.** Research runs on your machine by default — not in a logged cloud chat.
+1. **Sources stay local (goal).** Research is designed to run on your machine by default — not in a logged cloud chat. Phase 3 M1 (local `ask`) is in flight; the demo app may run in a labeled `DEMO · REMOTE` / `DEMO · stub` mode.
 2. **Secrets are refused, not stored.** The model won’t echo keys or sensitive material, and it never holds credentials.
 3. **You decide every consequential step.** The agent proposes; policy and you approve before anything is sent, published, or changed.
 
 ```mermaid
 flowchart LR
-  A["📝 Notes · transcripts · docs"] --> B["🛡️ Sanitizer<br/><sub>strips secrets + PII</sub>"]
+  A["📝 Notes · transcripts · docs"] --> B["🛡️ Sanitizer<br/><sub>heuristic secret filter</sub>"]
   B --> C["🧠 Local model<br/><sub>on your machine · no logs</sub>"]
   C --> T["🧰 Read-only tools<br/><sub>hard caps · output untrusted</sub>"]
   T --> B
@@ -43,7 +43,7 @@ Exposing a source can end a career or put a person at risk. Most AI tools add le
 
 - **Local-first, fail closed.** It runs on your hardware by default with logs off. Offline mode fails closed on a cache miss.
 - **Refuse / must-not-echo.** A tuned 7B-class model is gated by a refusal eval that fails CI on any secret echo, crime assist or prompt-injection slip.
-- **Sanitizer on every boundary.** Secrets and PII are stripped from input and before anything leaves the device. All tool output is wrapped as untrusted data.
+- **Sanitizer on every boundary.** A heuristic filter redacts common secret patterns (plus limited PII) on input and before any remote call; it is not a complete PII guarantee. All tool output is wrapped as untrusted data. Source-ID masking is Phase 3 **M2 — criteria accepted, not opened, not shipped** ([criteria](docs/acceptance/PHASE3_M2_SOURCE_MASK_ACCEPT.md)).
 - **Read-only tools, hard caps.** The agent loop enforces step and tool limits. Anything that would send, publish or change something is **propose-only**.
 - **Credentials outside the model.** The host holds them. The model never sees raw keys, tokens or passwords.
 - **Plain-language refusals.** When Salomon refuses or strips something, it says why.
@@ -63,8 +63,9 @@ flowchart LR
 
 - **Phase 1 (gate done).** Qwen2.5-7B-Instruct + QLoRA harness. The refusal eval passes **8/8** on 7B (`docs/signoffs/SECURITY_SIGNOFF_REFUSAL_7B.md`), and the R3 near-echo delta is cleared. Dataset expansion is **parked** at 362 seed rows. When it unparks, the data gets refreshed toward sources, PII and secrets in journalism.
 - **Phase 1.5 (signed).** Threat model, fail-closed verified-remote client, sanitizer, policy stub and refusal eval: items (1)–(5) are signed off in `docs/signoffs/`.
-- **Phase 2 (M1–M3 green).** Agent loop with hard caps, TS sanitizer on `role:tool` output, multi-step read-only tool chaining, and a reviewed propose-only pattern. Execute/sign was never opened. Today's read-only tools come from the archived track. Research web dogfood is **Phase 3 M1 in flight** (local ask path). Ingest/mask (M2) and propose-save (M3) are **not shipped**.
-- **Archived prior work:** an earlier crypto/on-chain framing. See [docs/archive/crypto-near-track.md](docs/archive/crypto-near-track.md).
+- **Phase 2 (M1–M3 green).** Agent loop with hard caps, TS sanitizer on `role:tool` output, multi-step read-only tool chaining, and a reviewed propose-only pattern. Execute/sign was never opened. The safe agent-loop pattern (caps, sanitizer, propose-only) is green; research web dogfood is **Phase 3 M1 in flight** (local ask path). Ingest/mask (M2) and propose-save (M3) are **not shipped**.
+- **Phase 3 (M1 in flight, not green).** Primary surface: Next.js web app + `POST /api/ask`; CLI secondary. M1 is not green until desk → `/api/ask` + offline smoke pass. A Q4_K_M GGUF is pinned and scripts exist, but there is **no live local GGUF** until Runtime smoke is green.
+- **Archived prior work:** an earlier crypto/NEAR framing. See [crypto-near-track](docs/archive/crypto-near-track.md) · [near/](docs/archive/near/).
 
 Status of record: [STATUS.md](STATUS.md) · plan: [ROADMAP.md](ROADMAP.md) · design: [ARCHITECTURE.md](ARCHITECTURE.md).
 
@@ -98,12 +99,12 @@ For the 7B gate, open `notebooks/eval_refusal_7b_colab.ipynb` in Colab, choose a
 
 - **No secrets in the model, ever.** Keys and credentials live outside it; anything consequential needs policy plus your approval.
 - **Fail closed.** No verification → no remote call. Policy fail → no action. Secret-scan hit → no dataset.
-- **Local first.** Offline by default, prompt logs off, PII stripped before any remote call.
+- **Local first.** Offline by default, prompt logs off, heuristic secret/PII redaction before any remote call (source-ID mask = M2, not shipped).
 - **Everything the agent reads is untrusted.** Web pages, emails, files and tool output are treated as possible injection.
 
 ## Docs
 
-[ARCHITECTURE](ARCHITECTURE.md) · [ROADMAP](ROADMAP.md) · [STATUS](STATUS.md) · [SECURITY](SECURITY.md) · [phase1-slm/README](phase1-slm/README.md) · [Archived crypto track](docs/archive/crypto-near-track.md)
+[ARCHITECTURE](ARCHITECTURE.md) · [ROADMAP](ROADMAP.md) · [STATUS](STATUS.md) · [SECURITY](SECURITY.md) · [phase1-slm/README](phase1-slm/README.md) · [Archived crypto track](docs/archive/crypto-near-track.md) · [docs/archive/near/](docs/archive/near/)
 
 ---
 
