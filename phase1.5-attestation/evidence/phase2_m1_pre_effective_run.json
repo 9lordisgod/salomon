@@ -1,0 +1,54 @@
+{
+ "run_started_utc": "2026-10-29T16:24:46.731Z",
+ "model_id": "z-ai/glm-5.3-flash",
+ "measurements_sha256": "0e84e2548c844f0a05170ba4a547f868385b54d78a57d7fb8280003b2d376e35",
+ "negative": [
+  {
+   "model_id": "z-ai/glm-5.3",
+   "denied": true,
+   "check": "fetch",
+   "reason": "http 503"
+  }
+ ],
+ "happy_fail": {
+  "check": "allowlist",
+  "reason": "no exact allowlist pin"
+ },
+ "verify_log": [
+  {
+   "event": "attestation_verify",
+   "modelId": "z-ai/glm-5.3",
+   "nonceHash": "fd5d177265cc3d5d9893d5d5dbf483bb23d239cdf90f40d552f61df906effc11",
+   "result": "fail",
+   "check": "fetch",
+   "reason": "http 503",
+   "ts": "2026-10-29T16:24:47.297Z"
+  },
+  {
+   "event": "attestation_verify",
+   "modelId": "z-ai/glm-5.3-flash",
+   "nonceHash": "70bd23ccfeb8a6cd9d30ef13433eb29c8cb93547ca8d65900fd7cd1a9b35258c",
+   "provider": "near",
+   "signingAlgo": "ecdsa",
+   "scope": "gateway",
+   "result": "pass",
+   "quoteSha256": "016027cb0c6ef0602215ceb3dd881a38800e997067a9fcc51b98e6d225d46a26",
+   "ts": "2026-10-29T16:24:48.298Z"
+  },
+  {
+   "event": "attestation_verify",
+   "modelId": "z-ai/glm-5.3-flash",
+   "nonceHash": "70bd23ccfeb8a6cd9d30ef13433eb29c8cb93547ca8d65900fd7cd1a9b35258c",
+   "provider": "near",
+   "signingAlgo": "ecdsa",
+   "scope": "model",
+   "result": "fail",
+   "check": "allowlist",
+   "reason": "no exact allowlist pin",
+   "candidateIndex": "0",
+   "ts": "2026-10-29T16:24:49.817Z"
+  }
+ ],
+ "run_finished_utc": "2026-10-29T16:24:49.817Z",
+ "verified": false
+}

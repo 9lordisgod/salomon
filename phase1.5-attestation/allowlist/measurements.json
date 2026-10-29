@@ -1,1 +1,24 @@
-{"entries":[]}
+{
+  "entries": [
+    {
+      "model_id": "z-ai/glm-5.3-flash",
+      "mrconfigid": "01a0e3c6f4f21a60ea3f5c96bc7ef319b03a184ca2049605399275fbcea74e8c5f000000000000000000000000000000",
+      "app_compose_sha256": "a0e3c6f4f21a60ea3f5c96bc7ef319b03a184ca2049605399275fbcea74e8c5f",
+      "rtmr3": "463b2e18f0dde370e2be8d6b4cb07aac5efc4d8bc712cea2714d103e4db57cea4ce50197973d557306b25e70f82277d6",
+      "effective_from": "2026-10-29T17:00:00Z",
+      "privacy_security_approver": "Privacy Security",
+      "notes": "Item (6) first prod pin. Instance-scoped RTMR3 (instance_id=19aea1693533dc2d529db03e3f725f20bde8d66d, app_id=2c0a0c96cb6dbd659bf1446e2f3fce58172ff91b); redeploy \u21d2 new PS entry, never silent overwrite. CM required (absent \u21d2 DENY compose_manager_missing). Non-abliterated compose prod/GLM-5.3-Flash-SGL-TP2x4-W4AFP8-V12Q8.yaml file_sha256=904054f502ccdb2f913d6b80f156ea658b8bc5cb6f8af06082723581d62a45c0 tag=v0.0.521 commit=7ee4a4c741259d0c69a81e5cda22c3dfce21cbc2; services across ups include model-sg-glm53-w4afp8-tp2-r1..r4 + otelcol-contrib (latest action services may list only otelcol). dstack-nvidia-0.5.11 app_name vs vm_config 0.5.12 naming skew with identical MRTD/RTMR3/MRCONFIGID \u2014 accepted. No gpu_evidence_sha256 (nonce-bound per request). Captures 2026-10-29T16:10Z + 16:12Z same pins. Evidence: phase1.5-attestation/EVIDENCE_PRE_PHASE2_G4_AND_MODEL_PROBE.md; SECURITY_SIGNOFF_PRE_PHASE2_ITEM6_GLM.md. Abliterated DeepSeek/Qwen rejected (G3). compose_file_sha256 pinned to latest CM compose_up file_sha256 904054f5\u2026 (SECURITY_ACCEPTANCE_COMPOSE_FILE_SHA256.md; SECURITY_REACK_COMPOSE_FILE_SHA256.md).",
+      "compose_file_sha256": "904054f502ccdb2f913d6b80f156ea658b8bc5cb6f8af06082723581d62a45c0"
+    },
+    {
+      "model_id": "z-ai/glm-5.3-flash",
+      "mrconfigid": "015f7ebd85cf1f480a118f75dd10fd0cb277e4ddbb23845f1c20d8ea0f1e87efa6000000000000000000000000000000",
+      "app_compose_sha256": "5f7ebd85cf1f480a118f75dd10fd0cb277e4ddbb23845f1c20d8ea0f1e87efa6",
+      "rtmr3": "e0f6c83eec48dfbfdb41d438a96783bcde1de18a1ac73705e2a8e24c2bc2051cbbf05ec0e856fed86498316a1b3e1bec",
+      "effective_from": "2026-10-29T17:10:00Z",
+      "privacy_security_approver": "Privacy Security",
+      "notes": "Item (6)/Phase2 second instance pin (option A). Instance-scoped RTMR3 (instance_id=7bb9af0ac5b0e22dde3903218f58e56f743164a1, app_id=2c0a0c96cb6dbd659bf1446e2f3fce58172ff91b). Boot app_compose differs from pinned 19aea169 solely by docker_compose INSTANCE_LABEL=gpu04 vs gpu03 (same images/services/pre_launch; no abliterat); hence mrconfigid/app_compose_sha256 5f7ebd85\u2026 \u2260 a0e3c6f4\u2026. CM required. Runtime compose_up same as first pin: prod/GLM-5.3-Flash-SGL-TP2x4-W4AFP8-V12Q8.yaml file_sha256=904054f502ccdb2f913d6b80f156ea658b8bc5cb6f8af06082723581d62a45c0 tag=v0.0.521 commit=7ee4a4c741259d0c69a81e5cda22c3dfce21cbc2. Captures 2026-10-29T17:04:30Z + 17:04:43Z identical pins. Evidence: phase1.5-attestation/EVIDENCE_PHASE2_SECOND_INSTANCE_DRAFT.md; SECURITY_SIGNOFF_PHASE2_SECOND_INSTANCE_GLM.md. Never silent-overwrite the 19aea169 entry. compose_file_sha256 pinned to latest CM compose_up file_sha256 904054f5\u2026 (SECURITY_ACCEPTANCE_COMPOSE_FILE_SHA256.md; SECURITY_REACK_COMPOSE_FILE_SHA256.md).",
+      "compose_file_sha256": "904054f502ccdb2f913d6b80f156ea658b8bc5cb6f8af06082723581d62a45c0"
+    }
+  ]
+}
