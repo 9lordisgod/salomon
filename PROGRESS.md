@@ -1,4 +1,9 @@
 # Progress Log
+
+> **Lead pivot — Thu Oct 29, 2026, ~15:16 PDT (America/Vancouver).** Salomon is now a **fully AI project**: privacy-first personal / agent AI, small models that refuse to leak secrets, local-first inference, safe agent tools + sanitizer, no keys in the model, optional future confidential compute (unnamed). The crypto/on-chain narrative is **archived** — Intents, Chain Signatures, contracts, tokens, staking-for-credits, and cloud-TEE attestation as a product. Phase 1 SLM/refusal and Phase 2 agent/sanitizer remain engineering assets. Entries below are kept verbatim as history.
+
+## Thu Oct 29, 2026, ~15:16 PDT — Lead pivot narrative rewrite (Tech Docs)
+- README, ARCHITECTURE rewritten AI-first; STATUS header/Next steps and ROADMAP header/mermaid/Phases 3–4 reframed; on-chain track moved to "Archived" sections. No evidence files deleted; no engineering status changed. Draft not pushed.
 ## Wed Oct 28, 2026 (PDT) — initial scaffold
 - Wrote the architecture (assumptions A1–A6 still to verify against NEAR docs), the roadmap, and the status file.
 - Phase 1: model config, dataset builder (44 seed examples), QLoRA trainer with LoRA fallback, eval harness, local chat CLI, Makefile.
@@ -215,5 +220,15 @@
 ## Thu Oct 29, 2026 ~13:33 PDT — M4 soft polish verifier_mainnet_on_testnet ACCEPT
 - Privacy Security **ACCEPT** (`SECURITY_REVIEW_PHASE2_M4_SOFT_VERIFIER_TESTNET.md`). Evidence: `phase2/EVIDENCE_PHASE2_M4_SOFT_VERIFIER_TESTNET.md`.
 - phase2 **59/59**. Env-reack residual **CLOSED**. **G3 still closed.**
-- Soft polish on salomon main `79c0f99` (prior G2 `34a2466`).
-- Docs: STATUS/PROGRESS updated.
+- Soft polish **pushed / done** salomon main **`79c0f99`** (prior G2 `34a2466`).
+- Docs: STATUS/PROGRESS/ROADMAP amended with SHA; ready for Lead docs push.
+
+## Thu Oct 29, 2026 ~14:07 PDT — Routine check (no change)
+- No Phase 1 item advanceable: dataset expansion PARKED (user), 7B QLoRA needs GPU (user deferred), 0.5B CPU loops stopped by Lead. Phase 2 M4 propose sketch GREEN; G3 (execute/sign) needs Lead/user opening.
+- No files changed beyond this note. Next: wait for user to unpark dataset, provide GPU, or open G3.
+
+## Thu Oct 29, 2026 ~15:16 PDT — PIVOT: privacy-first AI (not crypto)
+- Lead/user: project is **privacy-first AI**, not crypto. Domain data shifts away from crypto-centric; focus **general privacy / refusal / safe personal AI**.
+- Dataset expansion when unparked = **privacy AI**, not crypto SLM. **NEAR AI Cloud out of narrative.**
+- Dataset remains **PARKED** (seed 362). Item (5) stays SIGNED. No scrub of historical crypto rows while parked.
+- Note: `docs/notes/SLM_PIVOT_PRIVACY_FIRST.md`. STATUS / ROADMAP Phase 1 expand line updated. ARCHITECTURE SLM layer retargeted.

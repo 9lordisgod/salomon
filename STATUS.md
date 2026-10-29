@@ -1,6 +1,10 @@
-# STATUS — Thu Oct 29, 2026 (America/Vancouver, PDT)
+# STATUS — Thu Oct 29, 2026 (America/Vancouver, PDT) — Lead pivot 15:16 PDT: AI-first
 
-**Phase:** **2 (Agent Capabilities) — IN PROGRESS** (scoped: `z-ai/glm-5.3-flash` verified-remote + agent loops). Phase 1 SLM foundation continues in parallel where needed. The scaffold is complete. CPU-only smoke pipeline verified at 16:50 PDT: deps installed, dataset regenerated, 2-step LoRA dry-run done, base-model smoke inference + baseline eval done (Qwen2.5-0.5B, mean keyword score 0.222). First real adapter trained on CPU (0.5B LoRA, 18:20 PDT): no gain, 1 safety regression; see phase1-slm/FIRST_ADAPTER_0.5B.md. Phase 1.5 (Privacy merge gate) opens after Phase 1 is complete. **Latest:** M4 soft polish `verifier_mainnet_on_testnet` **PS ACCEPT** (`SECURITY_REVIEW_PHASE2_M4_SOFT_VERIFIER_TESTNET.md`); phase2 **59/59**. Env-reack residual **CLOSED**. `.env.example` IDs **RE-ACKED** (`SECURITY_REACK_M4_ENV_EXAMPLE.md`). Salomon main soft polish `79c0f99` (prior M4 G2 `34a2466`). **G3 still closed.** Propose sketch GREEN. Phase 1 gate done; dataset PARKED.
+**Product:** Salomon — privacy-first personal / agent AI. Small models that refuse to leak secrets, local-first inference, safe agent tools + sanitizer, no keys in the model; optional future confidential compute (unnamed). Crypto/on-chain narrative **archived** (Lead pivot, 2026-10-29 ~15:16 PDT).
+
+**Phase:** **2 (agent loop, tools, sanitizer) — IN PROGRESS.** Phase 1 gate done (7B refusal 8/8); dataset **PARKED** at 362 seed rows. Phase 1.5 privacy gate (1)–(5) SIGNED. Phase 2 M1–M3 **GREEN**. M4 propose-only stubs (G1+G2 ACCEPTED, soft verifier ACCEPT, phase2 59/59, salomon `79c0f99`) are **archived as a safe-tooling pattern**, not product; G3 never opened.
+
+**Latest:** Narrative rewrite of README / ARCHITECTURE / STATUS / ROADMAP / PROGRESS headers to AI-first (draft, not pushed). No engineering status changed. Earlier entries below are history and still use the original on-chain framing.
 
 ## Files
 - ARCHITECTURE.md, ROADMAP.md, STATUS.md, PROGRESS.md
@@ -24,12 +28,12 @@ docs/reviews/SECURITY_REVIEW_PHASE1.md landed (Privacy Security). Lead Architect
 - Fixes for transformers 5.x: finetune_qlora.py (`warmup_ratio` -> `warmup_steps`), local_inference.py (apply_chat_template returns BatchEncoding, so take input_ids).
 
 ## Next steps
-0. **Phase 2 M4** — G2 ACCEPTED; propose sketch **GREEN**; soft `verifier_mainnet_on_testnet` **ACCEPT** (59/59). Env IDs RE-ACKED; reack residual CLOSED. salomon soft polish `79c0f99` landed (prior G2 `34a2466`). **G3 still closed.** Prior: M1–M3 GREEN.
+0. **Lead pivot (2026-10-29 ~15:16 PDT):** AI-first narrative. On-chain items (Intents, Chain Signatures, contracts, tokens, staking-for-credits, cloud-TEE provider as product) are **parked/archived**. Await Lead direction for the next Phase 2/3 milestone (e.g. non-chain read-only tools, local-first packaging).
 1. Get a GPU host for the real QLoRA run (7B, 4-bit). Then do a full-data 0.5B LoRA run on CPU and compare tuned vs. baseline eval.
-2. **PARKED (user, via Lead 2026-10-29 ~11:44 PDT):** do **not** expand toward 2k / multi-turn for now. Seed stays at **362** rows (batch5). `dataset_check.py` remains in `make data`. Gate item (5) stays **SIGNED**. Resume only when Lead/user unparks.
-3. ~~Phase 1.5 stub/criteria items (1)–(5)~~ — all SIGNED OFF at stub/criteria level.
-4. ~~Pin `transformers<6` / `>=5`~~ — done (`transformers>=5,<6` in requirements.txt).
-5. Phase 2 scope: GLM pin; M1–M3 GREEN; **M4** G1+G2 ACCEPTED (propose-only; no keys in model; hash+summary HARD; spend caps testnet 1000 / mainnet 10 NEAR). **G3 not opened.** Widen only when Lead expands.
+2. **PARKED (user, via Lead 2026-10-29 ~11:44 PDT):** no 2k / multi-turn expansion. Seed stays at **362** rows. Gate item (5) stays **SIGNED**. Resume only when unparked. Note: seed content is crypto/NEAR-heavy; a refresh toward general privacy/secret-handling is an open question for Lead.
+3. ~~Phase 1.5 items (1)–(5)~~ — SIGNED OFF.
+4. ~~Pin `transformers>=5,<6`~~ — done.
+5. Archived: M4 G1+G2 ACCEPTED propose-only stubs (salomon `79c0f99`); G3 not opened and not planned.
 
 ## Security hardening — done (SLM Engineer, Wed Oct 28 2026, PDT)
 docs/notes/PHASE1_SCRIPT_FIXES.md items 1–3 are implemented. Smoke/dry-run status is tracked separately and these changes don't verify it.
@@ -213,4 +217,4 @@ docs/notes/PHASE1_SCRIPT_FIXES.md items 1–3 are implemented. Smoke/dry-run sta
 - Privacy Security **ACCEPT** (`SECURITY_REVIEW_PHASE2_M4_SOFT_VERIFIER_TESTNET.md`). Evidence: `phase2/EVIDENCE_PHASE2_M4_SOFT_VERIFIER_TESTNET.md`.
 - phase2 **59/59** (m4.propose 21/21). Rule: `NETWORK=testnet` ∧ mainnet-shaped Verifier ⇒ `DraftDenied("verifier_mainnet_on_testnet")`.
 - Env-reack soft residual **CLOSED**. **G3 still closed** (no execute/sign/simulate; measurements untouched).
-- Soft polish on salomon main `79c0f99`.
+- Soft polish **pushed / done** on salomon main **`79c0f99`** (prior M4 G2 `34a2466`). Docs amend ready for Lead push.
