@@ -8,7 +8,7 @@
 - **M0 DONE** — Scope lock: Lead approved the Phase 3 journalist MVP brief (`docs/notes/PRODUCT_NICHE.md`, Product brief).
 - **M1 IN FLIGHT** — Local run path: offline/local `ask` end-to-end (fail closed if model missing). **Primary surface = Next.js web + API** (`POST /api/ask`); CLI secondary. Runbook: `docs/notes/PHASE3_MVP_RUNBOOK.md`.
 
-**Latest (~15:40 PDT):** Product+Lead confirmed Phase 3 MVP brief + **Next.js web+API primary** (CLI secondary — not CLI-only). M0 = scope lock DONE; M1 = local offline `ask` IN FLIGHT. Docs: `docs/notes/PHASE3_MVP_RUNBOOK.md` + STATUS/ROADMAP amend for Lead push. Dataset PARKED. No M2/M3 claims.
+**Latest (~15:40 PDT):** PS soft skim salomon-app M1: **S2 ACCEPT** (ask path) · **S1 SOFT DENY** (public-demo copy — Source-safe chrome, Protections M2/M3 overclaim, stub≠LOCAL). Stamp `docs/reviews/SECURITY_SOFT_SKIM_SALOMON_APP_M1.md`. Frontend+Docs fixing copy. Main docs HEAD was `885b6b2`.
 
 ## Lead answers (2026-10-29)
 1. Product docs say generic **verified-remote** / unnamed confidential compute; the archived provider is named only in archive sections.
@@ -42,7 +42,8 @@ docs/reviews/SECURITY_REVIEW_PHASE1.md landed (Privacy Security). Lead Architect
 - Fixes for transformers 5.x: finetune_qlora.py (`warmup_ratio` -> `warmup_steps`), local_inference.py (apply_chat_template returns BatchEncoding, so take input_ids).
 
 ## Next steps
-0. **Phase 3 M1 IN FLIGHT:** local offline `ask` — primary Next.js web+API; CLI secondary. Runbook `docs/notes/PHASE3_MVP_RUNBOOK.md`. M0 scope lock DONE. Do not claim M2 ingest/mask or M3 propose-save. Dataset PARKED. Follow-up: SECURITY + phase READMEs niche align; Privacy soft-review before overclaim.
+0. **PS S1 SOFT DENY** (salomon-app public-demo copy) — fix residuals in `docs/reviews/SECURITY_SOFT_SKIM_SALOMON_APP_M1.md`; re-ping PS. S2 ask path ACCEPT.
+0b. **Phase 3 M1 IN FLIGHT:** local offline `ask` — primary Next.js web+API; CLI secondary. Runbook `docs/notes/PHASE3_MVP_RUNBOOK.md`. M0 scope lock DONE. Do not claim M2 ingest/mask or M3 propose-save. Dataset PARKED. Follow-up: SECURITY + phase READMEs niche align; Privacy soft-review before overclaim.
 1. Get a GPU host for the real QLoRA run (7B, 4-bit). Then do a full-data 0.5B LoRA run on CPU and compare tuned vs. baseline eval.
 2. **PARKED (user, via Lead 2026-10-29 ~11:44 PDT):** no 2k / multi-turn expansion. Seed stays at **362** rows. Gate item (5) stays **SIGNED**. Resume only when unparked. Note: seed content is crypto/NEAR-heavy; Lead answer: refresh toward privacy AI for journalism (sources/PII/secrets) when unparked.
 3. ~~Phase 1.5 items (1)–(5)~~ — SIGNED OFF.

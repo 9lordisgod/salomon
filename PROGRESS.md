@@ -2,6 +2,17 @@
 
 > **Niche (main `f9d75fd`, 2026-10-29):** Salomon is a local research agent for journalists and investigators that protects sources. Crypto archived under `docs/archive/`. Entries below remain history.
 
+## Thu Oct 29, 2026, ~15:40 PDT — PS soft skim salomon-app M1 (Docs Lead)
+- Privacy & Safety: runbook checklist OK. **S2 ACCEPT** (local ask fail-closed). **S1 SOFT DENY** for public-demo wording until residuals: Source-safe chrome; Protections card M2/M3 overclaim; stub badged as LOCAL; Research subtitle mask claim.
+- Stamp: `docs/reviews/SECURITY_SOFT_SKIM_SALOMON_APP_M1.md` (Docs Lead ack). Coordinating copy with Frontend. No M2/M3 claims; dataset PARKED.
+
+## Thu Oct 29, 2026, ~15:38 PDT — Phase 3 M1 supersede on main `885b6b2` (Docs Lead)
+- Lead pushed supersede: main HEAD **`885b6b2`** (also `8dc39b9`; prior batch `e0811e2`). Runbook `docs/notes/PHASE3_MVP_RUNBOOK.md` + web-primary / M0 DONE amend landed. No README rewrite.
+- Docs Lead standing by for next engineering status from Frontend / Agent Runtime / Release.
+
+## Thu Oct 29, 2026, ~15:40 PDT — Lead push `e0811e2` + supersede in flight (Docs Lead)
+- Lead landed prior Phase 3 M1 docs on main **`e0811e2`**. Supersede (PHASE3_MVP_RUNBOOK + WEB_STACK + M0 DONE / web-primary) pushing; Docs Lead standing by for SHA. Kickoff already has web-Ask-primary / CLI-secondary line. No README rewrite.
+
 ## Thu Oct 29, 2026, ~15:40 PDT — Phase 3 surface amend + MVP runbook (Docs Lead)
 - Product confirmed Docs language: one-liner + hero from `docs/notes/PRODUCT_NICHE.md` / README on `f9d75fd` verbatim; **M0 = scope lock DONE**; **M1 = local offline `ask`**.
 - Lead/Product scope: **Next.js web + API is primary MVP surface**; CLI secondary — STATUS/ROADMAP must **not** say CLI-only.
@@ -260,3 +271,12 @@
 ## Thu Oct 29, 2026 ~15:29 PDT — niche push `f9d75fd` (Docs Lead banners)
 - Lead: niche push already on main **`f9d75fd`**. No further full rewrite of README/ARCHITECTURE/ROADMAP.
 - STATUS + PROGRESS: one-line niche banners drafted for Lead push (this workspace). Docs Lead does not push.
+
+## Thu Oct 29, 2026 ~15:40 PDT — Phase 3 M1 platform scaffold
+- `phase3-platform/`: resolveGgufPath (MANIFEST lock `salomon-qwen25-7b-instruct-Q4_K_M.gguf`, shard refusal, fail-closed, no download), `~/.salomon` cred vault v0, offlineAsk (scrub→assert→local), LocalCompleter → `ask_local.py`. 19 tests green, tsc clean. Note `docs/notes/PHASE3_M1_PLATFORM.md`.
+
+## Thu Oct 29, 2026 ~15:35 PDT — Phase 3 M1 local ask path
+- Model Engineer: pin `Qwen2.5-7B-Instruct` **Q4_K_M** single-file (`bartowski`; official split refused). Lead OK.
+- Landed `phase1-slm/scripts/ask_local.py`, `fetch_gguf.sh`, `smoke_ask_refusal.sh`, `docs/notes/PHASE3_M1_LOCAL_GGUF.md`, `requirements-local.txt`.
+- Conceptual smoke: `test_safety_unit` 20/20; secret scrub exit 2. No item-(5) re-sign. 7B GGUF fetch explicit; llama-cpp-python may need wheel/toolchain.
+- Platform wraps ask_local; Release checksums primary filename `Qwen2.5-7B-Instruct-Q4_K_M.gguf`.
