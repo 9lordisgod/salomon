@@ -1,0 +1,57 @@
+{
+ "run_started_utc": "2026-10-29T17:10:23.864Z",
+ "model_id": "z-ai/glm-5.3-flash",
+ "measurements_sha256": "09ce9a2df0ae2cc555b08d8f4df6f14f3cff330550d035c682eccc2ad9c0cbb8",
+ "negative": [
+  {
+   "model_id": "openai/privacy-filter",
+   "denied": true,
+   "check": "allowlist",
+   "reason": "no exact allowlist pin"
+  },
+  {
+   "model_id": "z-ai/glm-5.3-flash",
+   "allowlist": "empty_temp",
+   "denied": true,
+   "check": "allowlist_load",
+   "reason": "allowlist empty (deny-all)"
+  }
+ ],
+ "verify_log": [
+  {
+   "event": "attestation_verify",
+   "modelId": "openai/privacy-filter",
+   "nonceHash": "0214bd162f1870eb8575c2ddaf2b7ffad7aa84b18fabcbebd73fc978eb90929f",
+   "provider": "near",
+   "signingAlgo": "ecdsa",
+   "scope": "gateway",
+   "result": "pass",
+   "quoteSha256": "87abc7b2f2a2ac0f1b4a5aa9726c551f79eb231c981778a492c69b2bf70c69b2",
+   "ts": "2026-10-29T17:10:25.008Z"
+  },
+  {
+   "event": "attestation_verify",
+   "modelId": "openai/privacy-filter",
+   "nonceHash": "0214bd162f1870eb8575c2ddaf2b7ffad7aa84b18fabcbebd73fc978eb90929f",
+   "provider": "near",
+   "signingAlgo": "ecdsa",
+   "scope": "model",
+   "result": "fail",
+   "check": "allowlist",
+   "reason": "no exact allowlist pin",
+   "candidateIndex": "0",
+   "ts": "2026-10-29T17:10:26.506Z"
+  },
+  {
+   "event": "attestation_verify",
+   "modelId": "z-ai/glm-5.3-flash",
+   "nonceHash": "5ba40cc82b067bdade3886de5b42af6d207de7fc78706679b1b00a5635403011",
+   "result": "fail",
+   "check": "allowlist_load",
+   "reason": "allowlist empty (deny-all)",
+   "ts": "2026-10-29T17:10:26.507Z"
+  }
+ ],
+ "run_finished_utc": "2026-10-29T17:10:26.507Z",
+ "verified": false
+}

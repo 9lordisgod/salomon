@@ -1,0 +1,76 @@
+{
+ "run_started_utc": "2026-10-29T17:10:09.122Z",
+ "model_id": "z-ai/glm-5.3-flash",
+ "mode": "no_tool",
+ "measurements_sha256": "09ce9a2df0ae2cc555b08d8f4df6f14f3cff330550d035c682eccc2ad9c0cbb8",
+ "result": {
+  "ok": true,
+  "steps": 1,
+  "contentSha256": "565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3",
+  "contentLength": 2,
+  "transcriptSha256": "31e149fd967acde07fe7dc1c9f2a87918ff89a90df797a73af8e96abd80d0079"
+ },
+ "loop_log": [
+  {
+   "event": "attest",
+   "step": 1,
+   "attempt": 1,
+   "result": "pass"
+  },
+  {
+   "event": "complete",
+   "step": 1,
+   "result": "pass",
+   "requestHash": "08455ac43b9c7bfa77df2b4cb673503eb717293ec2023e09080303bb6b60cdf6",
+   "responseHash": "81940b277c6d52fec53139c4bbf28a55da44a35ccfd5a258a3bcd7d094c38fdf"
+  },
+  {
+   "event": "final",
+   "step": 1,
+   "result": "pass",
+   "contentSha256": "565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3"
+  }
+ ],
+ "attest_log": [
+  {
+   "event": "attestation_verify",
+   "modelId": "z-ai/glm-5.3-flash",
+   "nonceHash": "0db854026375399e346b748ada7d9ffb8ce7fa02173216a010d4b8a4d4476c69",
+   "provider": "near",
+   "signingAlgo": "ecdsa",
+   "scope": "gateway",
+   "result": "pass",
+   "quoteSha256": "c5d71045005dade4e942af3b1f386150c6ac486448ab5c738a4b519f7cebd6f5",
+   "ts": "2026-10-29T17:10:10.331Z"
+  },
+  {
+   "event": "attestation_verify",
+   "modelId": "z-ai/glm-5.3-flash",
+   "nonceHash": "0db854026375399e346b748ada7d9ffb8ce7fa02173216a010d4b8a4d4476c69",
+   "provider": "near",
+   "signingAlgo": "ecdsa",
+   "scope": "model",
+   "result": "pass",
+   "candidateIndex": "0",
+   "signingAddressSha256": "2631ece102bd298b2614d74c1f8d420b9ec467e5c68da2d0218a4980a7a69fda",
+   "quoteSha256": "67c4ec363143ad7f532c9ca11e415db1fbc56b2174064fed56d94fa3456ae5af",
+   "composeSha256": "5f7ebd85cf1f480a118f75dd10fd0cb277e4ddbb23845f1c20d8ea0f1e87efa6",
+   "rtmr3": "e0f6c83eec48dfbfdb41d438a96783bcde1de18a1ac73705e2a8e24c2bc2051cbbf05ec0e856fed86498316a1b3e1bec",
+   "mrConfigId": "015f7ebd85cf1f480a118f75dd10fd0cb277e4ddbb23845f1c20d8ea0f1e87efa6000000000000000000000000000000",
+   "tcbStatus": "UpToDate",
+   "ts": "2026-10-29T17:10:12.005Z"
+  },
+  {
+   "event": "completion_bind",
+   "modelId": "z-ai/glm-5.3-flash",
+   "nonceHash": "-",
+   "result": "pass",
+   "requestHash": "08455ac43b9c7bfa77df2b4cb673503eb717293ec2023e09080303bb6b60cdf6",
+   "responseHash": "81940b277c6d52fec53139c4bbf28a55da44a35ccfd5a258a3bcd7d094c38fdf",
+   "signingAlgo": "ecdsa",
+   "signingAddressSha256": "2631ece102bd298b2614d74c1f8d420b9ec467e5c68da2d0218a4980a7a69fda",
+   "ts": "2026-10-29T17:10:13.158Z"
+  }
+ ],
+ "run_finished_utc": "2026-10-29T17:10:13.158Z"
+}
