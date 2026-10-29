@@ -3,7 +3,7 @@ import { MockLanguageModelV4 } from 'ai/test';
 import { SYSTEM_PROMPT } from '@/lib/prompt';
 import { maskText } from '@/lib/mask';
 import { askLocal } from '@/lib/askLocal';
-import { chatMode, DEFAULT_GATEWAY_MODEL } from '@/lib/mode';
+import { chatMode, gatewayAvailable, gatewayModel } from '@/lib/mode';
 
 export const maxDuration = 60;
 
@@ -36,7 +36,10 @@ export async function POST(req: Request) {
     parts: m.parts.map((p) => (p.type === 'text' ? { ...p, text: maskText(p.text.replace(SECRET, '[REDACTED-SECRET]').slice(0, 12000)).text } : p)),
   })) as UIMessage[];
   const lastText = safe.filter((m) => m.role === 'user').at(-1)?.parts.map((p) => (p.type === 'text' ? p.text : '')).join('') ?? '';
-  const mode = chatMode();
+  // Remote gateway runs ONLY on explicit client opt-in header AND a configured key. Never auto.
+  const rh = (req.headers.get('x-salomon-remote') || '').toLowerCase();
+  const wantRemote = rh === '1' || rh === 'true';
+  const mode: 'gateway' | ReturnType<typeof chatMode> = wantRemote && gatewayAvailable() ? 'gateway' : chatMode();
   const headers = { 'x-salomon-mode': mode };
 
   if (lastText.includes('[REDACTED-SECRET]')) {
@@ -47,7 +50,7 @@ export async function POST(req: Request) {
   if (mode === 'gateway') {
     try {
       const result = streamText({
-        model: process.env.SALOMON_MODEL || DEFAULT_GATEWAY_MODEL,
+        model: gatewayModel(),
         instructions: SYSTEM_PROMPT,
         messages: await convertToModelMessages(safe),
         onError: ({ error }) => { console.error('[salomon gateway]', error); },
@@ -81,7 +84,7 @@ export async function POST(req: Request) {
   // local / stub / demo: offline Runtime askLocal (fail closed), streamed for UX.
   let reply: string;
   if (mode === 'demo') {
-    reply = 'No model is connected, so nothing was generated and nothing left this machine.\n\nTo get real answers: install a local GGUF (SALOMON_GGUF) for on-device mode, or set AI_GATEWAY_API_KEY for clearly-labeled REMOTE mode.';
+    reply = 'No model is connected, so nothing was generated and nothing left this machine.\n\nTo get real answers: install a local GGUF (SALOMON_GGUF) for on-device mode, or explicitly opt in to clearly-labeled REMOTE mode (requires AI_GATEWAY_API_KEY).';
   } else {
     const r = await askLocal({ question: lastText });
     reply = r.ok ? (r as { answer: string }).answer : `Refused (${(r as { reason?: string }).reason}): ${(r as { message?: string }).message}`;

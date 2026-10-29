@@ -1,15 +1,18 @@
 import { localStatus } from '@/lib/askLocal';
-import { chatMode, DEFAULT_GATEWAY_MODEL } from '@/lib/mode';
+import { chatMode, gatewayAvailable, gatewayModel } from '@/lib/mode';
 import { connection } from 'next/server';
 export async function GET() {
   await connection();
   const l = localStatus();
   const mode = chatMode();
+  const gw = gatewayAvailable();
   return Response.json({
     mode,
     backend: l.backend,
-    model: mode === 'local' ? l.model : mode === 'gateway' ? (process.env.SALOMON_MODEL || DEFAULT_GATEWAY_MODEL) : null,
+    model: mode === 'local' ? l.model : null,
     local: mode === 'local',
-    remote: mode === 'gateway',
+    remote: false, // remote is only ever an explicit per-request client opt-in
+    gatewayAvailable: gw,
+    gatewayModel: gw ? gatewayModel() : null,
   }, { headers: { 'cache-control': 'no-store' } });
 }
