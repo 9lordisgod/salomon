@@ -13,7 +13,10 @@ export default function Sources() {
   return (
     <div>
       <h1 className="text-3xl text-zinc-50">Sources</h1>
-      <p className="mt-1 text-sm text-zinc-400">Paste notes or a transcript. Only the masked version ever leaves this page. The mask map stays in this browser.</p>
+      <p className="mt-1 text-sm text-zinc-400">
+        Demo mask heuristic in this browser — it can miss. Research may still use a labeled remote path when configured.
+        The mask map stays local; this is <strong>not</strong> M2 source-ID masking.
+      </p>
       <div className="mt-6 grid gap-6 lg:grid-cols-2">
         <div>
           <div className="mb-2 flex items-center justify-between text-[11px] uppercase tracking-widest text-zinc-500">
@@ -40,7 +43,7 @@ export default function Sources() {
           {preview.map.map((e) => (
             <tr key={e.token} className="border-t border-zinc-800"><td className="py-2 font-mono text-emerald-400">{e.token}</td><td className="text-zinc-400">{e.kind}</td><td className="font-mono text-zinc-300">{e.original}</td></tr>
           ))}
-          {preview.map.length === 0 && <tr><td colSpan={3} className="py-3 text-zinc-500">No identifying details detected.</td></tr>}
+          {preview.map.length === 0 && <tr><td colSpan={3} className="py-3 text-zinc-500">No matches in this demo heuristic — that does not mean none are present.</td></tr>}
         </tbody>
       </table>
       <p className="mt-4 text-xs text-zinc-600">Demo heuristics (regex for emails, phones, handles, code names, capitalized names). Review every row; this is not a guarantee of anonymity.</p>
