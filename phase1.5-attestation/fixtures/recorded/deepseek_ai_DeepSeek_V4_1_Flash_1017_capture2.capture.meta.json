@@ -1,0 +1,16 @@
+{
+  "model_id": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+  "captured_at_utc": "2026-10-29T16:04:18.394Z",
+  "gateway": "https://cloud-api.near.ai/v1",
+  "status": {
+    "report": 200,
+    "completion": 200,
+    "signature": 200
+  },
+  "nonceHash": "474ebd86377002f2feb1006362f240a7a5c359d64527faa7bdb87e1b26cec2d4",
+  "report_sha256": "4b31f113de19785659185f3945ce09d3cbe4d9a4461d7e45cc77d6014cbf10fa",
+  "chat_id": "chatcmpl-1e99a813-682d-455e-87a7-5cfab78b4793",
+  "request_sha256": "a28269bd285119ce3eebd135703e482554828f744bc8e81e3a41ff6931dd62d5",
+  "response_sha256": "e5468e7f152a1463cbc922c6106069d0fcf81cff01934a7a171c0923774a25e1",
+  "signature_present": true
+}

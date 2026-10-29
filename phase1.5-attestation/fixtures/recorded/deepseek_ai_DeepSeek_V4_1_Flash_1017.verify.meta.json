@@ -1,0 +1,104 @@
+{
+  "slug": "deepseek_ai_DeepSeek_V4_1_Flash_1017",
+  "model_id": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+  "nonceHash": "6ac7730a3de20893280c1cde1950febd08361e24942b2b0b9601f5b2aa8d99d4",
+  "verified_at_utc": "2026-10-29T16:05:31.824Z",
+  "model_quote": {
+    "ok": true,
+    "quote_sha256": "294e291555619af914df748b82fe65994c45dd52ea14b00cfd25b1e4c35f114f",
+    "tcbStatus": "UpToDate",
+    "advisoryIds": [],
+    "mrtd": "df4d77c857de652bd0fafa343a2026b51071ee03773d076d283abf1a7d36ff91ffa279ee4a617ac664f7e2a2c8d5891b",
+    "rtmr3": "b82e033606007266ad7f92273645be6c06ef5712dc5c110ec1e306d79afd14e1a9e41e092353383cbc189d57768f5b8d",
+    "mrconfigid": "01ae66f844658a7aee331dcb9fb59bd40323d71d192d37719e022cc4af8389265b000000000000000000000000000000"
+  },
+  "gateway": {
+    "ok": true,
+    "quoteSha256": "e14e639a28b7b9eefbedb79ea6197861d04487a5f50654fc55a546e35323db5a"
+  },
+  "gateway_quote": {
+    "tcbStatus": "UpToDate",
+    "advisoryIds": [],
+    "rtmr3": "2aa8aa8ae07aa1263468af686df8d0650501d23b2c536f9adda740fd2098a41ef657111acacfcae4b7ee69f1a4aef8f1",
+    "mrconfigid": "01f571e5dafe8f96baf116a271b4be9cba228b447dd6ebe502bbda81ede7bcc7ce000000000000000000000000000000",
+    "mrtd": "7fe60787222bd394cb516abca2435f22f035ab2cc9c0a4b4b3b148e46297f3d931a237b72f359052c6e657d8c1409173"
+  },
+  "rtmr3_replay": {
+    "recomputed": "b82e033606007266ad7f92273645be6c06ef5712dc5c110ec1e306d79afd14e1a9e41e092353383cbc189d57768f5b8d",
+    "matches_quote": true,
+    "imr3_digests": [
+      "f9974020ef507068183313d0ca808e0d1ca9b2d1ad0c61f5784e7157c362c06536f5ddacdad4451693f48fcc72fff624",
+      "5c149c8719975dc6285de58d94db7e6a75c46e796c319b751db8ee14e6748b6c2638d13cf12f54396e08299944766537",
+      "97f7f483c72c3a2e21bc73952ed57b1b185fb9363e18d5a23d37c229e027ef205c48046f57cf8f304998ac9527e55268",
+      "d0bed787caa18e335896efc220c8378cf9eb9c609c8bf10ad295d25166873110fba3bb0857542eb21fcf7c99ae6fc85c",
+      "98bd7e6bd3952720b65027fd494834045d06b4a714bf737a06b874638b3ea00ff402f7f583e3e3b05e921c8570433ac6",
+      "9efa75a2c8cd830c5e540c63be1389fd19c27083d7b82248b33bdf7e3a9db0bfc5a0e8f7c34d0e3c43b7ff4a2de617da",
+      "47eb743b8bd069e71b6ab3cc6a7afbcd79fdd60bb6d4d630d0b6cd3746126ea4c074f0df8a517747bd1e23d4433ec9a6",
+      "9de6782ab6dfadb59a95bab8378e28a748331441c6f3acc822bcebc5cf01ceada3d5b2bb7d985aae8ac2482756895fe8",
+      "ba51104636900268b0e059fa3d266419d079d1e94aea26fb9fcbb8d764bf4c89a67ac271b8a0d1a3989945132a111fc7",
+      "1a76b2a80a0be71eae59f80945d876351a7a3fb8e9fd1ff1cede5734aa84ea11fd72b4edfbb6f04e5a85edd114c751bd"
+    ]
+  },
+  "compose": {
+    "app_compose_sha256": "ae66f844658a7aee331dcb9fb59bd40323d71d192d37719e022cc4af8389265b",
+    "expected_mrconfigid": "01ae66f844658a7aee331dcb9fb59bd40323d71d192d37719e022cc4af8389265b000000000000000000000000000000",
+    "matches_quote": true,
+    "info_compose_hash": "ae66f844658a7aee331dcb9fb59bd40323d71d192d37719e022cc4af8389265b",
+    "app_name": "dstack-nvidia-0.5.11"
+  },
+  "report_data": {
+    "matches": true
+  },
+  "signing_address_sha256": "826cdafe972fa0937f7ffa3a4f6a2e3b0d98ed0d7522afdfa69289917d703467",
+  "nvidia_payload_sha256": "6dcfbb5dcb194eab412016cf10306b62815e13e0dc2d41c41462398ccbf07304",
+  "nras": {
+    "ok": true
+  },
+  "provider_tee": {
+    "signature_kind": "provider_tee",
+    "signing_algo": "ecdsa",
+    "text_matches_exact_bytes": true,
+    "request_sha256": "a28269bd285119ce3eebd135703e482554828f744bc8e81e3a41ff6931dd62d5",
+    "response_sha256": "7e9203371954118f48bbe5d78808bc1de776ef4d41efafd1e70ce9cbc4cc0e22",
+    "signer_matches_model_attestation": true,
+    "signature_sha256": "722256858bedf18c927dc8b5f4409d721baff146960c3c7d7f2f1659a70fd97f",
+    "binder": {
+      "ok": true
+    }
+  },
+  "compose_manager": {
+    "ok": true,
+    "quote_sha256": "e3c3074f5969c09b1e96aab2d6d41ae0792d5f5cb2c17ab277b008bb0193b679",
+    "tcbStatus": "UpToDate",
+    "advisoryIds": [],
+    "rtmr3": "b82e033606007266ad7f92273645be6c06ef5712dc5c110ec1e306d79afd14e1a9e41e092353383cbc189d57768f5b8d",
+    "mrtd": "df4d77c857de652bd0fafa343a2026b51071ee03773d076d283abf1a7d36ff91ffa279ee4a617ac664f7e2a2c8d5891b",
+    "mrconfigid": "01ae66f844658a7aee331dcb9fb59bd40323d71d192d37719e022cc4af8389265b000000000000000000000000000000",
+    "report_data_eq_actions_hash_nonce": true,
+    "nonce_source": "client",
+    "actions_hash_record_only": "49d561463a55a9b153698dc9f73fb9bd33362d032066418d6e24cadaa1e6d404",
+    "actions_count": 188,
+    "latest_compose_up": {
+      "timestamp": "2026-10-29T06:24:03.226789796+00:00",
+      "file": "prod/DeepSeek-V4.1-Flash-1017-vLLM-DEP8-Abliterated.yaml",
+      "file_sha256": "ce0dbf705aa950db96e6c5cb169b13d1feb1716b02968418a3b5b43606e26440",
+      "tag": "v0.0.528",
+      "commit": "4f7a11dcf5ebf8cbe7c4c28f900bcba688264774",
+      "services": [
+        "proxy-dsv41",
+        "proxy-dsv41-abliterated",
+        "nginx",
+        "model-proxy-registrar"
+      ]
+    },
+    "compose_manager_images": [
+      "nearaidev/compose-manager@sha256:6e035c8fb99c1d31f41760d25af178683a658cca4afd73cd0d366fbb5bf884be",
+      "nearaidev/compose-manager@sha256:bc44e44e619dc003b3b5bcf53420b759a0ea058d0b81cf0caffc063a9d733193",
+      "nearaidev/compose-manager@sha256:a320bb4882341c8e19ef1944436f6591ed73303732009ed5db9f6db6c9da756a"
+    ],
+    "vm_config_image": "dstack-nvidia-0.5.12"
+  },
+  "instance_id": "fccd496ae28c19105777793efa98fbbd726219cc",
+  "app_id": "2c0a0c96cb6dbd659bf1446e2f3fce58172ff91b",
+  "verifyReport_empty_allowlist": "DENY allowlist_load attestation denied [allowlist_load]: allowlist empty (deny-all)"
+}
