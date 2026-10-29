@@ -18,12 +18,12 @@ flowchart LR
 - [ ] GGUF/llama.cpp quantized export for local use
 
 ## Phase 1.5 — Privacy merge gate (Lead decision, Oct 28 2026)
-Opens after Phase 1 is complete. Stub/criteria items **(1)–(5) all SIGNED OFF**. **Phase 2 still BLOCKED** by (a) R3 near-echo 7B re-green + Privacy delta, (b) real DCAP/gateway + PS-approved allowlist, (c) `provider_tee` response binding. No Phase 2 / no waive. See `SECURITY_SIGNOFF_ATTESTATION_ITEM2.md`.
+Opens after Phase 1 is complete. Stub/criteria items **(1)–(5) all SIGNED OFF**. R3 near-echo delta **CLEARED** (`SECURITY_SIGNOFF_R3_NEARECHO_DELTA.md`). **Phase 2 still BLOCKED** by (b) real DCAP/gateway + PS-approved allowlist and (c) `provider_tee` response binding. No Phase 2 / no waive.
 - [x] (1) Threat model doc — SIGNED OFF (THREAT_MODEL_PHASE1.5.md filled, Oct 29 2026). See SECURITY_SIGNOFF_PHASE1.5_1_3_4.md
-- [x] (2) Attestation verify client, fail-closed — SIGNED OFF Privacy Security (phase1.5-attestation/ 15/15, Oct 29 2026). Bar: ATTESTATION_ACCEPTANCE.md. Evidence: SECURITY_SIGNOFF_ATTESTATION_ITEM2.md. Phase 2 still blocked: real DCAP/gateway + PS-approved allowlist; provider_tee response binding; plus R3 near-echo 7B re-green.
+- [x] (2) Attestation verify client, fail-closed — SIGNED OFF Privacy Security (phase1.5-attestation/ 15/15, Oct 29 2026). Bar: ATTESTATION_ACCEPTANCE.md. Evidence: SECURITY_SIGNOFF_ATTESTATION_ITEM2.md. Phase 2 still blocked: (b) real DCAP/gateway + PS-approved allowlist; (c) provider_tee response binding. (a) R3 near-echo CLEARED.
 - [x] (3) Sanitizer stub + unit tests — SIGNED OFF (privacy/sanitizer.py 17/17, Oct 29 2026). See SECURITY_SIGNOFF_PHASE1.5_1_3_4.md
 - [x] (4) Policy/spend stub — SIGNED OFF Privacy Security (criteria + privacy/policy_spend.py 11/11, Oct 29 2026). Residuals: non-durable counters (not for real funds); 64-hex ambiguity; human-approval daily total. See SECURITY_SIGNOFF_PHASE1.5_1_3_4.md
-- [x] (5) Refusal / must-not-echo eval suite that fails CI — SIGNED OFF by Privacy Security (7B Colab 8/8 anti-echo, Wed Oct 28 2026 PDT). Artifacts: phase1-slm/outputs/eval_refusal_7b_anti_echo/, SECURITY_SIGNOFF_REFUSAL_7B.md. Residual R3 near-echo tighten is a pre-Phase-2 blocker, not a reopen of item (5). Owner: SLM Engineer (harness updates)
+- [x] (5) Refusal / must-not-echo eval suite that fails CI — SIGNED OFF by Privacy Security (7B Colab 8/8 anti-echo). Artifacts: phase1-slm/outputs/eval_refusal_7b_anti_echo/, SECURITY_SIGNOFF_REFUSAL_7B.md. R3 near-echo pre-Phase-2 delta **CLEARED** (`SECURITY_SIGNOFF_R3_NEARECHO_DELTA.md`; artifacts phase1-slm/outputs/eval_refusal_7b_r3_nearecho/ 8/8). Item (5) stays closed. Owner: SLM Engineer (harness updates)
 
 Owners: Privacy Security owns gate acceptance and reviews every Phase 2 PR touching tools, remote inference, or keys. Agent Engineer implements attestation verify. SLM Engineer owns refusal eval harness updates.
 

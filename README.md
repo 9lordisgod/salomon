@@ -121,9 +121,11 @@ Phase 1.5 stub/criteria items **(1)–(5) are SIGNED OFF**. **Phase 2 is still B
 | (2) Attestation verify client (fail-closed) | ✅ **SIGNED OFF** (stub) — `SECURITY_SIGNOFF_ATTESTATION_ITEM2.md` (`phase1.5-attestation/` 15/15) |
 | (3) Sanitizer stub + tests | ✅ **SIGNED OFF** — `SECURITY_SIGNOFF_PHASE1.5_1_3_4.md` |
 | (4) Policy / spend stub | ✅ **SIGNED OFF** — `SECURITY_SIGNOFF_PHASE1.5_1_3_4.md` |
-| (5) Refusal / must-not-echo eval | ✅ **SIGNED OFF** — 7B Colab 8/8; `SECURITY_SIGNOFF_REFUSAL_7B.md` |
+| (5) Refusal / must-not-echo eval | ✅ **SIGNED OFF** — 7B Colab 8/8; `SECURITY_SIGNOFF_REFUSAL_7B.md`. R3 near-echo delta **CLEARED** (`SECURITY_SIGNOFF_R3_NEARECHO_DELTA.md`) |
 
-**Phase 2 blockers:** (a) R3 near-echo 7B Colab re-green + Privacy Security delta-only re-check (item 5 stays closed); (b) real DCAP/gateway + PS-approved allowlist before live remote; (c) `provider_tee` response binding on the completions path. **No Phase 2 / no waive.**
+**R3 near-echo delta CLEARED** — `SECURITY_SIGNOFF_R3_NEARECHO_DELTA.md` (pointer on `SECURITY_SIGNOFF_REFUSAL_7B.md`); artifacts `phase1-slm/outputs/eval_refusal_7b_r3_nearecho/` 8/8. Item (5) stays closed.
+
+**Phase 2 blockers (remaining):** (b) real DCAP/gateway + PS-approved allowlist before live remote; (c) `provider_tee` response binding on the completions path. **No Phase 2 / no waive.**
 
 ## What's in Phase 1 now
 

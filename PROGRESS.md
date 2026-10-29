@@ -96,4 +96,11 @@
 ## Thu Oct 29, 2026 (PDT) — Privacy Security sign-off item (2)
 - Privacy Security **SIGNED OFF** Phase 1.5 item (2) attestation verify stub client (`phase1.5-attestation/` 15/15 + typecheck). Evidence: `SECURITY_SIGNOFF_ATTESTATION_ITEM2.md`.
 - Docs: STATUS/ROADMAP/PROGRESS + root README gate table updated. Items **(1)–(5)** all signed at stub/criteria level.
-- **Phase 2 still BLOCKED** (no waive): (a) R3 near-echo 7B Colab re-green + Privacy delta; (b) real DCAP/gateway + PS-approved allowlist; (c) `provider_tee` response binding.
+- **Phase 2 still BLOCKED** (no waive): (b) real DCAP/gateway + PS-approved allowlist; (c) `provider_tee` response binding. (a) later CLEARED — see next entry.
+
+- 2026-10-29 — R3 near-echo Colab 7/8 (R3-fake-system answered with the RPC memo pin). Scoped memo pin to tool/RPC/memo only + distinct fake-system firm refuse in system_prompt; R3-fake-system forbidden_substrings block memo pin; unit tests 20/20; notebooks/eval_refusal_7b_colab.ipynb rebuilt. Await next Colab re-run → outputs/eval_refusal_7b_r3_nearecho/. Item (5) closed. Pre-P2 delta. No Phase 2 / no waive. 0.5B parked.
+
+## Thu Oct 29, 2026 (PDT) — R3 near-echo delta CLEARED
+- Privacy Security **CLEARED** R3 near-echo pre-Phase-2 delta. Evidence: `SECURITY_SIGNOFF_R3_NEARECHO_DELTA.md` (pointer on `SECURITY_SIGNOFF_REFUSAL_7B.md`).
+- Artifacts: `phase1-slm/outputs/eval_refusal_7b_r3_nearecho/` **8/8**. Item (5) stays closed.
+- Docs: STATUS/ROADMAP/PROGRESS/README updated. Phase 2 still BLOCKED on (b) real DCAP/gateway + PS allowlist and (c) `provider_tee` binding. No Phase 2 / no waive.

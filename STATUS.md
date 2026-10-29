@@ -1,6 +1,6 @@
 # STATUS — Thu Oct 29, 2026 (America/Vancouver, PDT)
 
-**Phase:** 1 (SLM Foundation) — in progress. The scaffold is complete. CPU-only smoke pipeline verified at 16:50 PDT: deps installed, dataset regenerated, 2-step LoRA dry-run done, base-model smoke inference + baseline eval done (Qwen2.5-0.5B, mean keyword score 0.222). First real adapter trained on CPU (0.5B LoRA, 18:20 PDT): no gain, 1 safety regression; see phase1-slm/FIRST_ADAPTER_0.5B.md. Phase 1.5 (Privacy merge gate) opens after Phase 1 is complete. **Latest:** Phase 1.5 item **(2) SIGNED OFF** (`SECURITY_SIGNOFF_ATTESTATION_ITEM2.md`, `phase1.5-attestation/` 15/15). Items **(1)–(5)** all signed at stub/criteria level. **Phase 2 still BLOCKED:** (a) R3 near-echo 7B Colab re-green + Privacy delta, (b) real DCAP/gateway + PS-approved allowlist, (c) `provider_tee` response binding. No Phase 2 / no waive.
+**Phase:** 1 (SLM Foundation) — in progress. The scaffold is complete. CPU-only smoke pipeline verified at 16:50 PDT: deps installed, dataset regenerated, 2-step LoRA dry-run done, base-model smoke inference + baseline eval done (Qwen2.5-0.5B, mean keyword score 0.222). First real adapter trained on CPU (0.5B LoRA, 18:20 PDT): no gain, 1 safety regression; see phase1-slm/FIRST_ADAPTER_0.5B.md. Phase 1.5 (Privacy merge gate) opens after Phase 1 is complete. **Latest:** R3 near-echo delta **CLEARED** (`SECURITY_SIGNOFF_R3_NEARECHO_DELTA.md`; pointer on `SECURITY_SIGNOFF_REFUSAL_7B.md`). Artifacts: `phase1-slm/outputs/eval_refusal_7b_r3_nearecho/` **8/8**. Item (5) stays closed. Items (1)–(5) signed at stub/criteria level. **Phase 2 still BLOCKED** on (b) real DCAP/gateway + PS-approved allowlist and (c) `provider_tee` binding. No Phase 2 / no waive.
 
 ## Files
 - ARCHITECTURE.md, ROADMAP.md, STATUS.md, PROGRESS.md
@@ -24,7 +24,7 @@ SECURITY_REVIEW_PHASE1.md landed (Privacy Security). Lead Architect calls:
 - Fixes for transformers 5.x: finetune_qlora.py (`warmup_ratio` -> `warmup_steps`), local_inference.py (apply_chat_template returns BatchEncoding, so take input_ids).
 
 ## Next steps
-0. **Phase 2 blockers (no waive):** (a) R3 near-echo 7B Colab re-green + Privacy Security delta-only re-check; (b) real DCAP/gateway/GPU verifier plugs + PS-approved (non-`test_only`) allowlist before live remote; (c) `provider_tee` response-signature binding on the completions path. See `SECURITY_SIGNOFF_ATTESTATION_ITEM2.md` + `SECURITY_SIGNOFF_REFUSAL_7B.md`.
+0. **Phase 2 blockers (no waive):** (b) real DCAP/gateway/GPU verifier plugs + PS-approved (non-`test_only`) allowlist before live remote; (c) `provider_tee` response-signature binding on the completions path. ~~(a) R3 near-echo~~ **CLEARED** — `SECURITY_SIGNOFF_R3_NEARECHO_DELTA.md`. See `SECURITY_SIGNOFF_ATTESTATION_ITEM2.md`.
 1. Get a GPU host for the real QLoRA run (7B, 4-bit). Then do a full-data 0.5B LoRA run on CPU and compare tuned vs. baseline eval.
 2. Expand the dataset toward 2–5k curated examples (current seed far above the early 44; still short of target).
 3. ~~Phase 1.5 stub/criteria items (1)–(5)~~ — all SIGNED OFF at stub/criteria level.
@@ -98,7 +98,15 @@ PHASE1_SCRIPT_FIXES.md items 1–3 are implemented. Smoke/dry-run status is trac
 - Privacy Security **SIGNED OFF** item (2) attestation verify **stub client** (`phase1.5-attestation/`, npm test **15/15**, typecheck clean). Bar: `ATTESTATION_ACCEPTANCE.md`. Evidence: `SECURITY_SIGNOFF_ATTESTATION_ITEM2.md` (+ `phase1.5-attestation/EVIDENCE_ITEM2.md`, `DESIGN.md`).
 - Items **(1)–(5)** all signed at stub/criteria level. Does **not** authorize live remote inference or open Phase 2.
 - **Phase 2 still BLOCKED** (no waive):
-  - (a) R3 near-echo 7B Colab re-green + Privacy Security delta-only re-check (does not reopen item 5).
+  - ~~(a) R3 near-echo~~ **CLEARED** — `SECURITY_SIGNOFF_R3_NEARECHO_DELTA.md`; artifacts `phase1-slm/outputs/eval_refusal_7b_r3_nearecho/` 8/8. Item (5) stays closed.
   - (b) Real DCAP/gateway/GPU verifier plugs + Privacy Security–approved allowlist (non-`test_only`) before live remote.
   - (c) `provider_tee` response-signature binding on the completions path.
 - Repo allowlist remains empty ⇒ deny-all remote. **No Phase 2 / no waive.**
+
+- 2026-10-29 — R3 near-echo Colab 7/8 (R3-fake-system answered with the RPC memo pin). Scoped memo pin to tool/RPC/memo only + distinct fake-system firm refuse in system_prompt; R3-fake-system forbidden_substrings block memo pin; unit tests 20/20; notebooks/eval_refusal_7b_colab.ipynb rebuilt. Await next Colab re-run → outputs/eval_refusal_7b_r3_nearecho/. Item (5) closed. Pre-P2 delta. No Phase 2 / no waive. 0.5B parked.
+
+## R3 near-echo delta — CLEARED (2026-10-29 08:29 PDT)
+- Privacy Security **CLEARED** the pre-Phase-2 R3 near-echo harden delta. Evidence: `SECURITY_SIGNOFF_R3_NEARECHO_DELTA.md` (pointer on `SECURITY_SIGNOFF_REFUSAL_7B.md`).
+- Artifacts: `phase1-slm/outputs/eval_refusal_7b_r3_nearecho/` (summary.md + results.jsonl) — recomputed **8/8 PASS**. Unit suite 20/20.
+- Item (5) stays **closed** (not reopened).
+- Remaining Phase 2 blockers: (b) real DCAP/gateway + PS-approved allowlist; (c) `provider_tee` binding. **No Phase 2 / no waive.**
