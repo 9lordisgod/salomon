@@ -1,27 +1,33 @@
 'use client';
-import { useChat } from '@ai-sdk/react';
-import { DefaultChatTransport } from 'ai';
 import { useState } from 'react';
 import { maskText } from '@/lib/mask';
 import { useMaskMap, useNotes, useProposals } from '@/lib/store';
 
 export default function Research() {
-  const { messages, sendMessage, status, stop, error } = useChat({ transport: new DefaultChatTransport({ api: '/api/chat' }) });
+  type Msg = { id: string; role: 'user' | 'assistant' | 'refuse'; text: string; code?: string };
+  const [messages, setMessages] = useState<Msg[]>([]);
+  const [status, setStatus] = useState<'ready' | 'submitted'>('ready');
+  const [error, setError] = useState(false);
   const [input, setInput] = useState('');
   const [map, setMap] = useMaskMap();
   const [notes] = useNotes();
   const [proposals, setProposals] = useProposals();
   const [attach, setAttach] = useState(true);
-  const busy = status === 'submitted' || status === 'streaming';
+  const busy = status === 'submitted';
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || busy) return;
     const raw = attach && notes ? `${input}\n\n--- Notes (untrusted data) ---\n${notes}` : input;
     const { text, map: m } = maskText(raw, map);
     setMap(m);
-    sendMessage({ text });
-    setInput('');
+    setInput(''); setError(false); setStatus('submitted');
+    setMessages((ms) => [...ms, { id: crypto.randomUUID(), role: 'user', text }]);
+    try {
+      const res = await fetch('/api/ask', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ question: text }) });
+      const j = await res.json();
+      setMessages((ms) => [...ms, j.ok ? { id: crypto.randomUUID(), role: 'assistant', text: j.answer } : { id: crypto.randomUUID(), role: 'refuse', text: j.message, code: j.reason }]);
+    } catch { setError(true); } finally { setStatus('ready'); }
   };
 
   const propose = (content: string, action: 'save' | 'export') =>
@@ -35,10 +41,10 @@ export default function Research() {
         <div className="mt-6 min-h-[360px] space-y-4 rounded-lg border border-zinc-800 bg-[#0e1115] p-5">
           {messages.length === 0 && <p className="text-sm text-zinc-500">Try: “Summarize the timeline from my notes and list what still needs a second source.”</p>}
           {messages.map((m) => {
-            const text = m.parts.map((p) => (p.type === 'text' ? p.text : '')).join('');
+            const text = m.text;
             return (
-              <div key={m.id} className={m.role === 'user' ? 'border-l-2 border-zinc-600 pl-4' : 'border-l-2 border-emerald-700 pl-4'}>
-                <div className="text-[11px] uppercase tracking-widest text-zinc-500">{m.role === 'user' ? 'You (as sent, masked)' : 'Salomon'}</div>
+              <div key={m.id} className={m.role === 'user' ? 'border-l-2 border-zinc-600 pl-4' : m.role === 'refuse' ? 'border-l-2 border-amber-600 pl-4' : 'border-l-2 border-emerald-700 pl-4'}>
+                <div className="text-[11px] uppercase tracking-widest text-zinc-500">{m.role === 'user' ? 'You (as sent, masked)' : m.role === 'refuse' ? <>Salomon refused <code className="normal-case text-zinc-600">{m.code}</code></> : 'Salomon · local'}</div>
                 <div className="mt-1 whitespace-pre-wrap text-sm leading-relaxed text-zinc-200">{text}</div>
                 {m.role === 'assistant' && !busy && (
                   <div className="mt-2 flex gap-2">
@@ -54,7 +60,7 @@ export default function Research() {
         </div>
         <form onSubmit={submit} className="mt-4 flex gap-2">
           <input value={input} onChange={(e) => setInput(e.target.value)} placeholder="Ask a research question…" className="flex-1 rounded border border-zinc-700 bg-[#0e1115] px-4 py-3 text-sm outline-none focus:border-zinc-500" />
-          {busy ? <button type="button" onClick={() => stop()} className="rounded bg-zinc-700 px-5 text-sm">Stop</button>
+          {busy ? <button type="button" disabled className="rounded bg-zinc-700 px-5 text-sm">Asking…</button>
             : <button className="rounded bg-zinc-100 px-5 text-sm font-medium text-zinc-900 hover:bg-white">Ask</button>}
         </form>
         <label className="mt-2 flex items-center gap-2 text-xs text-zinc-500">
