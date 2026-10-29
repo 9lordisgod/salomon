@@ -1,10 +1,11 @@
 'use client';
-import { useChat } from '@ai-sdk/react';
-import { DefaultChatTransport } from 'ai';
 import { useEffect, useRef, useState } from 'react';
 import { maskText } from '@/lib/mask';
 import { useMaskMap, useNotes, useProposals } from '@/lib/store';
-import { modeLabel, useMode } from '@/lib/useMode';
+import { isRemote, modeLabel, useMode } from '@/lib/useMode';
+import { usePreferRemote } from '@/lib/preferRemote';
+
+type Msg = { id: string; role: 'user' | 'assistant'; text: string };
 
 const SAMPLE_NOTES = `Interview log — municipal water contract (draft, unverified)
 Mar 3: Call with source codename Heron (whistleblower, procurement office). Says bid for Riverside pumping contract was rewritten after deadline.
@@ -21,8 +22,14 @@ const SUGGESTIONS = [
 
 export default function Research() {
   const mode = useMode();
-  const label = modeLabel(mode);
-  const { messages, sendMessage, status, stop, error } = useChat({ transport: new DefaultChatTransport({ api: '/api/chat' }) });
+  const [preferRemote, setPreferRemote] = usePreferRemote();
+  const remote = isRemote(mode, preferRemote);
+  const label = modeLabel(mode, preferRemote);
+  const [messages, setMessages] = useState<Msg[]>([]);
+  const [status, setStatus] = useState<'ready' | 'submitted' | 'streaming'>('ready');
+  const [error, setError] = useState<Error | null>(null);
+  const abort = useRef<AbortController | null>(null);
+  const stop = () => abort.current?.abort();
   const [input, setInput] = useState('');
   const [map, setMap] = useMaskMap();
   const [notes, setNotes] = useNotes();
@@ -38,11 +45,51 @@ export default function Research() {
     const { text, map: m } = maskText(raw, map);
     setMap(m);
     setInput('');
-    sendMessage({ text });
+    void send(text);
+  };
+  const patch = (id: string, f: (t: string) => string) => setMessages((ms) => ms.map((x) => (x.id === id ? { ...x, text: f(x.text) } : x)));
+
+  // Default: local POST /api/ask (Runtime askLocal, fail closed). REMOTE gateway only on explicit opt-in.
+  const send = async (text: string) => {
+    const uid = crypto.randomUUID(), aid = crypto.randomUUID();
+    const history = messages;
+    setMessages((ms) => [...ms, { id: uid, role: 'user', text }, { id: aid, role: 'assistant', text: '' }]);
+    setError(null); setStatus('submitted');
+    const ac = new AbortController(); abort.current = ac;
+    try {
+      if (remote) {
+        const ui = [...history, { id: uid, role: 'user' as const, text }].map((m) => ({ id: m.id, role: m.role, parts: [{ type: 'text', text: m.text }] }));
+        const res = await fetch('/api/chat', { method: 'POST', signal: ac.signal, headers: { 'content-type': 'application/json', 'x-salomon-remote': '1' }, body: JSON.stringify({ messages: ui }) });
+        if (!res.ok || !res.body) throw new Error(`HTTP ${res.status}`);
+        setStatus('streaming');
+        const reader = res.body.getReader(); const dec = new TextDecoder(); let buf = '';
+        for (;;) {
+          const { done, value } = await reader.read(); if (done) break;
+          buf += dec.decode(value, { stream: true });
+          const lines = buf.split('\n'); buf = lines.pop() ?? '';
+          for (const line of lines) {
+            if (!line.startsWith('data:')) continue;
+            const d = line.slice(5).trim(); if (!d || d === '[DONE]') continue;
+            try {
+              const ev = JSON.parse(d);
+              if (ev.type === 'text-delta') patch(aid, (t) => t + (ev.delta ?? ''));
+              else if (ev.type === 'error') patch(aid, (t) => t + (t ? '\n\n' : '') + (ev.errorText ?? 'REMOTE GATEWAY error'));
+            } catch {}
+          }
+        }
+      } else {
+        const q = text.split('\n\n--- Notes (untrusted data) ---')[0];
+        const res = await fetch('/api/ask', { method: 'POST', signal: ac.signal, headers: { 'content-type': 'application/json' }, body: JSON.stringify({ question: text.length <= 8000 ? text : q }) });
+        const j = await res.json().catch(() => ({ ok: false, reason: 'bad_response', message: `HTTP ${res.status}` }));
+        patch(aid, () => (j.ok ? String(j.answer ?? '') : `Refused (${j.reason}): ${j.message}`));
+      }
+    } catch (e) {
+      if ((e as Error).name !== 'AbortError') setError(e as Error);
+    } finally { setStatus('ready'); abort.current = null; }
   };
   const propose = (content: string, action: 'save' | 'export') =>
     setProposals([{ id: crypto.randomUUID(), action, title: content.slice(0, 60), content, status: 'pending', createdAt: new Date().toISOString() }, ...proposals]);
-  const textOf = (m: (typeof messages)[number]) => m.parts.map((p) => (p.type === 'text' ? p.text : '')).join('');
+  const textOf = (m: Msg) => m.text;
 
   return (
     <div className="relative mx-auto flex min-h-[calc(100vh-9rem)] max-w-3xl flex-col">
@@ -117,9 +164,15 @@ export default function Research() {
             onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); ask(input); } }}
             placeholder="Ask about your reporting…" className="block max-h-48 w-full resize-none bg-transparent px-2 py-1.5 text-[15px] text-zinc-100 outline-none placeholder:text-zinc-600" />
           <div className="flex items-center justify-between px-1">
+            <div className="flex items-center gap-3">
             <label className="flex items-center gap-1.5 text-[11px] text-zinc-500">
               <input type="checkbox" checked={attach} onChange={(e) => setAttach(e.target.checked)} className="accent-zinc-400" /> Attach notes ({notes.length} chars, masked)
             </label>
+            <label title={mode?.gatewayAvailable ? 'Sends masked text to a cloud model. Not local.' : 'No gateway key configured'} className={`flex items-center gap-1.5 text-[11px] ${remote ? 'text-sky-400/80' : 'text-zinc-500'} ${mode?.gatewayAvailable ? '' : 'opacity-40'}`}>
+              <input type="checkbox" disabled={!mode?.gatewayAvailable || busy} checked={remote} onChange={(e) => setPreferRemote(e.target.checked)} className="accent-sky-500" /> REMOTE · cloud (labeled)
+            </label>
+            {remote && <span className="text-[11px] text-sky-400/70">not local — masked text leaves this machine</span>}
+            </div>
             {busy ? <button type="button" onClick={() => stop()} className="rounded-full border border-white/15 px-3 py-1 text-[12px] text-zinc-200">Stop</button>
               : <button disabled={!input.trim()} className="rounded-full bg-zinc-100 px-3.5 py-1 text-[12px] font-medium text-zinc-900 disabled:opacity-30">Send</button>}
           </div>

@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { modeLabel, useMode } from '@/lib/useMode';
+import { usePreferRemote } from '@/lib/preferRemote';
 
 const NAV = [
   { href: '/', label: 'Research' },
@@ -11,7 +12,9 @@ const NAV = [
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const path = usePathname();
-  const b = modeLabel(useMode());
+  const mode = useMode();
+  const [preferRemote] = usePreferRemote();
+  const b = modeLabel(mode, preferRemote);
   return (
     <div className="flex min-h-screen flex-col bg-[#0e0f11] text-zinc-200">
       <header className="sticky top-0 z-20 border-b border-white/5 bg-[#0e0f11]/90 backdrop-blur">
