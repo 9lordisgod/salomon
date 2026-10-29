@@ -5,6 +5,19 @@
   "type": "module",
   "description": "Phase 1.5 fail-closed NEAR AI Cloud attestation verify client (stub; no remote inference wired)",
   "main": "src/index.ts",
-  "scripts": { "test": "vitest run", "typecheck": "tsc --noEmit" },
-  "devDependencies": { "typescript": "^5.6.0", "vitest": "^2.1.0", "@types/node": "^22.0.0" }
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
+  },
+  "dependencies": {
+    "@noble/ed25519": "^3.2.0",
+    "@noble/hashes": "^2.4.0",
+    "@noble/secp256k1": "^3.2.0",
+    "@phala/dcap-qvl": "^0.7.0"
+  }
 }
