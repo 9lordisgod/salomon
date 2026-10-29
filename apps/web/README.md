@@ -13,7 +13,7 @@ npm install && npm run dev
 ```
 
 ## M1: offline ask (what is in scope)
-- Research desk → `POST /api/ask` → `lib/askLocal.ts` (stub until Agent Runtime's `askLocal` lands; contract in `near-privacy-ai/phase3-runtime/DESIGN_M1_LOCAL_ASK.md` §6).
+- `POST /api/ask` → `lib/askLocal.ts` is the M1 fail-closed path (contract in `near-privacy-ai/phase3-runtime/DESIGN_M1_LOCAL_ASK.md` §6). ⚠️ The Research desk UI currently sends via `/api/chat`; with `AI_GATEWAY_API_KEY` set it goes to a remote gateway, badged `DEMO · REMOTE · … · not local`. Rewiring the desk to `/api/ask` is open (PS soft note 1).
 - **Fail-closed:** no local model → `503 local_model_unavailable`, plain message, nothing sent anywhere. No HuggingFace pull, no gateway fallback on `/api/ask`.
 - Secrets / key material in the question → `422 sanitizer_rejected` with a plain-language reason.
 - Stub (`SALOMON_ALLOW_ASK_STUB=1`) is **demo only** — not a real on-device model. Badge it as stub, not LOCAL.
@@ -24,4 +24,4 @@ npm install && npm run dev
 - “Source-safe” as a guarantee — prefer the approved one-liner or “UX dogfood · Phase 3 M1”.
 
 ## Demo gateway
-`AI_GATEWAY_API_KEY` only powers the legacy `/api/chat` demo and is always badged **DEMO · remote**. Never a default, never an automatic fallback for `/api/ask`.
+`AI_GATEWAY_API_KEY` enables a remote demo path on `/api/chat`, always badged **DEMO · REMOTE**. Do not set it when testing local-only behaviour. Never an automatic fallback for `/api/ask`.
