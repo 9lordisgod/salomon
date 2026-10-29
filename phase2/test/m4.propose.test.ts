@@ -142,4 +142,21 @@ describe("M4 loop: Completions never see draft_json", () => {
       completion: { complete: async (_m, b) => { seen.push(b); return { verified: true, requestHash: "r", responseHash: "s", response: { choices: [{ message: { role: "assistant", content: "ok" } }] } }; } } });
     expect(seen[0].tools.map((x: any) => x.function.name)).not.toContain("propose_intent");
   });
+  describe("soft polish: verifier_mainnet_on_testnet", () => {
+    const reason = (e: Record<string, string | undefined>) => { try { loadIntentsConfig(e); return "ok"; } catch (x) { return (x as DraftDenied).reason; } };
+    it("testnet + intents.near ⇒ verifier_mainnet_on_testnet (config + propose path)", async () => {
+      expect(reason({ ...ENV, INTENTS_VERIFIER_ID: "intents.near" })).toBe("verifier_mainnet_on_testnet");
+      expect(data(await new ProposeTools({ env: { ...ENV, INTENTS_VERIFIER_ID: "intents.near" } }).execute("propose_intent", xfer(near(1)))).error).toBe("verifier_mainnet_on_testnet");
+    });
+    it("testnet + bridge.near ⇒ verifier_mainnet_on_testnet", () => {
+      expect(reason({ ...ENV, INTENTS_VERIFIER_ID: "bridge.near" })).toBe("verifier_mainnet_on_testnet");
+    });
+    it("testnet + empty verifier ⇒ still env_unconfigured", () => {
+      expect(reason({ ...ENV, INTENTS_VERIFIER_ID: "" })).toBe("env_unconfigured");
+    });
+    it("testnet + *.testnet verifier ⇒ not verifier_mainnet_on_testnet", () => {
+      expect(reason({ ...ENV, INTENTS_VERIFIER_ID: "something.testnet" })).not.toBe("verifier_mainnet_on_testnet");
+      expect(reason({ ...ENV, INTENTS_VERIFIER_ID: "intents.near.testnet" })).not.toBe("verifier_mainnet_on_testnet");
+    });
+  });
 });

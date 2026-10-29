@@ -14,6 +14,8 @@ export function nearToYocto(s: string): bigint {
 export function loadIntentsConfig(env: Record<string, string | undefined> = process.env): IntentsConfig {
   const network = env.NETWORK; if (network !== "testnet" && network !== "mainnet") throw new DraftDenied("env_unconfigured");
   const verifierId = env.INTENTS_VERIFIER_ID ?? ""; if (!ACCOUNT_RE.test(verifierId)) throw new DraftDenied("env_unconfigured");
+  // Soft polish (PS residual): mainnet-shaped verifier (e.g. intents.near) on testnet ⇒ fail closed.
+  if (network === "testnet" && (verifierId === "intents.near" || (verifierId.endsWith(".near") && !verifierId.endsWith(".testnet")))) throw new DraftDenied("verifier_mainnet_on_testnet");
   const mpc = env.MPC_CONTRACT_ID || undefined; if (mpc !== undefined && !ACCOUNT_RE.test(mpc)) throw new DraftDenied("env_unconfigured");
   const tokens = new Map<string, TokenRule>();
   for (const raw of (env.TOKEN_ALLOWLIST ?? "").split(",").map((x) => x.trim()).filter(Boolean)) {
