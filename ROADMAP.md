@@ -1,10 +1,10 @@
 # Roadmap
-**Current: Phase 1 — in progress · Phase 1.5 stub items (1)–(5) SIGNED OFF · Phase 2 BLOCKED · No Phase 2**
+**Current: Phase 2 — IN PROGRESS** · **M1–M3 GREEN** · soft polish **CLOSED** (refusal formal stamp 8/8 · compose_file_sha256 MERGE APPROVED · role:tool sanitizer) · Phase 1.5 (1)–(5) SIGNED · (6) APPROVED
 
 ```mermaid
 flowchart LR
-  P1[Phase 1<br/>SLM foundation<br/>IN PROGRESS] --> G{{Phase 1.5<br/>stub 1–5 ✅<br/>P2 BLOCKED}}
-  G --> P2[Phase 2<br/>Agent + private inference]
+  P1[Phase 1<br/>SLM foundation<br/>continues] --> G{{Phase 1.5<br/>1–5 ✅ · 6 APPROVED}}
+  G --> P2[Phase 2<br/>IN PROGRESS<br/>M1–M3 GREEN]
   P2 --> P3[Phase 3<br/>NEAR contracts · Intents · Chain Sigs]
   P3 --> P4[Phase 4<br/>Privacy hardening + prod]
 ```
@@ -18,19 +18,22 @@ flowchart LR
 - [ ] GGUF/llama.cpp quantized export for local use
 
 ## Phase 1.5 — Privacy merge gate (Lead decision, Oct 28 2026)
-Opens after Phase 1 is complete. Stub/criteria items **(1)–(5) all SIGNED OFF**. R3 near-echo delta **CLEARED** (`SECURITY_SIGNOFF_R3_NEARECHO_DELTA.md`). **Phase 2 still BLOCKED** by (b) real DCAP/gateway + PS-approved allowlist and (c) `provider_tee` response binding. No Phase 2 / no waive.
+Opens after Phase 1 is complete. Stub/criteria items **(1)–(5) SIGNED OFF**. R3 near-echo **CLEARED**. Item **(6) APPROVED** — `z-ai/glm-5.3-flash` allowlist now **two** entries (`19aea169…` via `SECURITY_SIGNOFF_PRE_PHASE2_ITEM6_GLM.md`; `7bb9af0a…` via `SECURITY_SIGNOFF_PHASE2_SECOND_INSTANCE_GLM.md`, effective_from 2026-10-29T17:10:00Z; Abliterated DeepSeek/Qwen rejected). Phase 2 **IN PROGRESS**: **M1 GREEN** + **M2 landed** + **M3 GREEN** (`EVIDENCE_PHASE2_M3_MULTI_TOOL.md`; multi-step live PASS) + dual-instance live + sanitizer TS. Unknown instances DENY+retry. Soft polish **CLOSED**: formal GLM refusal stamp 8/8 (`SECURITY_SIGNOFF_GLM_LIVE_REFUSAL.md`); `compose_file_sha256` **MERGE APPROVED** (`SECURITY_SIGNOFF_COMPOSE_FILE_SHA256_MIGRATION.md`); `role:tool` sanitizer PS-accepted. M3 skim OK (`SECURITY_REVIEW_PHASE2_M3.md`).
 - [x] (1) Threat model doc — SIGNED OFF (THREAT_MODEL_PHASE1.5.md filled, Oct 29 2026). See SECURITY_SIGNOFF_PHASE1.5_1_3_4.md
-- [x] (2) Attestation verify client, fail-closed — SIGNED OFF Privacy Security (phase1.5-attestation/ 15/15, Oct 29 2026). Bar: ATTESTATION_ACCEPTANCE.md. Evidence: SECURITY_SIGNOFF_ATTESTATION_ITEM2.md. Phase 2 still blocked: (b) real DCAP/gateway + PS-approved allowlist; (c) provider_tee response binding. (a) R3 near-echo CLEARED.
-- [x] (3) Sanitizer stub + unit tests — SIGNED OFF (privacy/sanitizer.py 17/17, Oct 29 2026). See SECURITY_SIGNOFF_PHASE1.5_1_3_4.md
+- [x] (2) Attestation verify client, fail-closed — SIGNED OFF Privacy Security (phase1.5-attestation/ 15/15, Oct 29 2026). Bar: ATTESTATION_ACCEPTANCE.md. Evidence: SECURITY_SIGNOFF_ATTESTATION_ITEM2.md. (a) R3 CLEARED; item (6) GLM allowlist APPROVED; Phase 2 **M1 GREEN** + **M2 landed**; provider_tee binding demonstrated on M1 happy path.
+- [x] (3) Sanitizer stub + unit tests — SIGNED OFF (privacy/sanitizer.py 17/17, Oct 29 2026). Phase 2: TS parity port in-loop (`phase2/SANITIZER.md`; 17-vector parity). See SECURITY_SIGNOFF_PHASE1.5_1_3_4.md
 - [x] (4) Policy/spend stub — SIGNED OFF Privacy Security (criteria + privacy/policy_spend.py 11/11, Oct 29 2026). Residuals: non-durable counters (not for real funds); 64-hex ambiguity; human-approval daily total. See SECURITY_SIGNOFF_PHASE1.5_1_3_4.md
 - [x] (5) Refusal / must-not-echo eval suite that fails CI — SIGNED OFF by Privacy Security (7B Colab 8/8 anti-echo). Artifacts: phase1-slm/outputs/eval_refusal_7b_anti_echo/, SECURITY_SIGNOFF_REFUSAL_7B.md. R3 near-echo pre-Phase-2 delta **CLEARED** (`SECURITY_SIGNOFF_R3_NEARECHO_DELTA.md`; artifacts phase1-slm/outputs/eval_refusal_7b_r3_nearecho/ 8/8). Item (5) stays closed. Owner: SLM Engineer (harness updates)
+- [x] (6) Production allowlist pin(s) — **APPROVED** Privacy Security for `z-ai/glm-5.3-flash`: entry 1 `19aea169…` (`SECURITY_SIGNOFF_PRE_PHASE2_ITEM6_GLM.md`, effective_from 2026-10-29T17:00:00Z); entry 2 `7bb9af0a…` **APPROVED + appended** (`SECURITY_SIGNOFF_PHASE2_SECOND_INSTANCE_GLM.md`, effective_from 2026-10-29T17:10:00Z). `measurements.json` has **two** entries. Abliterated DeepSeek/Qwen rejected. Unknown instances still DENY+retry. Soft: refusal suite on live GLM before refusal claims.
 
 Owners: Privacy Security owns gate acceptance and reviews every Phase 2 PR touching tools, remote inference, or keys. Agent Engineer implements attestation verify. SLM Engineer owns refusal eval harness updates.
 
-## Phase 2 — Agent Capabilities
-- [ ] Tool schema + read-only tools (NEAR RPC view, account/tx lookup)
-- [ ] Agent loop (TS) with injection-safe tool output handling
-- [ ] NEAR AI Cloud private inference backend with attestation check
+## Phase 2 — Agent Capabilities (**IN PROGRESS** — M1–M3 GREEN)
+**Scope now:** `z-ai/glm-5.3-flash` verified-remote + agent loops. **M1 GREEN** + **M2 landed** + **M3 GREEN** (`phase2/EVIDENCE_PHASE2_M3_MULTI_TOOL.md`) + dual-instance live + sanitizer TS. Allowlist: two GLM pins; unknown instances DENY+retry. Soft polish **CLOSED**: formal GLM refusal stamp 8/8 (`SECURITY_SIGNOFF_GLM_LIVE_REFUSAL.md`); `compose_file_sha256` **MERGE APPROVED** (`SECURITY_SIGNOFF_COMPOSE_FILE_SHA256_MIGRATION.md`); `role:tool` sanitizer PS-accepted. M3 skim OK (`SECURITY_REVIEW_PHASE2_M3.md`).
+- [x] Tool schema + read-only tools — M2 `view_account`; **M3** `view_access_key_list`, bounded `view_state`, `block`, `gas_price` (multi-step live PASS)
+- [x] Agent loop (TS) with injection-safe tool output handling — **M2 landed** + skim OK; dual-instance live; TS sanitizer; **M3** multi-step chaining w/ hard caps
+- [x] NEAR AI Cloud private inference backend with attestation check — **M1 GREEN**; two pins live-verified; unknown instances DENY+retry
+- [x] **M3 GREEN** — more read-only tools + multi-step chaining w/ hard caps; UNTRUSTED+sanitizer; no writes/sign; GLM only (`EVIDENCE_PHASE2_M3_MULTI_TOOL.md`)
 
 ## Phase 3 — NEAR Integration
 - [ ] near-sdk Rust contracts: agent registry, credits/staking, access control

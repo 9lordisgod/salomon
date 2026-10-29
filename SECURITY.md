@@ -28,5 +28,12 @@ Every tx path: proposal → schema validate → simulate → **policy** (allowli
 ### Chain Signatures / Intents (Phase 3+)
 Pin verified contract IDs from official docs. Requests to MPC signers only after the same policy gate. Model never sees MPC share material.
 
+## Phase 1.5 gate artifacts
+- `THREAT_MODEL_PHASE1.5.md` — threat model (**item 1 SIGNED OFF**).
+- `privacy/sanitizer.py` (+ `test_sanitizer.py`) — local pre-remote sanitizer; secrets never leave (**item 3 SIGNED OFF**, 17/17).
+- `privacy/policy_spend.py` (+ `test_policy_spend.py`) — non-signing policy stub (**item 4 SIGNED OFF**, 11/11; not for real funds).
+- Acceptance / sign-off: `ATTESTATION_ACCEPTANCE.md` + `SECURITY_SIGNOFF_ATTESTATION_ITEM2.md` (item 2 SIGNED OFF stub), `POLICY_SPEND_ACCEPTANCE.md`, `REFUSAL_EVAL_CRITERIA.md` + `SECURITY_SIGNOFF_REFUSAL_7B.md` (item 5), `SECURITY_SIGNOFF_PHASE1.5_1_3_4.md` (items 1/3/4).
+- Run: `python3 privacy/test_sanitizer.py && python3 privacy/test_policy_spend.py`
+
 ## Review mandate
 Privacy Security reviews changes that touch: training data ingestion, inference (local or remote), tools, attestation, policy/spend, key/signer handling, or logging. File findings as short actionable notes to the Lead Architect.
