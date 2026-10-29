@@ -29,13 +29,13 @@ Opens after Phase 1 is complete. Stub/criteria items **(1)–(5) SIGNED OFF**. R
 Owners: Privacy Security owns gate acceptance and reviews every Phase 2 PR touching tools, remote inference, or keys. Agent Engineer implements attestation verify. SLM Engineer owns refusal eval harness updates.
 
 ## Phase 2 — Agent Capabilities (**M4 propose sketch GREEN** — G2 ACCEPTED · M1–M3 GREEN)
-**Scope now:** `z-ai/glm-5.3-flash` verified-remote + agent loops. **M1–M3 GREEN** + soft polish CLOSED. **M4** G1+G2 ACCEPTED / merge-stamped; propose sketch **GREEN** (fail-closed empty Verifier in `phase2/.env.example`). Intents settlement stays **mainnet-only / G3**. **G3 NOT opened.** Push to salomon in flight. Phase 1 gate done; dataset PARKED. Allowlist: two GLM pins; unknown instances DENY+retry.
+**Scope now:** `z-ai/glm-5.3-flash` verified-remote + agent loops. **M1–M3 GREEN** + soft polish CLOSED. **M4** G1+G2 ACCEPTED / merge-stamped; propose sketch **GREEN** (fail-closed empty Verifier in `phase2/.env.example`). Intents settlement stays **mainnet-only / G3**. **G3 NOT opened.** Soft polish on salomon `79c0f99`. Phase 1 gate done; dataset PARKED. Allowlist: two GLM pins; unknown instances DENY+retry.
 - [x] Tool schema + read-only tools — M2 `view_account`; **M3** `view_access_key_list`, bounded `view_state`, `block`, `gas_price` (multi-step live PASS)
 - [x] Agent loop (TS) with injection-safe tool output handling — **M2 landed** + skim OK; dual-instance live; TS sanitizer; **M3** multi-step chaining w/ hard caps
 - [x] NEAR AI Cloud private inference backend with attestation check — **M1 GREEN**; two pins live-verified; unknown instances DENY+retry
 - [x] **M3 GREEN** — more read-only tools + multi-step chaining w/ hard caps; UNTRUSTED+sanitizer; no writes/sign; GLM only (`EVIDENCE_PHASE2_M3_MULTI_TOOL.md`)
 - [x] **M4 G1** — design ACCEPTED (`SECURITY_REVIEW_PHASE2_M4_G1.md`; gate `SECURITY_GATE_PHASE2_M4.md`)
-- [x] **M4 G2** — propose-only stubs ACCEPTED / MERGE STAMPED (`SECURITY_REVIEW_PHASE2_M4_G2.md`; evidence `phase2/EVIDENCE_PHASE2_M4_G2_STUBS.md`; 55/55). Soft residuals only. `phase2/.env.example` filled: Verifier empty (fail-closed); MPC `v1.signer-prod.testnet`; preview tokens wrap/usdc.fakes/usdt.fakes. Propose sketch **GREEN**. Intents settlement = mainnet-only / G3.
+- [x] **M4 G2** — propose-only stubs ACCEPTED / MERGE STAMPED (`SECURITY_REVIEW_PHASE2_M4_G2.md`; evidence `phase2/EVIDENCE_PHASE2_M4_G2_STUBS.md`). `.env.example` filled + **RE-ACKED** (`SECURITY_REACK_M4_ENV_EXAMPLE.md`). Soft `verifier_mainnet_on_testnet` **ACCEPT** (`SECURITY_REVIEW_PHASE2_M4_SOFT_VERIFIER_TESTNET.md`; phase2 **59/59**); reack residual CLOSED. Propose sketch **GREEN**. Settlement mainnet-only / G3. salomon soft polish `79c0f99` (prior G2 `34a2466`).
 - [ ] **M4 G3** — execute/sign/simulate — **NOT opened**
 
 ## Phase 3 — NEAR Integration

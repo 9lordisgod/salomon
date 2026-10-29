@@ -1,6 +1,6 @@
 # STATUS — Thu Oct 29, 2026 (America/Vancouver, PDT)
 
-**Phase:** **2 (Agent Capabilities) — IN PROGRESS** (scoped: `z-ai/glm-5.3-flash` verified-remote + agent loops). Phase 1 SLM foundation continues in parallel where needed. The scaffold is complete. CPU-only smoke pipeline verified at 16:50 PDT: deps installed, dataset regenerated, 2-step LoRA dry-run done, base-model smoke inference + baseline eval done (Qwen2.5-0.5B, mean keyword score 0.222). First real adapter trained on CPU (0.5B LoRA, 18:20 PDT): no gain, 1 safety regression; see phase1-slm/FIRST_ADAPTER_0.5B.md. Phase 1.5 (Privacy merge gate) opens after Phase 1 is complete. **Latest:** Phase 2 **M4 G2 ACCEPTED** / merge-stamped — propose sketch **GREEN** (fail-closed empty Verifier). `phase2/.env.example` filled: Verifier empty (no official Intents testnet); MPC `v1.signer-prod.testnet`; preview tokens wrap/usdc.fakes/usdt.fakes. Intents settlement stays **mainnet-only / G3**. Push to salomon in flight. Soft residuals only. Phase 1 gate done; dataset PARKED.
+**Phase:** **2 (Agent Capabilities) — IN PROGRESS** (scoped: `z-ai/glm-5.3-flash` verified-remote + agent loops). Phase 1 SLM foundation continues in parallel where needed. The scaffold is complete. CPU-only smoke pipeline verified at 16:50 PDT: deps installed, dataset regenerated, 2-step LoRA dry-run done, base-model smoke inference + baseline eval done (Qwen2.5-0.5B, mean keyword score 0.222). First real adapter trained on CPU (0.5B LoRA, 18:20 PDT): no gain, 1 safety regression; see phase1-slm/FIRST_ADAPTER_0.5B.md. Phase 1.5 (Privacy merge gate) opens after Phase 1 is complete. **Latest:** M4 soft polish `verifier_mainnet_on_testnet` **PS ACCEPT** (`SECURITY_REVIEW_PHASE2_M4_SOFT_VERIFIER_TESTNET.md`); phase2 **59/59**. Env-reack residual **CLOSED**. `.env.example` IDs **RE-ACKED** (`SECURITY_REACK_M4_ENV_EXAMPLE.md`). Salomon main soft polish `79c0f99` (prior M4 G2 `34a2466`). **G3 still closed.** Propose sketch GREEN. Phase 1 gate done; dataset PARKED.
 
 ## Files
 - ARCHITECTURE.md, ROADMAP.md, STATUS.md, PROGRESS.md
@@ -24,7 +24,7 @@ docs/reviews/SECURITY_REVIEW_PHASE1.md landed (Privacy Security). Lead Architect
 - Fixes for transformers 5.x: finetune_qlora.py (`warmup_ratio` -> `warmup_steps`), local_inference.py (apply_chat_template returns BatchEncoding, so take input_ids).
 
 ## Next steps
-0. **Phase 2 M4** — **G2 ACCEPTED** / merge-stamped; propose sketch **GREEN** (fail-closed Verifier). `phase2/.env.example` filled (Verifier empty; MPC + preview tokens). Intents settlement = **mainnet-only / G3** — **G3 NOT opened.** Push to salomon in flight. Prior: M1–M3 GREEN + soft polish CLOSED.
+0. **Phase 2 M4** — G2 ACCEPTED; propose sketch **GREEN**; soft `verifier_mainnet_on_testnet` **ACCEPT** (59/59). Env IDs RE-ACKED; reack residual CLOSED. salomon soft polish `79c0f99` landed (prior G2 `34a2466`). **G3 still closed.** Prior: M1–M3 GREEN.
 1. Get a GPU host for the real QLoRA run (7B, 4-bit). Then do a full-data 0.5B LoRA run on CPU and compare tuned vs. baseline eval.
 2. **PARKED (user, via Lead 2026-10-29 ~11:44 PDT):** do **not** expand toward 2k / multi-turn for now. Seed stays at **362** rows (batch5). `dataset_check.py` remains in `make data`. Gate item (5) stays **SIGNED**. Resume only when Lead/user unparks.
 3. ~~Phase 1.5 stub/criteria items (1)–(5)~~ — all SIGNED OFF at stub/criteria level.
@@ -198,9 +198,19 @@ docs/notes/PHASE1_SCRIPT_FIXES.md items 1–3 are implemented. Smoke/dry-run sta
 - Soft residuals (non-blocking): `preview_derived_address` null until G3; unlabelled secp256k1 soft watch.
 - `phase2/.env.example` **filled** (Lead): `INTENTS_VERIFIER_ID=` empty (no official Intents testnet Verifier → fail-closed `env_unconfigured`); `MPC_CONTRACT_ID=v1.signer-prod.testnet`; `TOKEN_ALLOWLIST=wrap.testnet@24,usdc.fakes.testnet@6,usdt.fakes.testnet@6` (preview only, not Intents Verifier assets); `MAX_DRAFT_AMOUNT=1000`.
 - M4 propose sketch **GREEN** with fail-closed Verifier. Intents **settlement stays mainnet-only / G3**. **G3 (execute/sign) NOT opened.**
-- Push to salomon **in flight** (2026-10-29 ~12:03 PDT).
+- Push to salomon main **`34a2466`** landed (docs + G2 sketch). Soft polish landed on `79c0f99`.
 
 ## Phase 2 M4 — .env.example filled (2026-10-29 ~12:03 PDT)
 - Lead filled `phase2/.env.example`: Verifier **empty** (no official Intents testnet); MPC `v1.signer-prod.testnet`; preview tokens wrap/usdc.fakes/usdt.fakes; `MAX_DRAFT_AMOUNT=1000`.
 - Propose sketch **GREEN** with fail-closed empty Verifier. Intents settlement remains **mainnet-only / G3**.
-- Push to salomon in flight.
+- Push to salomon main **`34a2466`** landed.
+
+## Phase 2 M4 — .env.example RE-ACKED (2026-10-29)
+- Privacy Security **RE-ACKED** propose-only / G2 config IDs (`SECURITY_REACK_M4_ENV_EXAMPLE.md`): empty Verifier OK; MPC + preview tokens OK.
+- Soft residual then closed by `verifier_mainnet_on_testnet` (see below).
+
+## Phase 2 M4 soft polish — verifier_mainnet_on_testnet ACCEPT (2026-10-29 ~13:33 PDT)
+- Privacy Security **ACCEPT** (`SECURITY_REVIEW_PHASE2_M4_SOFT_VERIFIER_TESTNET.md`). Evidence: `phase2/EVIDENCE_PHASE2_M4_SOFT_VERIFIER_TESTNET.md`.
+- phase2 **59/59** (m4.propose 21/21). Rule: `NETWORK=testnet` ∧ mainnet-shaped Verifier ⇒ `DraftDenied("verifier_mainnet_on_testnet")`.
+- Env-reack soft residual **CLOSED**. **G3 still closed** (no execute/sign/simulate; measurements untouched).
+- Soft polish on salomon main `79c0f99`.

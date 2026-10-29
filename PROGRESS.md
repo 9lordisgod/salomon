@@ -205,5 +205,15 @@
 - Lead filled `phase2/.env.example`: `INTENTS_VERIFIER_ID=` empty (no official Intents testnet Verifier → fail-closed); MPC `v1.signer-prod.testnet`; preview tokens `wrap.testnet` / `usdc.fakes.testnet` / `usdt.fakes.testnet`; `MAX_DRAFT_AMOUNT=1000`.
 - M4 G2 remain merge-stamped. Propose sketch **GREEN** with fail-closed Verifier.
 - Intents settlement stays **mainnet-only / G3**. G3 NOT opened.
-- Push to salomon in flight.
+- Push to salomon main **`34a2466`** landed (STATUS/ROADMAP/PROGRESS included).
 - Docs: STATUS/ROADMAP/PROGRESS updated.
+
+## Thu Oct 29, 2026 (PDT) — M4 .env.example RE-ACKED
+- Privacy Security **RE-ACKED** (`SECURITY_REACK_M4_ENV_EXAMPLE.md`): Verifier empty OK; MPC `v1.signer-prod.testnet` OK; preview tokens OK.
+- Soft residual noted then closed by soft polish below.
+
+## Thu Oct 29, 2026 ~13:33 PDT — M4 soft polish verifier_mainnet_on_testnet ACCEPT
+- Privacy Security **ACCEPT** (`SECURITY_REVIEW_PHASE2_M4_SOFT_VERIFIER_TESTNET.md`). Evidence: `phase2/EVIDENCE_PHASE2_M4_SOFT_VERIFIER_TESTNET.md`.
+- phase2 **59/59**. Env-reack residual **CLOSED**. **G3 still closed.**
+- Soft polish on salomon main `79c0f99` (prior G2 `34a2466`).
+- Docs: STATUS/PROGRESS updated.
