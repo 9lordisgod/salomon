@@ -9,3 +9,5 @@ Supporting records. Status of record lives in the root [STATUS.md](../STATUS.md)
 | [reviews/](reviews/) | Privacy Security reviews, acceptances, decisions, re-acks, watches |
 | [signoffs/](signoffs/) | Formal Privacy Security sign-offs (`SECURITY_SIGNOFF_*`) |
 | [notes/](notes/) | SLM notes/positions and Phase 1 script fixes |
+
+Product framing: Salomon (privacy-first, local-first AI) — see root [README.md](../README.md) and [SECURITY.md](../SECURITY.md). Records from before the 2026-10-29 AI-first pivot keep their original on-chain wording as history.

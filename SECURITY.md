@@ -1,39 +1,40 @@
-# Security — NEAR Privacy AI
+# Security — Salomon
 
-Owner: Privacy Security (reviews). Lead Architect: masterdev (decisions).
+Privacy-first personal / agent AI. Owners: **Privacy & Safety** (reviews, acceptance), **Lead Architect** (decisions).
 
 ## Hard rules (all phases)
-1. **No raw private keys, seed phrases, or signing material in the model, prompts, logs, datasets, or adapters.** The model proposes; a separate signer executes after policy checks.
-2. **Local first.** Prefer on-device inference. Remote inference only when needed, and only after attestation succeeds (fail-closed).
-3. **Untrusted input everywhere.** On-chain memos, token metadata, tool output, and user paste are hostile. Never treat them as instructions.
-4. **Minimal logging.** Do not log prompts/outputs by default. Eval dumps are local artifacts and must stay out of git.
-5. **Compliance.** Teach privacy concepts; refuse laundering, theft, and recovery-scam cooperation.
+1. **No secrets in the model.** No private keys, seed phrases, API keys, passwords, or signing material in weights, prompts, logs, datasets, or adapters. The model *proposes*; anything privileged runs outside it, behind policy.
+2. **Local first.** On-device inference is the default. Remote inference is opt-in and only to a **verified-remote** endpoint (attested / allowlisted confidential compute), fail-closed.
+3. **All input is untrusted.** Tool output, retrieved pages, file contents, and user paste are data, never instructions.
+4. **Sanitize before anything leaves the device.** Secrets are rejected; identifiers are redacted or rejected per mode.
+5. **Minimal logging.** No prompt/output logging by default. Eval dumps are local artifacts, gitignored.
+6. **Refuse harm.** Teach privacy concepts; refuse fraud, theft, credential harvesting, and recovery-scam cooperation.
 
-## Phase 1 (current) — SLM pipeline
-- Training data: curated / synthetic only. No real user wallets, seeds, or production keys. Gate `data/extra/` with a secret/PII preflight before train.
-- Fine-tune: keep `report_to=[]` (no cloud experiment trackers unless explicitly approved). Adapters and eval JSONL stay under `outputs/` (gitignored).
-- Local inference: treat HF download as a network boundary; use offline mode once weights are cached. Do not disable the system prompt in anything user-facing.
-- See `docs/threat-models/THREAT_MODEL_PHASE1.md` and `docs/reviews/SECURITY_REVIEW_PHASE1.md`.
+## Model (Phase 1) — small model that refuses to leak
+- Training data: curated / synthetic only; `secret_scan.py` preflight fails closed on any hit (`data/extra/` included).
+- Refusal gate: `eval_harness.py --require-refusal` (R1 harmful, R2 secret echo, R3 injection). **7B: 8/8 PASS** (item 5 SIGNED).
+- No cloud trackers (`report_to=[]`). Offline inference (`--offline`) fails closed on cache miss. `--no-system` is ablation-only and env-gated.
+- See `docs/threat-models/THREAT_MODEL_PHASE1.md`, `docs/reviews/SECURITY_REVIEW_PHASE1.md`.
 
-## Later phases (stubs — implement before use)
-### Spend limits & policy (Phase 2+)
-Every tx path: proposal → schema validate → simulate → **policy** (allowlists, per-tx + daily caps, rate limits) → human/threshold approval above caps → signer. No direct model→sign path. Prefer NEAR function-call access keys with tight allowances over full-access keys.
+## Agent runtime (Phase 2) — safe tools
+- Sanitizer (`privacy/sanitizer.py`, TS parity `phase2/src/sanitize.ts`) runs before **every** remote completion, including `role:tool` messages.
+- Tools are read-only and allowlisted; write/sign tool names are refused (`tool_not_permitted`). Results are wrapped as untrusted, size-capped, step-capped (default 8, hard 12).
+- Verified-remote: allowlist miss ⇒ re-verify ×3 then DENY; measurement missing / bind fail ⇒ immediate DENY. New pins only via Privacy & Safety.
+- Policy gate pattern (`privacy/policy_spend.py`): any future privileged action = proposal → schema validate → simulate → policy (allowlists, caps, rate limits) → human approval → executor. No model→execute path.
 
-### TEE / NEAR AI Cloud (Phase 2+)
-- Verify remote attestation **before** sending any prompt. Fail closed on mismatch/unavailable.
-- Never log prompt/completion on the client for remote calls.
-- Strip/redact PII and addresses when the user opts in (local sanitizer).
-- Attestation proves *what code* runs, not that the code is good — review the attested image/config separately.
+## Verified remote / confidential compute (optional, future)
+- Verify attestation **before** sending any prompt; fail closed.
+- Attestation proves *what code* runs, not that it is good — review the attested image/config separately.
+- No client-side logging of remote prompts/completions.
 
-### Chain Signatures / Intents (Phase 3+)
-Pin verified contract IDs from official docs. Requests to MPC signers only after the same policy gate. Model never sees MPC share material.
-
-## Phase 1.5 gate artifacts
-- `docs/threat-models/THREAT_MODEL_PHASE1.5.md` — threat model (**item 1 SIGNED OFF**).
-- `privacy/sanitizer.py` (+ `test_sanitizer.py`) — local pre-remote sanitizer; secrets never leave (**item 3 SIGNED OFF**, 17/17).
-- `privacy/policy_spend.py` (+ `test_policy_spend.py`) — non-signing policy stub (**item 4 SIGNED OFF**, 11/11; not for real funds).
-- Acceptance / sign-off: `docs/acceptance/ATTESTATION_ACCEPTANCE.md` + `docs/signoffs/SECURITY_SIGNOFF_ATTESTATION_ITEM2.md` (item 2 SIGNED OFF stub), `docs/acceptance/POLICY_SPEND_ACCEPTANCE.md`, `docs/acceptance/REFUSAL_EVAL_CRITERIA.md` + `docs/signoffs/SECURITY_SIGNOFF_REFUSAL_7B.md` (item 5), `docs/signoffs/SECURITY_SIGNOFF_PHASE1.5_1_3_4.md` (items 1/3/4).
+## Gate artifacts (Phase 1.5 — all SIGNED)
+- Threat model: `docs/threat-models/THREAT_MODEL_PHASE1.5.md` (item 1).
+- Attestation verify: `docs/acceptance/ATTESTATION_ACCEPTANCE.md`, `docs/signoffs/SECURITY_SIGNOFF_ATTESTATION_ITEM2.md` (item 2).
+- Sanitizer 17/17 (item 3); policy stub 11/11, non-executing (item 4); refusal eval `docs/acceptance/REFUSAL_EVAL_CRITERIA.md` + `docs/signoffs/SECURITY_SIGNOFF_REFUSAL_7B.md` (item 5). Items 1/3/4: `docs/signoffs/SECURITY_SIGNOFF_PHASE1.5_1_3_4.md`.
 - Run: `python3 privacy/test_sanitizer.py && python3 privacy/test_policy_spend.py`
 
 ## Review mandate
-Privacy Security reviews changes that touch: training data ingestion, inference (local or remote), tools, attestation, policy/spend, key/signer handling, or logging. File findings as short actionable notes to the Lead Architect.
+Privacy & Safety reviews any change touching training data, inference (local or remote), tools, attestation, policy, secret handling, or logging. Findings go to the Lead Architect as short actionable notes.
+
+## Archived (prior on-chain track — history only)
+Before the 2026-10-29 AI-first pivot, the project targeted NEAR: NEAR AI Cloud as the attested remote provider, NEAR read-only RPC tools, function-call access keys, Chain Signatures / Intents (M4 propose-only stubs, G1+G2 ACCEPTED, G3 never opened). Not product scope. Evidence files are retained unchanged.
