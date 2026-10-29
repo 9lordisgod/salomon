@@ -2,21 +2,20 @@ import { convertToModelMessages, createUIMessageStreamResponse, simulateReadable
 import { MockLanguageModelV4 } from 'ai/test';
 import { SYSTEM_PROMPT } from '@/lib/prompt';
 import { maskText } from '@/lib/mask';
+import { askLocal } from '@/lib/askLocal';
+import { chatMode, DEFAULT_GATEWAY_MODEL } from '@/lib/mode';
 
-export const maxDuration = 30;
+export const maxDuration = 60;
 
-const SECRET = /(sk-[A-Za-z0-9]{10,}|AKIA[0-9A-Z]{16}|-----BEGIN [A-Z ]*PRIVATE KEY-----|ghp_[A-Za-z0-9]{20,}|(?:password|passwd|api[_-]?key|token)\s*[:=]\s*\S+)/gi;
+const SECRET = /(sk-[A-Za-z0-9]{10,}|AKIA[0-9A-Z]{16}|-----BEGIN [A-Z ]*PRIVATE KEY-----[\s\S]*?(?:-----END [A-Z ]*PRIVATE KEY-----|$)|ghp_[A-Za-z0-9]{20,}|(?:password|passwd|api[_-]?key|token)\s*[:=]\s*\S+)/gi;
 
-function demoModel(lastUser: string) {
-  const refused = lastUser.includes('[REDACTED-SECRET]');
-  const reply = refused
-    ? "I won't repeat that: it looks like a credential or secret, and credentials never enter my context. I removed it before reading your message. If you need to store it, use your password manager, not this chat."
-    : `DEMO MODE — no model is connected (set AI_GATEWAY_API_KEY on the server). Here is what Salomon received after masking:\n\n> ${lastUser.slice(0, 600)}\n\nAny names, emails, phones, and handles above were replaced with tokens before reaching the model. I can only propose a save or export; you approve it on the Approvals screen.`;
+/** Streams a fixed text word-by-word. Used for local answers, refusals and demo — never a cloud call. */
+function textModel(reply: string) {
   const words = reply.split(/(\s+)/);
   return new MockLanguageModelV4({
     doStream: async () => ({
       stream: simulateReadableStream({
-        chunkDelayInMs: 15,
+        chunkDelayInMs: 12,
         chunks: [
           { type: 'text-start', id: 't1' },
           ...words.map((w) => ({ type: 'text-delta' as const, id: 't1', delta: w })),
@@ -31,22 +30,37 @@ function demoModel(lastUser: string) {
 
 export async function POST(req: Request) {
   const { messages }: { messages: UIMessage[] } = await req.json();
-  // Server-side defense in depth: strip secrets and mask source identity before any model sees text.
+  // Defense in depth: strip secrets and mask identities server-side before any model sees text.
   const safe = messages.slice(-20).map((m) => ({
     ...m,
-    parts: m.parts.map((p) => (p.type === 'text' ? { ...p, text: maskText(p.text.replace(SECRET, '[REDACTED-SECRET]').slice(0, 8000)).text } : p)),
+    parts: m.parts.map((p) => (p.type === 'text' ? { ...p, text: maskText(p.text.replace(SECRET, '[REDACTED-SECRET]').slice(0, 12000)).text } : p)),
   })) as UIMessage[];
-  const last = safe.filter((m) => m.role === 'user').at(-1);
-  const lastText = last?.parts.map((p) => (p.type === 'text' ? p.text : '')).join('') ?? '';
-  const live = Boolean(process.env.AI_GATEWAY_API_KEY);
+  const lastText = safe.filter((m) => m.role === 'user').at(-1)?.parts.map((p) => (p.type === 'text' ? p.text : '')).join('') ?? '';
+  const mode = chatMode();
+  const headers = { 'x-salomon-mode': mode };
 
-  const result = streamText({
-    model: live ? (process.env.SALOMON_MODEL ?? 'anthropic/claude-sonnet-5.5') : demoModel(lastText),
-    instructions: SYSTEM_PROMPT,
-    messages: await convertToModelMessages(safe),
-  });
-  return createUIMessageStreamResponse({
-    stream: toUIMessageStream({ stream: result.stream }),
-    headers: { 'x-salomon-mode': live ? 'gateway' : 'demo' },
-  });
+  if (lastText.includes('[REDACTED-SECRET]')) {
+    const r = streamText({ model: textModel("I won't process that: it contains what looks like a credential or private key, so I removed it before anything reached a model. Store secrets in a password manager, then ask again without them."), prompt: 'refuse' });
+    return createUIMessageStreamResponse({ stream: toUIMessageStream({ stream: r.stream }), headers });
+  }
+
+  if (mode === 'gateway') {
+    const result = streamText({
+      model: process.env.SALOMON_MODEL || DEFAULT_GATEWAY_MODEL,
+      instructions: SYSTEM_PROMPT,
+      messages: await convertToModelMessages(safe),
+    });
+    return createUIMessageStreamResponse({ stream: toUIMessageStream({ stream: result.stream }), headers });
+  }
+
+  // local / stub / demo: offline Runtime askLocal (fail closed), streamed for UX.
+  let reply: string;
+  if (mode === 'demo') {
+    reply = 'No model is connected, so nothing was generated and nothing left this machine.\n\nTo get real answers: install a local GGUF (SALOMON_GGUF) for on-device mode, or set AI_GATEWAY_API_KEY for clearly-labeled REMOTE mode.';
+  } else {
+    const r = await askLocal({ question: lastText });
+    reply = r.ok ? (r as { answer: string }).answer : `Refused (${(r as { reason?: string }).reason}): ${(r as { message?: string }).message}`;
+  }
+  const r = streamText({ model: textModel(reply), prompt: lastText || 'ask' });
+  return createUIMessageStreamResponse({ stream: toUIMessageStream({ stream: r.stream }), headers });
 }

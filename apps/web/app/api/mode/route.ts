@@ -1,12 +1,15 @@
 import { localStatus } from '@/lib/askLocal';
+import { chatMode, DEFAULT_GATEWAY_MODEL } from '@/lib/mode';
 import { connection } from 'next/server';
 export async function GET() {
-  await connection(); // dynamic per request (cacheComponents forbids `dynamic` export)
+  await connection();
   const l = localStatus();
-  const gw = !l.available && !!process.env.AI_GATEWAY_API_KEY;
+  const mode = chatMode();
   return Response.json({
-    mode: l.available ? 'local' : gw ? 'gateway' : 'demo',
-    model: l.available ? l.model : gw ? (process.env.SALOMON_MODEL ?? 'anthropic/claude-sonnet-5.5') : null,
-    local: l.available, demo: !l.available,
+    mode,
+    backend: l.backend,
+    model: mode === 'local' ? l.model : mode === 'gateway' ? (process.env.SALOMON_MODEL || DEFAULT_GATEWAY_MODEL) : null,
+    local: mode === 'local',
+    remote: mode === 'gateway',
   }, { headers: { 'cache-control': 'no-store' } });
 }
