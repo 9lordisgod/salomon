@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { wrapUntrusted, NearReadOnlyTools, READ_ONLY_TOOL_NAMES } from "../src/tools/nearReadOnly.js";
+import { wrapUntrusted } from "../src/tools/untrusted.js";
+import { isForbiddenToolName, assertNoForbiddenTools } from "../src/tools/guard.js";
 import { sanitizeMessages, defaultSanitizer, noopSanitizer, redact } from "../src/sanitize.js";
 import { runAgentLoop, AgentDenied, type CompleterLike } from "../src/agentLoop.js";
 import { AttestationError } from "../../phase1.5-attestation/src/types.js";
@@ -29,24 +30,10 @@ describe("tool output wrapping", () => {
     expect(typeof inner.text).toBe("string");
     expect(inner.text.length).toBeLessThanOrEqual(8000);
   });
-  it("only read-only tools exist; unknown/write tools denied without RPC", async () => {
-    expect([...READ_ONLY_TOOL_NAMES].sort()).toEqual(["block", "gas_price", "tx_status", "view_access_key_list", "view_account", "view_call", "view_state"]);
-    let hit = 0; const t = new NearReadOnlyTools({ fetch: async () => { hit++; return { status: 200, text: async () => "{}" }; } });
-    for (const n of ["send_tx", "broadcast_tx_commit", "function_call", "sign"]) expect(JSON.parse(await t.execute(n, "{}")).untrusted_tool_output.ok).toBe(false);
-    expect(JSON.parse(await t.execute("view_account", '{"account_id":"BAD ID"}')).untrusted_tool_output.ok).toBe(false);
-    expect(hit).toBe(0);
-  });
-  it("view_account / view_call issue read-only query RPCs", async () => {
-    const bodies: any[] = []; const t = new NearReadOnlyTools({ fetch: async (_u, i) => { bodies.push(JSON.parse(i.body));
-      return { status: 200, text: async () => JSON.stringify({ result: { result: [...Buffer.from('{"v":1}')], amount: "5" } }) }; } });
-    expect(JSON.parse(await t.execute("view_account", '{"account_id":"near"}')).untrusted_tool_output.ok).toBe(true);
-    const vc = JSON.parse(await t.execute("view_call", '{"account_id":"wrap.near","method_name":"ft_metadata"}'));
-    expect(JSON.parse(vc.untrusted_tool_output.data_json).result).toEqual({ v: 1 });
-    expect(bodies.map((b) => [b.method, b.params.request_type])).toEqual([["query", "view_account"], ["query", "call_function"]]);
-  });
-  it("rpc errors are wrapped, never thrown", async () => {
-    const t = new NearReadOnlyTools({ fetch: async () => ({ status: 500, text: async () => "" }) });
-    expect(JSON.parse(await t.execute("view_account", '{"account_id":"near"}')).untrusted_tool_output).toMatchObject({ ok: false });
+  it("generic guard denies sign/send/transfer/execute tool names", () => {
+    for (const n of ["sign", "send_tx", "transfer", "execute_intents", "broadcast_tx_commit", "sign_message"]) expect(isForbiddenToolName(n)).toBe(true);
+    for (const n of ["search_notes", "summarize", "lookup_source"]) expect(isForbiddenToolName(n)).toBe(false);
+    expect(() => assertNoForbiddenTools([{ function: { name: "send_tx" } }])).toThrow("forbidden_tool_registered");
   });
 });
 

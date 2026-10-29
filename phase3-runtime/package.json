@@ -1,5 +1,5 @@
 {
-  "name": "@near-privacy-ai/phase3-runtime",
+  "name": "@salomon/phase3-runtime",
   "version": "0.1.0",
   "private": true,
   "type": "module",

@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { defaultSanitizer, isWrappedUntrustedToolMessage, sanitizeMessages, SanitizerRejected, type ChatMessage } from "../src/sanitize.js";
-import { wrapUntrusted } from "../src/tools/nearReadOnly.js";
+import { wrapUntrusted } from "../src/tools/untrusted.js";
 import { runAgentLoop, AgentDenied } from "../src/agentLoop.js";
 
 const B64 = Buffer.from("x".repeat(120)).toString("base64"); // 160 chars
