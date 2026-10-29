@@ -1,3 +1,23 @@
 @import "tailwindcss";
-body { background: #0b0d10; font-family: ui-sans-serif, system-ui, sans-serif; }
-.font-serif { font-family: Georgia, "Times New Roman", serif; }
+
+:root {
+  color-scheme: dark;
+  --bg: #0e0f11;
+  --panel: #16171a;
+  --border: rgba(255,255,255,0.07);
+  --text: #e4e4e7;
+  --muted: #8b8d93;
+}
+
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Inter, sans-serif;
+  margin: 0;
+  min-height: 100%;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font: inherit; }
+textarea { font: inherit; }
+::selection { background: rgba(255,255,255,0.15); }

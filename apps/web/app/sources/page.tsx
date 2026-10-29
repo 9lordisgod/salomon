@@ -12,7 +12,7 @@ export default function Sources() {
   const preview = maskText(notes, map);
   return (
     <div>
-      <h1 className="font-serif text-3xl text-zinc-50">Sources</h1>
+      <h1 className="text-3xl text-zinc-50">Sources</h1>
       <p className="mt-1 text-sm text-zinc-400">Paste notes or a transcript. Only the masked version ever leaves this page. The mask map stays in this browser.</p>
       <div className="mt-6 grid gap-6 lg:grid-cols-2">
         <div>
@@ -28,7 +28,7 @@ export default function Sources() {
         </div>
       </div>
       <div className="mt-8 flex items-center justify-between">
-        <h2 className="font-serif text-xl text-zinc-100">Mask map</h2>
+        <h2 className="text-xl text-zinc-100">Mask map</h2>
         <div className="flex gap-2">
           <button onClick={() => setMap(preview.map)} className="rounded bg-zinc-100 px-3 py-1.5 text-sm text-zinc-900">Apply masks</button>
           <button onClick={() => setMap([])} className="rounded border border-zinc-700 px-3 py-1.5 text-sm">Clear map</button>

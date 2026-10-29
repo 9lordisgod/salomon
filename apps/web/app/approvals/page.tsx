@@ -18,7 +18,7 @@ export default function Approvals() {
   };
   return (
     <div>
-      <h1 className="font-serif text-3xl text-zinc-50">Approvals</h1>
+      <h1 className="text-3xl text-zinc-50">Approvals</h1>
       <p className="mt-1 text-sm text-zinc-400">Salomon proposes; you decide. Nothing is saved, exported, sent, or published until you approve it here.</p>
       <p className="mt-1 text-xs text-amber-400/80">Approvals UI is dogfood for M3 — not a shipped product gate yet.</p>
       <div className="mt-6 space-y-4">

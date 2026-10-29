@@ -45,89 +45,86 @@ export default function Research() {
   const textOf = (m: (typeof messages)[number]) => m.parts.map((p) => (p.type === 'text' ? p.text : '')).join('');
 
   return (
-    <div className="grid gap-10 lg:grid-cols-[1fr_300px]">
-      <section>
-        <div className="text-[10px] uppercase tracking-[0.3em] text-red-500/80">Research desk</div>
-        <h1 className="mt-1 font-serif text-4xl text-zinc-50">Ask about your reporting</h1>
-        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-zinc-400">
-          Names, emails, phones and handles are masked in your browser before sending. Masking is a <strong className="text-zinc-300">demo heuristic, not a guarantee</strong> (M2).
-          Current engine: <span className="font-mono text-zinc-300">{label.text}</span>.
-        </p>
-
-        {!notes && (
-          <div className="mt-6 flex items-center justify-between gap-4 rounded border border-dashed border-zinc-700 bg-zinc-950 px-5 py-4">
-            <div className="text-sm text-zinc-400"><span className="text-zinc-200">New here?</span> Load a sample interview log, then ask a question.</div>
-            <button onClick={() => setNotes(SAMPLE_NOTES)} className="shrink-0 rounded bg-red-800 px-4 py-2 text-sm font-medium text-white hover:bg-red-700">Load sample notes</button>
+    <div className="relative mx-auto flex min-h-[calc(100vh-9rem)] max-w-3xl flex-col">
+      <div className="flex-1 pb-44">
+        {messages.length === 0 ? (
+          <div className="flex flex-col items-center pt-[12vh] text-center">
+            <h1 className="text-2xl font-medium tracking-tight text-zinc-100">What are you reporting on?</h1>
+            <p className="mt-2 max-w-md text-[13px] leading-relaxed text-zinc-500">
+              Names, emails, phones and handles are masked in your browser before sending — a demo heuristic, not a guarantee.
+            </p>
+            {!notes && (
+              <button onClick={() => setNotes(SAMPLE_NOTES)} className="mt-6 rounded-full border border-white/10 px-3.5 py-1.5 text-[13px] text-zinc-300 hover:bg-white/5">Load sample interview notes</button>
+            )}
+            <div className="mt-8 grid w-full gap-2 sm:grid-cols-2">
+              {SUGGESTIONS.slice(0, 2).map((s) => (
+                <button key={s} onClick={() => ask(s)} disabled={busy} className="rounded-xl border border-white/[0.07] px-4 py-3 text-left text-[13px] leading-snug text-zinc-400 hover:bg-white/[0.03] hover:text-zinc-200">{s}</button>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div className="space-y-8 pt-2">
+            {messages.map((m) => {
+              const text = textOf(m);
+              const user = m.role === 'user';
+              const shown = user ? text.split('\n\n--- Notes (untrusted data) ---')[0] : text;
+              const refused = !user && /^(Refused|I won't)/.test(text);
+              return user ? (
+                <div key={m.id} className="flex flex-col items-end">
+                  <div className="max-w-[85%] whitespace-pre-wrap rounded-2xl bg-white/[0.06] px-4 py-2.5 text-[15px] leading-relaxed text-zinc-100">{shown}</div>
+                  <div className="mt-1 text-[10px] text-zinc-600">as sent, masked{text.includes('--- Notes') ? ' · notes attached' : ''}</div>
+                </div>
+              ) : (
+                <article key={m.id}>
+                  <div className="mb-1.5 text-[11px] text-zinc-500">{label.who}</div>
+                  <div className={`whitespace-pre-wrap text-[15px] leading-7 ${refused ? 'text-amber-300/90' : 'text-zinc-200'}`}>{shown}</div>
+                  {!busy && !refused && text && (
+                    <div className="mt-2 flex gap-3 text-[12px] text-zinc-600">
+                      <button onClick={() => propose(text, 'save')} className="hover:text-zinc-300">Propose save</button>
+                      <button onClick={() => propose(text, 'export')} className="hover:text-zinc-300">Propose export</button>
+                    </div>
+                  )}
+                </article>
+              );
+            })}
+            {status === 'submitted' && <p className="animate-pulse text-[13px] text-zinc-500">Reading masked notes…</p>}
+            {error && <p className="text-[13px] text-red-400/90">Request failed. Nothing was saved or sent. {error.message}</p>}
+            <div ref={end} />
           </div>
         )}
 
-        <div className="mt-6 min-h-[380px] space-y-6 rounded border border-zinc-800 bg-[#0d0e11] p-6">
-          {messages.length === 0 && (
-            <div className="space-y-2">
-              <p className="text-xs uppercase tracking-widest text-zinc-600">Try</p>
-              {SUGGESTIONS.map((s) => (
-                <button key={s} onClick={() => ask(s)} disabled={busy} className="block w-full rounded border border-zinc-800 px-4 py-2.5 text-left text-sm text-zinc-300 hover:border-zinc-600 hover:bg-zinc-900">{s}</button>
+        <details className="mt-12 text-[12px] text-zinc-500">
+          <summary className="cursor-pointer select-none text-zinc-600 hover:text-zinc-400">Protections · mask map ({map.length}) · {proposals.filter((p) => p.status === 'pending').length} pending approvals</summary>
+          <div className="mt-3 grid gap-4 rounded-xl border border-white/[0.07] p-4 sm:grid-cols-2">
+            <ul className="space-y-1">
+              <li>✓ Credentials stripped server-side</li>
+              <li>✓ No keys in browser or model context</li>
+              <li>◌ Masking: demo heuristic, not a guarantee (M2)</li>
+              <li>◌ Propose → approve gate (M3 placeholder)</li>
+            </ul>
+            <ul className="space-y-1 font-mono text-[11px]">
+              {map.length === 0 ? <li>Nothing masked yet</li> : map.slice(0, 10).map((e) => (
+                <li key={e.token} className="flex justify-between"><span className="text-zinc-300">{e.token}</span><span>{e.kind}</span></li>
               ))}
-            </div>
-          )}
-          {messages.map((m) => {
-            const text = textOf(m);
-            const user = m.role === 'user';
-            const shown = user ? text.split('\n\n--- Notes (untrusted data) ---')[0] : text;
-            const refused = !user && /^(Refused|I won't)/.test(text);
-            return (
-              <article key={m.id} className={`border-l-2 pl-4 ${user ? 'border-zinc-600' : refused ? 'border-amber-600' : 'border-red-800'}`}>
-                <div className="text-[10px] uppercase tracking-widest text-zinc-500">
-                  {user ? `You · as sent, masked${text.includes('--- Notes') ? ' · notes attached' : ''}` : label.who}
-                </div>
-                <div className={`mt-1.5 whitespace-pre-wrap leading-relaxed ${user ? 'text-sm text-zinc-300' : 'font-serif text-[15px] text-zinc-100'}`}>{shown}</div>
-                {!user && !busy && !refused && text && (
-                  <div className="mt-3 flex gap-2">
-                    <button onClick={() => propose(text, 'save')} className="rounded border border-zinc-700 px-2.5 py-1 text-xs text-zinc-400 hover:bg-zinc-800 hover:text-zinc-100">Propose save</button>
-                    <button onClick={() => propose(text, 'export')} className="rounded border border-zinc-700 px-2.5 py-1 text-xs text-zinc-400 hover:bg-zinc-800 hover:text-zinc-100">Propose export</button>
-                  </div>
-                )}
-              </article>
-            );
-          })}
-          {status === 'submitted' && <p className="animate-pulse text-xs text-zinc-500">Reading masked notes…</p>}
-          {error && <p className="text-sm text-red-400">Request failed. Nothing was saved or sent. {error.message}</p>}
-          <div ref={end} />
-        </div>
+            </ul>
+          </div>
+        </details>
+      </div>
 
-        <form onSubmit={(e) => { e.preventDefault(); ask(input); }} className="mt-4 flex gap-2">
-          <input value={input} onChange={(e) => setInput(e.target.value)} placeholder="Ask a research question…" className="flex-1 rounded border border-zinc-700 bg-[#0d0e11] px-4 py-3 text-sm outline-none focus:border-red-800" />
-          {busy ? <button type="button" onClick={() => stop()} className="rounded border border-zinc-600 px-5 text-sm text-zinc-200">Stop</button>
-            : <button className="rounded bg-zinc-100 px-6 text-sm font-medium text-zinc-900 hover:bg-white">Ask</button>}
+      <div className="sticky bottom-0 -mx-2 bg-gradient-to-t from-[#0e0f11] via-[#0e0f11] to-transparent px-2 pb-4 pt-6">
+        <form onSubmit={(e) => { e.preventDefault(); ask(input); }} className="rounded-2xl border border-white/10 bg-[#16171a] p-2 focus-within:border-white/20">
+          <textarea value={input} rows={2} onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); ask(input); } }}
+            placeholder="Ask about your reporting…" className="block max-h-48 w-full resize-none bg-transparent px-2 py-1.5 text-[15px] text-zinc-100 outline-none placeholder:text-zinc-600" />
+          <div className="flex items-center justify-between px-1">
+            <label className="flex items-center gap-1.5 text-[11px] text-zinc-500">
+              <input type="checkbox" checked={attach} onChange={(e) => setAttach(e.target.checked)} className="accent-zinc-400" /> Attach notes ({notes.length} chars, masked)
+            </label>
+            {busy ? <button type="button" onClick={() => stop()} className="rounded-full border border-white/15 px-3 py-1 text-[12px] text-zinc-200">Stop</button>
+              : <button disabled={!input.trim()} className="rounded-full bg-zinc-100 px-3.5 py-1 text-[12px] font-medium text-zinc-900 disabled:opacity-30">Send</button>}
+          </div>
         </form>
-        <label className="mt-2 flex items-center gap-2 text-xs text-zinc-500">
-          <input type="checkbox" checked={attach} onChange={(e) => setAttach(e.target.checked)} /> Attach notes from Sources ({notes.length} chars, masked before sending)
-        </label>
-      </section>
-
-      <aside className="space-y-4 text-sm">
-        <Card title="Protections">
-          <li>✓ Credentials stripped server-side</li>
-          <li>✓ No keys in browser or model context</li>
-          <li className="text-zinc-500">◌ Masking: demo heuristic, not a guarantee (M2)</li>
-          <li className="text-zinc-500">◌ Propose → approve gate (M3 placeholder)</li>
-        </Card>
-        <Card title={`Mask map · ${map.length}`}>
-          {map.length === 0 ? <li className="text-zinc-500">Nothing masked yet</li> : map.slice(0, 10).map((e) => (
-            <li key={e.token} className="flex justify-between font-mono text-xs"><span className="text-red-400">{e.token}</span><span className="text-zinc-600">{e.kind}</span></li>
-          ))}
-        </Card>
-        <Card title="Pending approvals"><li>{proposals.filter((p) => p.status === 'pending').length} waiting</li></Card>
-      </aside>
-    </div>
-  );
-}
-
-function Card({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <div className="rounded border border-zinc-800 bg-[#0d0e11] p-4">
-      <div className="mb-2.5 text-[10px] uppercase tracking-[0.2em] text-zinc-500">{title}</div>
-      <ul className="space-y-1.5 text-zinc-300">{children}</ul>
+      </div>
     </div>
   );
 }

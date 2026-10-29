@@ -11,28 +11,24 @@ const NAV = [
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const path = usePathname();
-  const mode = useMode();
-  const b = modeLabel(mode);
+  const b = modeLabel(useMode());
   return (
-    <div className="min-h-screen bg-[#08090b] text-zinc-200">
-      <header className="sticky top-0 z-10 border-b border-zinc-800/80 bg-[#0b0c0f]/95 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center gap-8 px-6 py-3.5">
-          <div className="flex items-baseline gap-3">
-            <span className="font-serif text-2xl tracking-tight text-zinc-50">Salomon</span>
-            <span className="hidden text-[10px] uppercase tracking-[0.25em] text-zinc-500 sm:inline">Local research · Phase 3 M1</span>
-          </div>
-          <nav className="flex gap-1">
+    <div className="flex min-h-screen flex-col bg-[#0e0f11] text-zinc-200">
+      <header className="sticky top-0 z-20 border-b border-white/5 bg-[#0e0f11]/90 backdrop-blur">
+        <div className="mx-auto flex h-12 max-w-5xl items-center gap-6 px-5">
+          <span className="text-[15px] font-semibold tracking-tight text-zinc-100">Salomon</span>
+          <nav className="flex gap-0.5">
             {NAV.map((n) => (
-              <Link key={n.href} href={n.href} className={`px-3 py-1.5 text-sm transition ${path === n.href ? 'border-b-2 border-red-700 text-zinc-50' : 'border-b-2 border-transparent text-zinc-400 hover:text-zinc-100'}`}>{n.label}</Link>
+              <Link key={n.href} href={n.href} className={`rounded-md px-2.5 py-1 text-[13px] transition ${path === n.href ? 'bg-white/[0.06] text-zinc-100' : 'text-zinc-500 hover:text-zinc-200'}`}>{n.label}</Link>
             ))}
           </nav>
-          <span className={`ml-auto rounded border px-2 py-1 font-mono text-[11px] ${b.cls}`}>{b.text}</span>
+          <span title="Engine mode" className={`ml-auto truncate rounded-full border px-2 py-0.5 font-mono text-[10px] ${b.cls}`}>{b.text}</span>
         </div>
       </header>
-      <main className="mx-auto max-w-6xl px-6 py-10">{children}</main>
-      <footer className="mx-auto max-w-6xl border-t border-zinc-900 px-6 py-6 text-xs leading-relaxed text-zinc-600">
-        Dogfood build. A real on-device model is always preferred; REMOTE GATEWAY mode sends masked text to a cloud model and is always labeled — never a silent cloud fallback.
-        Masking is a demo heuristic, not a guarantee (M2). Save/export approvals are M3 placeholders. Credentials are stripped before any model.
+      <main className="mx-auto w-full max-w-5xl flex-1 px-5 py-8">{children}</main>
+      <footer className="mx-auto w-full max-w-3xl px-5 pb-4 text-center text-[11px] leading-relaxed text-zinc-600">
+        Dogfood · Phase 3 M1. REMOTE mode sends masked text to a cloud model and is always labeled — no silent cloud fallback.
+        Masking is a demo heuristic, not a guarantee. Approvals are M3 placeholders.
       </footer>
     </div>
   );
