@@ -2,6 +2,12 @@
 
 > **Lead pivot — Thu Oct 29, 2026, ~15:16 PDT (America/Vancouver).** Salomon is now a **fully AI project**: privacy-first personal / agent AI, small models that refuse to leak secrets, local-first inference, safe agent tools + sanitizer, no keys in the model, optional future confidential compute (unnamed). The crypto/on-chain narrative is **archived** — Intents, Chain Signatures, contracts, tokens, staking-for-credits, and cloud-TEE attestation as a product. Phase 1 SLM/refusal and Phase 2 agent/sanitizer remain engineering assets. Entries below are kept verbatim as history.
 
+## Thu Oct 29, 2026, ~15:23 PDT — AI-first push landed + follow-up pass (Docs Lead)
+- Push landed: salomon main **`bcf2d07`** (prior batch `4464e5c`).
+- Follow-up pass: SECURITY.md, phase1-slm/README.md, phase2/README.md reframed AI-first (archived provider named only in archive sections); docs/README.md got a framing note. Not pushed.
+- Lead answers recorded in STATUS: generic verified-remote; dataset unpark ⇒ privacy-AI refresh; this pass covers SECURITY + phase READMEs.
+- Team roster (Lead rename): core Lead Architect, Model Engineer, Agent Runtime, Privacy & Safety, Docs Lead, Platform Engineer; new Eval Lead, Data Curator, Frontend Engineer, Product, Release Engineer, Research.
+
 ## Thu Oct 29, 2026, ~15:16 PDT — Lead pivot narrative rewrite (Tech Docs)
 - README, ARCHITECTURE rewritten AI-first; STATUS header/Next steps and ROADMAP header/mermaid/Phases 3–4 reframed; on-chain track moved to "Archived" sections. No evidence files deleted; no engineering status changed. Draft not pushed.
 ## Wed Oct 28, 2026 (PDT) — initial scaffold

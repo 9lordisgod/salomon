@@ -4,7 +4,17 @@
 
 **Phase:** **2 (agent loop, tools, sanitizer) — IN PROGRESS.** Phase 1 gate done (7B refusal 8/8); dataset **PARKED** at 362 seed rows. Phase 1.5 privacy gate (1)–(5) SIGNED. Phase 2 M1–M3 **GREEN**. M4 propose-only stubs (G1+G2 ACCEPTED, soft verifier ACCEPT, phase2 59/59, salomon `79c0f99`) are **archived as a safe-tooling pattern**, not product; G3 never opened.
 
-**Latest:** Narrative rewrite of README / ARCHITECTURE / STATUS / ROADMAP / PROGRESS headers to AI-first (draft, not pushed). No engineering status changed. Earlier entries below are history and still use the original on-chain framing.
+**Latest (15:23 PDT):** AI-first push landed on salomon main **`bcf2d07`** (prior batch `4464e5c`). Follow-up pass reframes SECURITY.md, phase1-slm/README.md, phase2/README.md, docs/README.md AI-first (draft, not pushed). No engineering status changed. Earlier entries below are history and still use the original on-chain framing.
+
+## Lead answers (2026-10-29)
+1. Product docs say generic **verified-remote** / unnamed confidential compute; the archived provider is named only in archive sections.
+2. When the dataset unparks → refresh toward **general privacy AI** (not crypto).
+3. SECURITY.md + phase READMEs reframed in this follow-up pass.
+
+## Team (Lead rename 2026-10-29)
+- **Core:** Lead Architect (master), Model Engineer, Agent Runtime, Privacy & Safety, Docs Lead, Platform Engineer.
+- **New:** Eval Lead, Data Curator, Frontend Engineer, Product, Release Engineer, Research.
+- Prior titles (in history below): SLM Engineer, Agent Engineer, Privacy Security, NEAR Contracts, Tech Docs.
 
 ## Files
 - ARCHITECTURE.md, ROADMAP.md, STATUS.md, PROGRESS.md
@@ -30,7 +40,7 @@ docs/reviews/SECURITY_REVIEW_PHASE1.md landed (Privacy Security). Lead Architect
 ## Next steps
 0. **Lead pivot (2026-10-29 ~15:16 PDT):** AI-first narrative. On-chain items (Intents, Chain Signatures, contracts, tokens, staking-for-credits, cloud-TEE provider as product) are **parked/archived**. Await Lead direction for the next Phase 2/3 milestone (e.g. non-chain read-only tools, local-first packaging).
 1. Get a GPU host for the real QLoRA run (7B, 4-bit). Then do a full-data 0.5B LoRA run on CPU and compare tuned vs. baseline eval.
-2. **PARKED (user, via Lead 2026-10-29 ~11:44 PDT):** no 2k / multi-turn expansion. Seed stays at **362** rows. Gate item (5) stays **SIGNED**. Resume only when unparked. Note: seed content is crypto/NEAR-heavy; a refresh toward general privacy/secret-handling is an open question for Lead.
+2. **PARKED (user, via Lead 2026-10-29 ~11:44 PDT):** no 2k / multi-turn expansion. Seed stays at **362** rows. Gate item (5) stays **SIGNED**. Resume only when unparked. Note: seed content is crypto/NEAR-heavy; Lead answer: refresh toward general privacy AI when unparked.
 3. ~~Phase 1.5 items (1)–(5)~~ — SIGNED OFF.
 4. ~~Pin `transformers>=5,<6`~~ — done.
 5. Archived: M4 G1+G2 ACCEPTED propose-only stubs (salomon `79c0f99`); G3 not opened and not planned.
