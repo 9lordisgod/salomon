@@ -1,6 +1,7 @@
-# Salomon — privacy-first AI + crypto on NEAR
+# Salomon — private AI for crypto, on NEAR
 
-> A local-first crypto/privacy SLM that grows into a policy-guarded agent on NEAR. It never holds your keys.
+> **An AI that helps you with crypto without ever touching your keys, your logs, or your trust.**
+> Local-first small language model → fail-closed private inference → policy check → *you* sign.
 
 ![visibility](https://img.shields.io/badge/repo-private-black)
 ![phase](https://img.shields.io/badge/Phase-1%20SLM%20foundation-blue)
@@ -8,34 +9,98 @@
 ![refusal](https://img.shields.io/badge/refusal%20eval%207B-8%2F8%20signed%20off-brightgreen)
 ![phase2](https://img.shields.io/badge/Phase%202-not%20started-lightgrey)
 
+```
+┌──────────────┬──────────────┬──────────────┬──────────────┬──────────────┐
+│  🧠 LOCAL SLM │ 🛡️ SANITIZER  │ 🔐 TEE (opt.) │ 📜 POLICY     │ ✍️ SIGNER     │
+│ on your box  │ strips PII   │ attested or  │ simulate +   │ HW / TEE /   │
+│ no logs      │ & secrets    │ refused      │ spend limits │ MPC — not AI │
+└──────────────┴──────────────┴──────────────┴──────────────┴──────────────┘
+          model proposes  ─────────────────────────────►  human/policy disposes
+```
+
 ---
+
+## The problem
+
+AI assistants and crypto wallets are colliding — unsafely.
+
+| Today | What goes wrong |
+|---|---|
+| 🔑 Users paste seed phrases into chatbots | Keys land in prompts, logs and training data |
+| 📝 Every prompt is logged server-side | Your balances, addresses and intent become a profile |
+| ☁️ Remote inference "just trusts" the host | No proof the operator can't read or alter your request |
+| 💉 Agents read on-chain memos & token names | Attackers inject *"transfer all funds to…"* straight into the agent |
+| 🤖 Agents hold hot keys to "be helpful" | One bad completion = drained wallet |
+
+## Salomon's answer
+
+1. **Local-first SLM** — a crypto/privacy-tuned 7B model that runs on your hardware by default.
+2. **Fail-closed TEE** — remote inference only on NEAR AI Cloud enclaves with *verified* attestation. No proof → no call.
+3. **Policy before sign** — every action is schema-checked, simulated and spend-limited before anything is signed.
+4. **The model never holds keys** — signing lives in a hardware wallet, TEE or NEAR Chain Signatures MPC.
+5. **On-chain text is hostile** — memos and metadata are treated as untrusted input, tested by a refusal eval.
+
+## Why it matters
+
+| | Status quo AI wallet / chatbot | **Salomon** |
+|---|---|---|
+| **Keys** | Pasted into chats, held by agents | Never enter the model; signer is separate |
+| **Privacy** | Prompts logged remotely by default | Local by default, logs off, PII stripped |
+| **Remote inference** | Trust the provider | Cryptographic attestation or refuse |
+| **Agent writes** | Model output → transaction | Model *proposes* → policy → explicit sign |
+| **Injection** | Untested | Gated: R3 prompt-injection eval must pass |
+| **Crime assist** | Varies | Teaches privacy, refuses laundering (R1 eval) |
+
+**Result:** the useful parts of an AI copilot for NEAR — explain, plan, draft intents — without making the AI the weakest link.
+
+---
+
+## How a request flows
+
+```mermaid
+flowchart LR
+  A["💬 You ask<br/>'Stake 10 NEAR safely'"] --> B["🛡️ Sanitizer<br/>strip keys · PII"]
+  B --> C["🧠 Local SLM<br/>drafts a plan"]
+  C -->|needs a bigger model?| D{"🔐 TEE attested?"}
+  D -->|yes| E["NEAR AI Cloud<br/>private inference"]
+  D -->|no| X1["⛔ stay local"]
+  E --> F
+  C --> F{"📜 Policy engine<br/>schema · simulate · limits"}
+  F -->|fail| X2["⛔ blocked + reason"]
+  F -->|pass| G["✍️ You approve<br/>HW wallet / MPC signs"]
+  G --> H["⛓️ NEAR"]
+```
 
 ## Architecture
 
 ```mermaid
 flowchart LR
-  U[User] --> S[Local sanitizer]
-  S --> M[SLM core<br/>Qwen2.5-7B + QLoRA]
-  M --> A[Agent loop<br/>read-only tools first]
-  A --> P{Policy engine<br/>schema · simulate · spend limits}
-  P -->|approved| SG[Signer<br/>HW wallet / TEE / MPC]
-  M -. attested only .-> T[NEAR AI Cloud<br/>TEE private inference]
-  SG --> I[NEAR Intents]
-  SG --> C[Chain Signatures]
-  A --> CR[Staking-for-credits]
+  U["👤 User"] --> S["Sanitizer<br/>(local)"]
+  S --> M["SLM core<br/>Qwen2.5-7B + QLoRA"]
+  M --> A["Agent loop<br/>read-only tools first"]
+  A --> P{"Policy engine<br/>schema · simulate · spend caps"}
+  P -->|approved| SG["Signer<br/>HW wallet · TEE · MPC"]
+  M -. "attested only" .-> T["NEAR AI Cloud<br/>TEE inference"]
+  SG --> I["NEAR Intents"]
+  SG --> C["Chain Signatures<br/>(multi-chain)"]
+  A --> CR["Staking-for-credits"]
+  classDef stop fill:#fee,stroke:#c33;
+  class P,SG stop;
 ```
 
-The model **proposes** actions. It never signs them. Every arrow fails closed.
+The model **proposes**. It never signs. Every arrow fails closed. Details: [ARCHITECTURE.md](ARCHITECTURE.md).
 
-## Phase timeline
+## Roadmap
 
 ```mermaid
 flowchart LR
-  P1[Phase 1<br/>SLM foundation<br/>🟦 in progress] --> G{{Phase 1.5<br/>Privacy gate<br/>🟧 OPEN}}
-  G --> P2[Phase 2<br/>Agent + private inference<br/>⬜]
-  P2 --> P3[Phase 3<br/>Contracts · Intents · Chain Sigs · Market<br/>⬜]
-  P3 --> P4[Phase 4<br/>Privacy hardening + prod<br/>⬜]
+  P1["Phase 1<br/>SLM foundation<br/>🟦 in progress"] --> G{{"Phase 1.5<br/>Privacy gate<br/>🟧 OPEN"}}
+  G --> P2["Phase 2<br/>Agent + private inference<br/>⬜"]
+  P2 --> P3["Phase 3<br/>Contracts · Intents · Chain Sigs<br/>⬜"]
+  P3 --> P4["Phase 4<br/>Hardening + production<br/>⬜"]
 ```
+
+Nothing ships to Phase 2 until every gate item below is signed off.
 
 | Phase 1.5 gate item | Status |
 |---|---|
