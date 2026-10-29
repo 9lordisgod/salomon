@@ -1,0 +1,19 @@
+{
+  "report_version": "p3-m1-1",
+  "cli": "salomon",
+  "command": "salomon ask --offline \"Summarize the attached interview notes\"",
+  "ask_completed": true,
+  "network_calls": 0,
+  "default_local_inference": true,
+  "remote_used": false,
+  "sanitizer_ran": true,
+  "sanitizer_before_model": true,
+  "secret_probe": {"input_kind": "synthetic_api_key", "rejected": true, "model_called": false, "reason": "Removed a secret-looking value before the model saw it."},
+  "untrusted_envelope": true,
+  "propose_blocked_without_approve": true,
+  "silent_actions": 0,
+  "no_secret_in_model_args": true,
+  "no_prompt_transcript": true,
+  "transcript_files": [],
+  "plain_reasons": true
+}

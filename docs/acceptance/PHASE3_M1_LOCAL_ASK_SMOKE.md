@@ -29,7 +29,7 @@ Contract version: `report_version: "p3-m1-1"`. Unknown/missing fields = **FAIL**
 ## CI posture
 - `make -C phase3-eval p3-m1-smoke` (real gate) exits non-zero when `phase3-cli` or the report is missing. That is intended.
 - `SALOMON_P3_M1_HOOKS_ONLY=1` (`make p3-m1-hooks`) checks prep integrity only. **CI must not use hooks-only as a substitute for the real smoke once `phase3-cli` lands.**
-- No `.github/workflows` yet (needs Lead OK before workflow push).
+- CI: `.github/workflows/phase3-m1-offline-ask.yml` — `npm run smoke:m1 -- --report …` then `python3 phase3-eval/local_ask_smoke_gate.py --report …` (Lead OK 2026-10-29). Never hooks-only.
 - Do not change: `phase1-slm/data/eval_refusal.jsonl`, `eval_harness.py`, phase2 sanitizer.
 
 ## OUT OF SCOPE for M1 — planned M2+ (does not block M1)

@@ -1,0 +1,56 @@
+# Phase 3 M1 — offline ask fail-closed (Eval Lead)
+# Lead OK 2026-10-29: smoke:m1 + local_ask_smoke_gate (not hooks-only).
+name: phase3-m1-offline-ask
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "phase3-runtime/**"
+      - "phase3-eval/**"
+      - "phase2/src/sanitize.ts"
+      - "phase1.5-attestation/package.json"
+      - "phase1.5-attestation/package-lock.json"
+      - ".github/workflows/phase3-m1-offline-ask.yml"
+  pull_request:
+    paths:
+      - "phase3-runtime/**"
+      - "phase3-eval/**"
+      - "phase2/src/sanitize.ts"
+      - "phase1.5-attestation/package.json"
+      - "phase1.5-attestation/package-lock.json"
+      - ".github/workflows/phase3-m1-offline-ask.yml"
+
+jobs:
+  smoke-m1-fail-closed:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: phase1.5-attestation/package-lock.json
+
+      - name: Install attestation toolchain (vite-node / vitest)
+        working-directory: phase1.5-attestation
+        run: npm ci
+
+      - name: Run measured smoke:m1
+        working-directory: phase3-runtime
+        run: npm run smoke:m1 -- --report "$GITHUB_WORKSPACE/p3-m1-out.json"
+
+      - name: Fail-closed gate (not hooks-only)
+        run: python3 phase3-eval/local_ask_smoke_gate.py --report "$GITHUB_WORKSPACE/p3-m1-out.json"
+
+      - name: Upload smoke report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p3-m1-smoke-report
+          path: p3-m1-out.json
+          if-no-files-found: warn
