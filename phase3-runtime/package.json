@@ -1,0 +1,13 @@
+{
+  "name": "@near-privacy-ai/phase3-runtime",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Phase 3 M1: askLocal — offline local ask through the phase2 hardened loop. Reuses ../phase1.5-attestation toolchain.",
+  "exports": { ".": "./src/index.ts" },
+  "scripts": {
+    "test": "../phase1.5-attestation/node_modules/.bin/vitest run --root .",
+    "typecheck": "../phase1.5-attestation/node_modules/.bin/tsc --noEmit -p .",
+    "smoke:m1": "../phase1.5-attestation/node_modules/.bin/vite-node src/smokeM1.ts --"
+  }
+}
