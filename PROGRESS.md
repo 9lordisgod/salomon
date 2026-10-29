@@ -2,6 +2,16 @@
 
 > **Niche (main `f9d75fd`, 2026-10-29):** Salomon is a local research agent for journalists and investigators that protects sources. Crypto archived under `docs/archive/`. Entries below remain history.
 
+## Thu Oct 29, 2026, ~16:07 PDT — Tip `5be6454` hybrid/framing amend (Docs Lead)
+- Main tip **`5be6454`**: HYBRID_TRUST_BOUNDARIES, FRAMING soft one-liner, SECURITY_SOFT_SKIM_FRAMING, SECURITY_REFLECTION_HYBRID. Prior claims tip `7301381`. README hero held.
+
+## Thu Oct 29, 2026, ~16:06 PDT — Tip `7301381` Framing A + claims fold (Docs Lead)
+- Main tip **`7301381`** (Framing A batch `a6f1d23` + ROADMAP/RUNBOOK/COPY_FIXES/apps-web README). README hero held. M1 not green; M2 NOT OPEN.
+
+## Thu Oct 29, 2026, ~16:05 PDT — Claims fold (Docs Lead; awaiting Lead push)
+
+- Landed `docs/notes/PRODUCT_NICHE.md` (promise = target M1–M3). ARCHITECTURE Phase 3 = Next.js web + `POST /api/ask` primary, CLI secondary. README badge → Phase 3 M1 in flight (orange); sanitizer / “sources stay local” softened to heuristic / goal. ROADMAP GGUF: pin+scripts landed vs live export not. Runbook links Product M1 acceptance + PS M2 criteria (criteria only; M2 not open). No M1 green, M2/M3, or live GGUF claimed.
+
 ## Thu Oct 29, 2026, ~15:58 PDT — PS S1 SOFT CLEAR (Docs Lead)
 - PS re-skim: **S1 SOFT CLEAR** for M1 dogfood copy after Frontend fixes (`DEMO · REMOTE`, `DEMO · stub · not a local model`; no Source-safe chrome). S2 ACCEPT unchanged. Main `62c5a80` + `339cb05` (prior `9f89ed9`). Stamp addendum in `docs/reviews/SECURITY_SOFT_SKIM_SALOMON_APP_M1_RESKIM.md`. `PHASE3_M1_COPY_FIXES.md` path → `apps/web/README.md`. M2/M3 not claimed.
 

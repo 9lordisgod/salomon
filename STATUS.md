@@ -8,7 +8,7 @@
 - **M0 DONE** — Scope lock: Lead approved the Phase 3 journalist MVP brief (`docs/notes/PRODUCT_NICHE.md`, Product brief).
 - **M1 IN FLIGHT** — Local run path: offline/local `ask` end-to-end (fail closed if model missing). **Primary surface = Next.js web + API** (`POST /api/ask`); CLI secondary. Runbook: `docs/notes/PHASE3_MVP_RUNBOOK.md`.
 
-**Latest (~16:05 PDT):** Claims fold ready (awaiting Lead push): PRODUCT_NICHE; ARCHITECTURE web+`/api/ask` primary + PS sanitizer tighten (secrets today, source-ID = M2); README M1-in-flight honesty; ROADMAP GGUF pin/scripts only; Product accept + M2 criteria (not open); Frontend desk `/api/ask` `16c4d50` + Sources soft-copy `973883a`. M1 not green until offline smoke. PS Sources+desk soft CLEAR stamped (`SECURITY_SOFT_SKIM_SALOMON_APP_SOURCES_RESKIM.md`).
+**Latest (~16:07 PDT):** Framing/hybrid amend tip **`5be6454`** — `HYBRID_TRUST_BOUNDARIES` + FRAMING soft edits (one-liner: mask+sanitize+attest) + `SECURITY_SOFT_SKIM_FRAMING` + `SECURITY_REFLECTION_HYBRID`. Prior claims tip `7301381` (via `a6f1d23`). README hero held. M1 not green; M2 eng NOT OPEN; hybrid not shipped. Residual: confirm apps/web = salomon-app.
 
 **Prior (~15:58 PDT):** PS **S1 SOFT CLEAR** after Frontend copy (`DEMO · REMOTE` / `DEMO · stub` badges; no Source-safe chrome) — main `62c5a80` (S1 copy-align docs) + `339cb05` (Frontend runtime/mode); stamp `docs/reviews/SECURITY_SOFT_SKIM_SALOMON_APP_M1_RESKIM.md`. S2 still ACCEPT. M1 still **IN FLIGHT**; M2/M3 **not shipped**. Frontend closed PS soft note 1: desk → /api/ask default (`16c4d50`); gateway only on explicit REMOTE. Sources soft-copy `973883a`. Soft note 2 still open: confirm apps/web = salomon-app. Prior: skim `9f89ed9`.
 
@@ -16,9 +16,9 @@
 
 ### Framing A LOCKED (yoxi, 2026-10-29 ~16:04 PDT) — STATUS fold (Docs)
 - **Framing LOCKED:** source-protected research agent — local = privacy floor + default; optional verified remote only after **mask→sanitize→attest→complete**; no auto-fallback; no cloud-by-default.
-- Design note: `docs/notes/FRAMING_SOURCE_PROTECTED_DRAFT.md` (Product; Lead+PS).
-- **README hero unchanged** until Docs fold + PS soft-clear of claim language (migration target one-liner is in that note — not landed).
-- Sequence unchanged: **M1-live → M2 mask → hybrid spike later.** Crypto parked. **Do not claim hybrid shipped.** Demo gateway ≠ verified remote. M2 still NOT OPEN; M1 not green.
+- Design note: `docs/notes/FRAMING_SOURCE_PROTECTED_DRAFT.md`. Trust boundaries: `docs/notes/HYBRID_TRUST_BOUNDARIES.md`. PS skim **SOFT CLEAR**: `docs/reviews/SECURITY_SOFT_SKIM_FRAMING_SOURCE_PROTECTED.md` (one-liner soft-edit: after mask, sanitization, and attestation).
+- **README hero unchanged** until Lead opens it. Locked one-liner (Product+PS): `Source-protected research agent for journalists — local by default; heavier work only on verified remote after mask, sanitization, and attestation.` Tips **`5be6454`** (hybrid/framing) · **`7301381`** (claims fold).
+- Sequence: **M1-live → M2 mask → hybrid spike later.** Crypto parked. **Do not claim hybrid shipped.** Demo gateway ≠ verified remote. M2 eng still NOT OPEN; M1 not green.
 
 ### Model Engineer niche reflection (2026-10-29 ~15:58 PDT)
 - M1 `ask_local.py --json` + `configs/source_care_system.txt` live for LocalCompleter (exits 0/2/3/4). Pin: `salomon-qwen25-7b-instruct-Q4_K_M.gguf` (bartowski single-file); split/Abliterated refuse. **Weight fetch APPROVED** (yoxi 2026-10-29) — Release/ME fetching pinned GGUF; Runtime owns live smoke after verify.
