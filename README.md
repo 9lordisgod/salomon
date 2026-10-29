@@ -4,10 +4,10 @@
 > Local-first small language model → fail-closed private inference → policy check → *you* sign.
 
 ![visibility](https://img.shields.io/badge/repo-private-black)
-![phase](https://img.shields.io/badge/Phase-1%20SLM%20foundation-blue)
-![gate](https://img.shields.io/badge/Phase%201.5%20stubs-SIGNED-green) ![p2](https://img.shields.io/badge/Phase%202-BLOCKED-orange)
-![refusal](https://img.shields.io/badge/refusal%20eval%207B-8%2F8%20signed%20off-brightgreen)
-![phase2](https://img.shields.io/badge/Phase%202-not%20started-lightgrey)
+![phase](https://img.shields.io/badge/Phase-2%20agent%20capabilities-blue)
+![gate](https://img.shields.io/badge/Phase%201.5%20stubs-SIGNED-green) ![p2](https://img.shields.io/badge/Phase%202-IN%20PROGRESS%20(M1%E2%80%93M3%20green)-brightgreen)
+![refusal](https://img.shields.io/badge/refusal%207B%20%2B%20live%20GLM-8%2F8%20signed%20off-brightgreen)
+![pin](https://img.shields.io/badge/remote%20model-z--ai%2Fglm--5.3--flash%20pinned-purple)
 
 ```mermaid
 flowchart LR
@@ -107,25 +107,31 @@ The model **proposes**. It never signs. Every arrow fails closed. Details: [ARCH
 
 ```mermaid
 flowchart LR
-  P1["Phase 1<br/>SLM foundation<br/>🟦 in progress"] --> G{{"Phase 1.5<br/>stub 1–5 ✅<br/>🟧 P2 BLOCKED"}}
-  G --> P2["Phase 2<br/>Agent + private inference<br/>⬜"]
+  P1["Phase 1<br/>SLM foundation<br/>🟦 in progress"] --> G{{"Phase 1.5<br/>gate 1–5 ✅"}}
+  G --> P2["Phase 2<br/>Agent + private inference<br/>🟩 M1–M3 green"]
   P2 --> P3["Phase 3<br/>Contracts · Intents · Chain Sigs<br/>⬜"]
   P3 --> P4["Phase 4<br/>Hardening + production<br/>⬜"]
 ```
 
-Phase 1.5 stub/criteria items **(1)–(5) are SIGNED OFF**. **Phase 2 is still BLOCKED** (no waive) by the residuals below — stub sign-off alone does not open Phase 2.
+Phase 1.5 items **(1)–(5) are SIGNED OFF**. **Phase 2 is IN PROGRESS** — narrow scope, read-only, fail-closed:
+
+- **M1** verified-remote inference on the allowlisted `z-ai/glm-5.3-flash` pin (attest + bind every call; dual GLM instances; `compose_file_sha256` pinned)
+- **M2–M3** agent loop + read-only NEAR tools (`view_access_key_list`, capped `view_state`, `block`, `gas_price`), multi-step chaining with hard step/tool caps
+- **Soft polish closed:** live GLM refusal **8/8** formally stamped; `role:tool` sanitizer accepted; compose-hash migration merge-approved
+- **Not yet:** no writes, no signing. The model still never holds keys. Abliterated DeepSeek is **not** pinned.
+
+Code: `phase2/`. Status of record: [STATUS.md](STATUS.md).
 
 | Phase 1.5 gate item | Status |
 |---|---|
-| (1) Threat model | ✅ **SIGNED OFF** — `SECURITY_SIGNOFF_PHASE1.5_1_3_4.md` |
-| (2) Attestation verify client (fail-closed) | ✅ **SIGNED OFF** (stub) — `SECURITY_SIGNOFF_ATTESTATION_ITEM2.md` (`phase1.5-attestation/` 15/15) |
-| (3) Sanitizer stub + tests | ✅ **SIGNED OFF** — `SECURITY_SIGNOFF_PHASE1.5_1_3_4.md` |
-| (4) Policy / spend stub | ✅ **SIGNED OFF** — `SECURITY_SIGNOFF_PHASE1.5_1_3_4.md` |
-| (5) Refusal / must-not-echo eval | ✅ **SIGNED OFF** — 7B Colab 8/8; `SECURITY_SIGNOFF_REFUSAL_7B.md`. R3 near-echo delta **CLEARED** (`SECURITY_SIGNOFF_R3_NEARECHO_DELTA.md`) |
+| (1) Threat model | ✅ **SIGNED OFF** — `docs/signoffs/SECURITY_SIGNOFF_PHASE1.5_1_3_4.md` |
+| (2) Attestation verify client (fail-closed) | ✅ **SIGNED OFF** (stub) — `docs/signoffs/SECURITY_SIGNOFF_ATTESTATION_ITEM2.md` (`phase1.5-attestation/` 15/15) |
+| (3) Sanitizer stub + tests | ✅ **SIGNED OFF** — `docs/signoffs/SECURITY_SIGNOFF_PHASE1.5_1_3_4.md` |
+| (4) Policy / spend stub | ✅ **SIGNED OFF** — `docs/signoffs/SECURITY_SIGNOFF_PHASE1.5_1_3_4.md` |
+| (5) Refusal / must-not-echo eval | ✅ **SIGNED OFF** — 7B Colab 8/8; `docs/signoffs/SECURITY_SIGNOFF_REFUSAL_7B.md`. R3 near-echo delta **CLEARED** (`docs/signoffs/SECURITY_SIGNOFF_R3_NEARECHO_DELTA.md`) |
 
-**R3 near-echo delta CLEARED** — `SECURITY_SIGNOFF_R3_NEARECHO_DELTA.md` (pointer on `SECURITY_SIGNOFF_REFUSAL_7B.md`); artifacts `phase1-slm/outputs/eval_refusal_7b_r3_nearecho/` 8/8. Item (5) stays closed.
+**R3 near-echo delta CLEARED** — `docs/signoffs/SECURITY_SIGNOFF_R3_NEARECHO_DELTA.md` (pointer on `docs/signoffs/SECURITY_SIGNOFF_REFUSAL_7B.md`); artifacts `phase1-slm/outputs/eval_refusal_7b_r3_nearecho/` 8/8. Item (5) stays closed.
 
-**Phase 2 blockers (remaining):** (b) real DCAP/gateway + PS-approved allowlist before live remote; (c) `provider_tee` response binding on the completions path. **No Phase 2 / no waive.**
 
 ## What's in Phase 1 now
 
@@ -140,9 +146,11 @@ Phase 1.5 stub/criteria items **(1)–(5) are SIGNED OFF**. **Phase 2 is still B
 ```
 .
 ├── README.md  ARCHITECTURE.md  ROADMAP.md  STATUS.md  PROGRESS.md
-├── SECURITY.md  SECURITY_REVIEW_*.md  SECURITY_SIGNOFF_REFUSAL_7B.md
-├── THREAT_MODEL_PHASE1.md  THREAT_MODEL_PHASE1.5.md
-├── REFUSAL_EVAL_CRITERIA.md  PHASE1_SCRIPT_FIXES.md  phase2-readiness.md
+├── SECURITY.md  .gitignore
+├── docs/            acceptance · threat-models · reviews · signoffs · notes  (index: docs/README.md)
+├── phase1.5-attestation/   fail-closed attestation verify + GLM allowlist
+├── phase2/          verified-remote agent loop + read-only tools
+├── privacy/         sanitizer + policy/spend stubs
 └── phase1-slm/
     ├── README.md  Makefile  requirements.txt
     ├── configs/model_config.yaml
