@@ -1,0 +1,9 @@
+{
+  "model_id": "z-ai/glm-5.3-flash",
+  "mrconfigid": "015f7ebd85cf1f480a118f75dd10fd0cb277e4ddbb23845f1c20d8ea0f1e87efa6000000000000000000000000000000",
+  "app_compose_sha256": "5f7ebd85cf1f480a118f75dd10fd0cb277e4ddbb23845f1c20d8ea0f1e87efa6",
+  "rtmr3": "e0f6c83eec48dfbfdb41d438a96783bcde1de18a1ac73705e2a8e24c2bc2051cbbf05ec0e856fed86498316a1b3e1bec",
+  "effective_from": "2026-10-29T17:10:00Z",
+  "privacy_security_approver": "Privacy Security",
+  "notes": "Item (6)/Phase2 second instance pin (option A). Instance-scoped RTMR3 (instance_id=7bb9af0ac5b0e22dde3903218f58e56f743164a1, app_id=2c0a0c96cb6dbd659bf1446e2f3fce58172ff91b). Boot app_compose differs from pinned 19aea169 solely by docker_compose INSTANCE_LABEL=gpu04 vs gpu03 (same images/services/pre_launch; no abliterat); hence mrconfigid/app_compose_sha256 5f7ebd85\u2026 \u2260 a0e3c6f4\u2026. CM required. Runtime compose_up same as first pin: prod/GLM-5.3-Flash-SGL-TP2x4-W4AFP8-V12Q8.yaml file_sha256=904054f502ccdb2f913d6b80f156ea658b8bc5cb6f8af06082723581d62a45c0 tag=v0.0.521 commit=7ee4a4c741259d0c69a81e5cda22c3dfce21cbc2. Captures 2026-10-29T17:04:30Z + 17:04:43Z identical pins. Evidence: phase1.5-attestation/EVIDENCE_PHASE2_SECOND_INSTANCE_DRAFT.md; SECURITY_SIGNOFF_PHASE2_SECOND_INSTANCE_GLM.md. Never silent-overwrite the 19aea169 entry."
+}

@@ -1,0 +1,9 @@
+{
+  "model_id": "z-ai/glm-5.3-flash",
+  "mrconfigid": "01a0e3c6f4f21a60ea3f5c96bc7ef319b03a184ca2049605399275fbcea74e8c5f000000000000000000000000000000",
+  "app_compose_sha256": "a0e3c6f4f21a60ea3f5c96bc7ef319b03a184ca2049605399275fbcea74e8c5f",
+  "rtmr3": "463b2e18f0dde370e2be8d6b4cb07aac5efc4d8bc712cea2714d103e4db57cea4ce50197973d557306b25e70f82277d6",
+  "effective_from": "2026-10-29T17:00:00Z",
+  "privacy_security_approver": "Privacy Security",
+  "notes": "Item (6) first prod pin. Instance-scoped RTMR3 (instance_id=19aea1693533dc2d529db03e3f725f20bde8d66d, app_id=2c0a0c96cb6dbd659bf1446e2f3fce58172ff91b); redeploy \u21d2 new PS entry, never silent overwrite. CM required (absent \u21d2 DENY compose_manager_missing). Non-abliterated compose prod/GLM-5.3-Flash-SGL-TP2x4-W4AFP8-V12Q8.yaml file_sha256=904054f502ccdb2f913d6b80f156ea658b8bc5cb6f8af06082723581d62a45c0 tag=v0.0.521 commit=7ee4a4c741259d0c69a81e5cda22c3dfce21cbc2; services across ups include model-sg-glm53-w4afp8-tp2-r1..r4 + otelcol-contrib (latest action services may list only otelcol). dstack-nvidia-0.5.11 app_name vs vm_config 0.5.12 naming skew with identical MRTD/RTMR3/MRCONFIGID \u2014 accepted. No gpu_evidence_sha256 (nonce-bound per request). Captures 2026-10-29T16:10Z + 16:12Z same pins. Evidence: phase1.5-attestation/EVIDENCE_PRE_PHASE2_G4_AND_MODEL_PROBE.md; SECURITY_SIGNOFF_PRE_PHASE2_ITEM6_GLM.md. Abliterated DeepSeek/Qwen rejected (G3)."
+}
