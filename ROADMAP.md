@@ -18,7 +18,7 @@ flowchart LR
 - [x] QLoRA fine-tune script, eval harness, local inference CLI
 - [ ] Expand dataset to 2–5k curated examples — **PARKED**; on unpark = **privacy AI** (privacy / refusal / safe personal AI → journalism sources/PII/secrets), not crypto/NEAR SLM (Lead pivot 2026-10-29 ~15:16 PDT). Seed 362. See `docs/notes/SLM_PIVOT_PRIVACY_FIRST.md`
 - [ ] First adapter trained + baseline vs. tuned eval report (0.5B CPU report landed 18:20 PDT, no gain; 7B GPU run pending)
-- [ ] GGUF/llama.cpp quantized export for local use
+- [ ] GGUF/llama.cpp quantized export for local use — **landed:** pin (`salomon-qwen25-7b-instruct-Q4_K_M.gguf`, bartowski single-file) + fetch/run scripts (`docs/notes/PHASE3_M1_LOCAL_GGUF.md`). **Not landed:** weights fetched, own-adapter export, Runtime smoke. Unchecked; no live GGUF claim until Runtime smoke green.
 
 ## Phase 1.5 — Privacy merge gate (Lead decision, Oct 28 2026)
 > Reframed 2026-10-29: this is a privacy merge gate for local-first + optional verified remote compute, not a product dependency on any specific cloud provider. Sign-offs below are unchanged.
@@ -55,7 +55,7 @@ Owners: Privacy Security owns gate acceptance and reviews every Phase 2 PR touch
 - [ ] **M3** Propose-only save/export with explicit approval; credentials outside the model
 - [ ] Untrusted-input handling for leaked documents, web pages and emails (injection-safe tool output — proven in Phase 2)
 - [ ] Plain-language refuse/sanitize reasons in the UX
-- [ ] GGUF / llama.cpp quantized export so the model runs on a reporter's laptop, offline
+- [ ] GGUF / llama.cpp quantized export so the model runs on a reporter's laptop, offline — pin + scripts landed; weight fetch pending Lead/user OK; **not live until Runtime smoke green**
 - [ ] **M4** Dogfood cut
 
 ## Phase 4 — Newsroom hardening
