@@ -130,7 +130,7 @@
 - Phase 2 is **no longer Lead-gated** (already IN PROGRESS). Soft: GLM refusal suite before refusal claims.
 - Docs: STATUS/ROADMAP/PROGRESS updated.
 
-- [2026-10-29 10:05 PDT] Lead (routine, Phase 1 dataset item): added `phase1-slm/scripts/dataset_check.py` (schema check, normalized duplicate-user-prompt gate, tag balance, progress vs 2k target; exit 1 on fail) and wired it into `make data`. Added `phase1-slm/data/extra/domain_batch5_fundamentals.jsonl` (+47 curated rows: crypto fundamentals — hashes, Merkle, signatures, Ed25519/secp256k1, nonces, PoW/PoS, multisig, MPC, stablecoins, oracles, AMMs, bridges, rollups, approvals; NEAR access keys/function-call keys for agents, yocto, implicit accounts, async cross-contract calls, receipts, staking pools, AI Cloud attestation; privacy metadata/TEE/local inference; onchain heuristics/honeypots/sybil). Checker caught 3 duplicate prompts in the draft batch, dropped. Rebuilt seed: 315 -> **362** (secret scan 0 hits after one reword of a bip39-like run), dataset_check OK, test_safety_unit 20/20. crypto tag 13 -> 35. Assumption: facts are general knowledge, not re-verified against live NEAR docs. Next: batch6 NEAR dev depth + first multi-turn examples; GPU still deferred for 7B QLoRA.
+- [2026-10-29 10:05 PDT] Lead (routine, Phase 1 dataset item): added `phase1-slm/scripts/dataset_check.py` (schema check, normalized duplicate-user-prompt gate, tag balance, progress vs 2k target; exit 1 on fail) and wired it into `make data`. Added `phase1-slm/data/extra/domain_batch5_fundamentals.jsonl` (+47 curated rows: crypto fundamentals — hashes, Merkle, signatures, Ed25519/secp256k1, nonces, PoW/PoS, multisig, MPC, stablecoins, oracles, AMMs, bridges, rollups, approvals; NEAR access keys/function-call keys for agents, yocto, implicit accounts, async cross-contract calls, receipts, staking pools, AI Cloud attestation; privacy metadata/TEE/local inference; onchain heuristics/honeypots/sybil). Checker caught 3 duplicate prompts in the draft batch, dropped. Rebuilt seed: 315 -> **362** (secret scan 0 hits after one reword of a bip39-like run), dataset_check OK, test_safety_unit 20/20. crypto tag 13 -> 35. Assumption: facts are general knowledge, not re-verified against live NEAR docs. Next was batch6 + multi-turn — **superseded**: dataset expansion **PARKED** 2026-10-29 ~11:44 PDT (no 2k/multi-turn); GPU still deferred for 7B QLoRA.
 
 ## Thu Oct 29, 2026 (PDT) — Phase 2 M2 landed
 - **M2 landed:** agent loop vs `z-ai/glm-5.3-flash`. Evidence: `phase2/EVIDENCE_PHASE2_M2_AGENT_LOOP.md` (mocks 15/15 + typecheck; live `--no-tool` + `view_account near` smoke; measurements.json unchanged).
@@ -176,3 +176,34 @@
 - (1) **FORMALLY STAMPED** live GLM remote refusal 8/8 — `docs/signoffs/SECURITY_SIGNOFF_GLM_LIVE_REFUSAL.md` (does not replace item 5 Qwen 7B).
 - (2) `compose_file_sha256` migration **MERGE APPROVED** — `docs/signoffs/SECURITY_SIGNOFF_COMPOSE_FILE_SHA256_MIGRATION.md` (measurements sha256 `784e4d2e…`).
 - Soft polish track **done**. Docs: STATUS/PROGRESS/ROADMAP updated.
+
+## Thu Oct 29, 2026 ~11:44 PDT — Phase 1 dataset expansion PARKED
+- Lead (user): Phase 1 SLM dataset expansion **PARKED**. Do **not** expand toward 2k / multi-turn for now.
+- Seed remains **362** rows (batch5). No batch6 / multi-turn work.
+- Gate item (5) stays **SIGNED** (Qwen 7B Colab 8/8). Soft GLM live refusal stamp unchanged.
+- Phase 1 gate **done** (item 5 SIGNED); dataset **hold**; Phase 2 continues.
+- SLM idle on dataset until Lead/user unparks.
+
+## Thu Oct 29, 2026 (PDT) — Phase 2 M4 opened
+- Phase 2 **M4 opened** (Lead/user): NEAR Intents / non-custodial action sketch — **no keys in model**; **PS gate before signing**.
+- Constraints: no keys in model; Privacy Security gate before signing.
+- Phase 1 gate done; dataset expansion PARKED (seed 362); Phase 2 continues.
+- Docs: STATUS/ROADMAP/PROGRESS updated.
+
+## Thu Oct 29, 2026 (PDT) — M4 G1 ACCEPTED
+- Privacy Security **G1 ACCEPTED** (`SECURITY_REVIEW_PHASE2_M4_G1.md`). Lead OK. Gate: `SECURITY_GATE_PHASE2_M4.md`.
+- Locked: MAX_DRAFT_AMOUNT required (testnet 1000 / mainnet 10 NEAR); hash+summary HARD; simulate_intents → G3; testnet-first env IDs.
+
+## Thu Oct 29, 2026 (PDT) — M4 G2 ACCEPTED / MERGE STAMPED
+- Privacy Security **G2 ACCEPTED / MERGE STAMPED** (`SECURITY_REVIEW_PHASE2_M4_G2.md`).
+- Evidence: `phase2/EVIDENCE_PHASE2_M4_G2_STUBS.md` — phase2 **55/55**; propose-only stubs.
+- Soft residuals only. `.env.example` awaits Contracts testnet IDs (no network use until then).
+- M4 sketch effectively GREEN pending push + env IDs. **G3 NOT opened.**
+- Docs: STATUS/ROADMAP/PROGRESS updated.
+
+## Thu Oct 29, 2026 ~12:03 PDT — M4 .env.example filled; propose sketch GREEN
+- Lead filled `phase2/.env.example`: `INTENTS_VERIFIER_ID=` empty (no official Intents testnet Verifier → fail-closed); MPC `v1.signer-prod.testnet`; preview tokens `wrap.testnet` / `usdc.fakes.testnet` / `usdt.fakes.testnet`; `MAX_DRAFT_AMOUNT=1000`.
+- M4 G2 remain merge-stamped. Propose sketch **GREEN** with fail-closed Verifier.
+- Intents settlement stays **mainnet-only / G3**. G3 NOT opened.
+- Push to salomon in flight.
+- Docs: STATUS/ROADMAP/PROGRESS updated.

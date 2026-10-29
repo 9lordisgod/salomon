@@ -1,10 +1,10 @@
 # Roadmap
-**Current: Phase 2 — IN PROGRESS** · **M1–M3 GREEN** · soft polish **CLOSED** (refusal formal stamp 8/8 · compose_file_sha256 MERGE APPROVED · role:tool sanitizer) · Phase 1.5 (1)–(5) SIGNED · (6) APPROVED
+**Current: Phase 2 — M4 propose sketch GREEN** · G2 ACCEPTED · soft polish **CLOSED** · settlement mainnet/G3 · Phase 1 gate done · dataset PARKED · Phase 1.5 (1)–(5) SIGNED · (6) APPROVED
 
 ```mermaid
 flowchart LR
   P1[Phase 1<br/>SLM foundation<br/>continues] --> G{{Phase 1.5<br/>1–5 ✅ · 6 APPROVED}}
-  G --> P2[Phase 2<br/>IN PROGRESS<br/>M1–M3 GREEN]
+  G --> P2[Phase 2<br/>M4 propose GREEN<br/>fail-closed Verifier]
   P2 --> P3[Phase 3<br/>NEAR contracts · Intents · Chain Sigs]
   P3 --> P4[Phase 4<br/>Privacy hardening + prod]
 ```
@@ -13,7 +13,7 @@ flowchart LR
 - [x] Model choice (Qwen2.5-7B-Instruct; Llama-3.1-8B alt) — configs/model_config.yaml
 - [x] Seed dataset builder + 40+ seed examples, 10+ eval prompts
 - [x] QLoRA fine-tune script, eval harness, local inference CLI
-- [ ] Expand dataset to 2–5k curated examples (docs, NEPs, privacy papers, on-chain traces)
+- [ ] Expand dataset to 2–5k curated examples (docs, NEPs, privacy papers, on-chain traces) — **PARKED** 2026-10-29 (user via Lead): no 2k / multi-turn for now; seed 362; resume only when unparked
 - [ ] First adapter trained + baseline vs. tuned eval report (0.5B CPU report landed 18:20 PDT, no gain; 7B GPU run pending)
 - [ ] GGUF/llama.cpp quantized export for local use
 
@@ -28,16 +28,19 @@ Opens after Phase 1 is complete. Stub/criteria items **(1)–(5) SIGNED OFF**. R
 
 Owners: Privacy Security owns gate acceptance and reviews every Phase 2 PR touching tools, remote inference, or keys. Agent Engineer implements attestation verify. SLM Engineer owns refusal eval harness updates.
 
-## Phase 2 — Agent Capabilities (**IN PROGRESS** — M1–M3 GREEN)
-**Scope now:** `z-ai/glm-5.3-flash` verified-remote + agent loops. **M1 GREEN** + **M2 landed** + **M3 GREEN** (`phase2/EVIDENCE_PHASE2_M3_MULTI_TOOL.md`) + dual-instance live + sanitizer TS. Allowlist: two GLM pins; unknown instances DENY+retry. Soft polish **CLOSED**: formal GLM refusal stamp 8/8 (`docs/signoffs/SECURITY_SIGNOFF_GLM_LIVE_REFUSAL.md`); `compose_file_sha256` **MERGE APPROVED** (`docs/signoffs/SECURITY_SIGNOFF_COMPOSE_FILE_SHA256_MIGRATION.md`); `role:tool` sanitizer PS-accepted. M3 skim OK (`docs/reviews/SECURITY_REVIEW_PHASE2_M3.md`).
+## Phase 2 — Agent Capabilities (**M4 propose sketch GREEN** — G2 ACCEPTED · M1–M3 GREEN)
+**Scope now:** `z-ai/glm-5.3-flash` verified-remote + agent loops. **M1–M3 GREEN** + soft polish CLOSED. **M4** G1+G2 ACCEPTED / merge-stamped; propose sketch **GREEN** (fail-closed empty Verifier in `phase2/.env.example`). Intents settlement stays **mainnet-only / G3**. **G3 NOT opened.** Push to salomon in flight. Phase 1 gate done; dataset PARKED. Allowlist: two GLM pins; unknown instances DENY+retry.
 - [x] Tool schema + read-only tools — M2 `view_account`; **M3** `view_access_key_list`, bounded `view_state`, `block`, `gas_price` (multi-step live PASS)
 - [x] Agent loop (TS) with injection-safe tool output handling — **M2 landed** + skim OK; dual-instance live; TS sanitizer; **M3** multi-step chaining w/ hard caps
 - [x] NEAR AI Cloud private inference backend with attestation check — **M1 GREEN**; two pins live-verified; unknown instances DENY+retry
 - [x] **M3 GREEN** — more read-only tools + multi-step chaining w/ hard caps; UNTRUSTED+sanitizer; no writes/sign; GLM only (`EVIDENCE_PHASE2_M3_MULTI_TOOL.md`)
+- [x] **M4 G1** — design ACCEPTED (`SECURITY_REVIEW_PHASE2_M4_G1.md`; gate `SECURITY_GATE_PHASE2_M4.md`)
+- [x] **M4 G2** — propose-only stubs ACCEPTED / MERGE STAMPED (`SECURITY_REVIEW_PHASE2_M4_G2.md`; evidence `phase2/EVIDENCE_PHASE2_M4_G2_STUBS.md`; 55/55). Soft residuals only. `phase2/.env.example` filled: Verifier empty (fail-closed); MPC `v1.signer-prod.testnet`; preview tokens wrap/usdc.fakes/usdt.fakes. Propose sketch **GREEN**. Intents settlement = mainnet-only / G3.
+- [ ] **M4 G3** — execute/sign/simulate — **NOT opened**
 
 ## Phase 3 — NEAR Integration
 - [ ] near-sdk Rust contracts: agent registry, credits/staking, access control
-- [ ] Intents-based execution prototype (testnet)
+- [ ] Intents-based execution / settlement — **mainnet-only / G3** (no official Intents testnet Verifier); Phase 2 **M4** propose sketch GREEN with fail-closed empty Verifier
 - [ ] Chain Signatures signing via policy engine (testnet)
 - [ ] Agent Market listing + job/escrow handling
 - [ ] CLI/frontend
