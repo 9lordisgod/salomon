@@ -1,7 +1,7 @@
 SMOKE=Qwen/Qwen2.5-0.5B-Instruct
 MODEL?=Qwen/Qwen2.5-7B-Instruct
 install: ; pip install -r requirements.txt
-data: ; python scripts/prepare_domain_data.py
+data: ; python scripts/prepare_domain_data.py && python scripts/dataset_check.py
 dryrun: ; python scripts/finetune_qlora.py --model $(SMOKE) --max-samples 8 --max-steps 2 --batch-size 1 --grad-accum 1 --output outputs/dryrun
 train: ; python scripts/finetune_qlora.py --model $(MODEL)
 smoke: ; python scripts/local_inference.py --model $(SMOKE) --prompt "What is a NEAR function-call access key?" --max-new 128
