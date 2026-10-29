@@ -7,7 +7,9 @@ import { createHash } from "node:crypto";
 export const nonceHash = (nonce: string): string => createHash("sha256").update(nonce, "utf8").digest("hex");
 
 export interface DigestLogRecord {
-  event: "attestation_verify";
+  event: "attestation_verify" | "completion_bind";
+  requestHash?: string;
+  responseHash?: string;
   modelId: string;
   nonceHash: string;
   result: "pass" | "fail";
@@ -30,7 +32,7 @@ export interface DigestLogRecord {
 
 const ALLOWED = new Set([
   "event", "modelId", "nonceHash", "result", "provider", "signingAlgo", "scope", "candidateIndex", "check", "reason",
-  "signingAddressSha256", "quoteSha256", "composeSha256", "rtmr3", "mrConfigId", "tcbStatus",
+  "signingAddressSha256", "quoteSha256", "composeSha256", "rtmr3", "mrConfigId", "tcbStatus", "requestHash", "responseHash",
 ]);
 const FORBIDDEN = /prompt|completion|message|content|api_?key|token|secret|authorization|bearer|password|^nonce$/i;
 

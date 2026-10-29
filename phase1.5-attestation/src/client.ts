@@ -7,6 +7,10 @@ import { DEFAULT_POLICY, verifyReport } from "./verify.js";
 import { DigestLogger, nonceHash } from "./digestLog.js";
 import { loadAllowlist } from "./allowlist.js";
 import { fileURLToPath } from "node:url";
+import { assertPlugsProductionReady, productionPlugsRequired } from "./productionGuard.js";
+import type { ResponseSignatureBinder } from "./responseBinding.js";
+import { DcapQuoteVerifier, DcapGatewayVerifier, NrasGpuVerifier } from "./realPlugs.js";
+import { NobleResponseBinder } from "./responseBinder.js";
 
 export const DEFAULT_ALLOWLIST_PATH = fileURLToPath(new URL("../allowlist/measurements.json", import.meta.url));
 const BANNED_SKIP_FLAGS = ["SKIP_ATTEST", "ALLOW_NO_ATTEST", "NEAR_SKIP_ATTEST", "ATTEST_SKIP"];
@@ -21,6 +25,12 @@ export interface AttestationClientOptions extends FetchReportOptions {
   allowlistPath?: string;
   /** Must be exactly true to load test_only pins; ignored when NODE_ENV=production. */
   allowTestOnly?: boolean;
+  /** Optional binder for the verified-remote path; checked by the production guard. */
+  responseBinder?: ResponseSignatureBinder;
+  /** Force production plug checks even when NODE_ENV!=="production". */
+  requireProductionPlugs?: boolean;
+  /** When production plugs are required, fill omitted plugs with the real wired ones (default true in prod; ignored otherwise). Set false to require explicit plugs. */
+  autoWireProductionPlugs?: boolean;
   maxAgeMs?: number; // TODO(Privacy Security): TTL / re-attest cadence
 }
 
@@ -30,9 +40,20 @@ export class AttestationClient {
   private readonly qv: QuoteVerifier; private readonly gv: GpuVerifier; private readonly gwv: GatewayVerifier;
   private readonly policy: MeasurementPolicy; private readonly logger: DigestLogger; private readonly maxAgeMs: number;
 
-  constructor(private readonly opts: AttestationClientOptions = {}) {
+  private readonly opts: AttestationClientOptions;
+  constructor(opts: AttestationClientOptions = {}) {
+    this.opts = opts;
     const env = opts.env ?? process.env;
     for (const f of BANNED_SKIP_FLAGS) if (env[f]) throw new AttestationError("skip_attest_banned", `${f} is not honored; refusing to start`);
+    if (productionPlugsRequired(env, opts.requireProductionPlugs) && opts.autoWireProductionPlugs !== false) {
+      const qv = opts.quoteVerifier ?? new DcapQuoteVerifier();
+      opts = { ...opts, quoteVerifier: qv, gpuVerifier: opts.gpuVerifier ?? new NrasGpuVerifier(),
+        gatewayVerifier: opts.gatewayVerifier ?? new DcapGatewayVerifier(qv), responseBinder: opts.responseBinder ?? new NobleResponseBinder() };
+      this.opts = opts;
+    }
+    if (productionPlugsRequired(env, opts.requireProductionPlugs))
+      assertPlugsProductionReady({ quoteVerifier: opts.quoteVerifier, gpuVerifier: opts.gpuVerifier,
+        gatewayVerifier: opts.gatewayVerifier, responseBinder: opts.responseBinder }, { requireBinder: true });
     const stub = new StubFailClosedVerifier();
     this.qv = opts.quoteVerifier ?? stub; this.gv = opts.gpuVerifier ?? stub; this.gwv = opts.gatewayVerifier ?? stub;
     this.policy = opts.policy ?? DEFAULT_POLICY; this.logger = opts.logger ?? new DigestLogger();
