@@ -88,3 +88,6 @@
 Privacy Security signs off item (2) only when: this bar is implemented, the required unit tests above are green, allowlist file exists (may start with zero production measurements but then remote must DENY — for a “green client” demo use MockQuoteVerifier + a test allowlist entry clearly marked `test_only: true` that cannot load in prod config), and Agent Engineer requests review with a short evidence note (test output + paths).
 
 **Item (2) is not signed off yet.** This document locks the bar only.
+
+## Pre–Phase-2 follow-on (plugs / allowlist / provider_tee / report_data)
+Locked separately in `PRE_PHASE2_ACCEPTANCE.md` (2026-10-29). Item (2) stub is signed; live remote still DENY until that bar clears.
