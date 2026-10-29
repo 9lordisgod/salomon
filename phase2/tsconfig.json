@@ -1,0 +1,3 @@
+{ "compilerOptions": { "target": "ES2022", "module": "ESNext", "moduleResolution": "Bundler", "strict": true, "skipLibCheck": true, "noEmit": true,
+  "allowImportingTsExtensions": false, "types": ["node"], "baseUrl": ".", "paths": { "vitest": ["../phase1.5-attestation/node_modules/vitest"] }, "typeRoots": ["../phase1.5-attestation/node_modules/@types"] },
+  "include": ["src", "test"] }
