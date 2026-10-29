@@ -1,0 +1,34 @@
+{
+  "schema": "salomon.phase3-runtime.manifest/v1",
+  "product": "Salomon",
+  "milestone": "Phase3-M1",
+  "created": "2026-10-29",
+  "owner": "Release Engineer",
+  "model": {
+    "base_id": "Qwen/Qwen2.5-7B-Instruct",
+    "adapter": null,
+    "license": "Apache-2.0",
+    "quant": "Q4_K_M",
+    "format": "gguf",
+    "runtime": "llama-cpp-python",
+    "source_repo": "bartowski/Qwen2.5-7B-Instruct-GGUF",
+    "source_filename": "Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+    "reject": ["abliterated", "uncensored", "no-refuse", "split-shard"]
+  },
+  "artifact": {
+    "filename": "salomon-qwen25-7b-instruct-Q4_K_M.gguf",
+    "sha256": "65b8fcd92af6b4fefa935c625d1ac27ea29dcb6ee14589c55a8f115ceaaa1423",
+    "bytes": 4683074240,
+    "single_file": true
+  },
+  "discovery": {
+    "env_file": "SALOMON_GGUF",
+    "env_dir": "SALOMON_GGUF_DIR",
+    "default_paths": [
+      "phase3-runtime/artifacts/salomon-qwen25-7b-instruct-Q4_K_M.gguf",
+      "phase1-slm/models/gguf/salomon-qwen25-7b-instruct-Q4_K_M.gguf"
+    ],
+    "refuse_glob": "*-of-*"
+  },
+  "notes": "Platform locked to this MANIFEST name. Refuse *-of-* on discovery and explicit SALOMON_GGUF. Fetch renames bartowski upstream → salomon-qwen25-7b-instruct-Q4_K_M.gguf."
+}
