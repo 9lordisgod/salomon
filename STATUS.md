@@ -1,6 +1,6 @@
-# STATUS — Wed Oct 28, 2026 (America/Vancouver, PDT)
+# STATUS — Thu Oct 29, 2026 (America/Vancouver, PDT)
 
-**Phase:** 1 (SLM Foundation) — in progress. The scaffold is complete. CPU-only smoke pipeline verified at 16:50 PDT: deps installed, dataset regenerated, 2-step LoRA dry-run done, base-model smoke inference + baseline eval done (Qwen2.5-0.5B, mean keyword score 0.222). First real adapter trained on CPU (0.5B LoRA, 18:20 PDT): no gain, 1 safety regression; see phase1-slm/FIRST_ADAPTER_0.5B.md. Phase 1.5 (Privacy merge gate) opens after Phase 1 is complete. **Latest:** Phase 1.5 item (5) refusal eval **SIGNED OFF** by Privacy Security (7B Colab anti-echo **8/8**). Artifacts: `phase1-slm/outputs/eval_refusal_7b_anti_echo/`, `SECURITY_SIGNOFF_REFUSAL_7B.md`. Full Phase 1.5 gate still **OPEN**; R3 near-echo tighten is a pre-Phase-2 blocker (does not reopen item 5). No Phase 2.
+**Phase:** 1 (SLM Foundation) — in progress. The scaffold is complete. CPU-only smoke pipeline verified at 16:50 PDT: deps installed, dataset regenerated, 2-step LoRA dry-run done, base-model smoke inference + baseline eval done (Qwen2.5-0.5B, mean keyword score 0.222). First real adapter trained on CPU (0.5B LoRA, 18:20 PDT): no gain, 1 safety regression; see phase1-slm/FIRST_ADAPTER_0.5B.md. Phase 1.5 (Privacy merge gate) opens after Phase 1 is complete. **Latest:** Phase 1.5 item **(2) SIGNED OFF** (`SECURITY_SIGNOFF_ATTESTATION_ITEM2.md`, `phase1.5-attestation/` 15/15). Items **(1)–(5)** all signed at stub/criteria level. **Phase 2 still BLOCKED:** (a) R3 near-echo 7B Colab re-green + Privacy delta, (b) real DCAP/gateway + PS-approved allowlist, (c) `provider_tee` response binding. No Phase 2 / no waive.
 
 ## Files
 - ARCHITECTURE.md, ROADMAP.md, STATUS.md, PROGRESS.md
@@ -24,13 +24,12 @@ SECURITY_REVIEW_PHASE1.md landed (Privacy Security). Lead Architect calls:
 - Fixes for transformers 5.x: finetune_qlora.py (`warmup_ratio` -> `warmup_steps`), local_inference.py (apply_chat_template returns BatchEncoding, so take input_ids).
 
 ## Next steps
-0. **Pre-Phase-2 blocker (item 5 residual):** tighten R3 near-echo scoring per SECURITY_SIGNOFF_REFUSAL_7B.md; re-record 7B; Privacy Security re-checks that delta only. Does not reopen item (5).
+0. **Phase 2 blockers (no waive):** (a) R3 near-echo 7B Colab re-green + Privacy Security delta-only re-check; (b) real DCAP/gateway/GPU verifier plugs + PS-approved (non-`test_only`) allowlist before live remote; (c) `provider_tee` response-signature binding on the completions path. See `SECURITY_SIGNOFF_ATTESTATION_ITEM2.md` + `SECURITY_SIGNOFF_REFUSAL_7B.md`.
 1. Get a GPU host for the real QLoRA run (7B, 4-bit). Then do a full-data 0.5B LoRA run on CPU and compare tuned vs. baseline eval.
-2. Expand the dataset toward 2–5k curated examples. 44 examples is too few to move the score.
-3. Privacy Security: draft the threat-model stub + refusal / must-not-echo acceptance criteria (Phase 1.5 prep).
-4. SLM Engineer: fix the eval harness so it actually runs the safety checks it claims to run. Today it does keyword scoring only. The seed-phrase prompt scored 0.00.
-5. Pin `transformers<6` / `>=5` in requirements.txt, now that the scripts target the 5.x API.
-6. Once Phase 1 is complete, open Phase 1.5. Agent Engineer starts the fail-closed attestation verify client.
+2. Expand the dataset toward 2–5k curated examples (current seed far above the early 44; still short of target).
+3. ~~Phase 1.5 stub/criteria items (1)–(5)~~ — all SIGNED OFF at stub/criteria level.
+4. Pin `transformers<6` / `>=5` in requirements.txt, now that the scripts target the 5.x API.
+5. **No Phase 2** until blockers (a)(b)(c) clear. No waive.
 
 ## Security hardening — done (SLM Engineer, Wed Oct 28 2026, PDT)
 PHASE1_SCRIPT_FIXES.md items 1–3 are implemented. Smoke/dry-run status is tracked separately and these changes don't verify it.
@@ -80,3 +79,26 @@ PHASE1_SCRIPT_FIXES.md items 1–3 are implemented. Smoke/dry-run status is trac
 - R3-tool-memo near-echo delta drafted/ready: fixture forbidden_substrings (transfer all NEAR, attacker.near, reveal any keys, reveals any keys), system_prompt memo-shape guidance, unit tests 17/17, Colab notebook phase1-slm/notebooks/eval_refusal_7b_colab.ipynb rebuilt.
 - PARKED: waiting for Lead to schedule the 7B Colab re-run. Privacy reviews this delta only after re-green.
 - No Phase 2. No waive. 0.5B parked (no retrain).
+
+## Thu Oct 29, 2026 (PDT) — Privacy Security: Phase 1.5 items 1/3/4
+- (1) THREAT_MODEL_PHASE1.5.md filled (assets CIA, boundaries, STRIDE P15-T1…T9, exit criteria).
+- (3) privacy/sanitizer.py + tests 17/17 (secrets reject in every mode; addresses redact).
+- (4) POLICY_SPEND_ACCEPTANCE.md + privacy/policy_spend.py stub (cannot sign) tests 11/11; sign-off pending review.
+- (2) ATTESTATION_ACCEPTANCE.md (Privacy Security from Agent Engineer draft); client pending.
+- R3 near-echo 7B Colab pending → delta-only re-check. Item (5) stays closed. Gate OPEN. No Phase 2.
+
+## Phase 1.5 items (1)(3)(4) — SIGNED OFF (2026-10-29 07:50 PDT)
+- Privacy Security **SIGNED OFF** items (1) threat model, (3) sanitizer stub+tests (17/17), (4) policy/spend stub (11/11). Evidence: `SECURITY_SIGNOFF_PHASE1.5_1_3_4.md`. Recomputed: `privacy/test_sanitizer.py` 17/17, `privacy/test_policy_spend.py` 11/11, `phase1-slm/scripts/test_safety_unit.py` 17/17.
+- Item (2) still **OPEN** — acceptance bar locked in `ATTESTATION_ACCEPTANCE.md`; Agent Engineer client pending. Gate stays open until (2) is signed off.
+- Item (5) remains **closed** (SIGNED OFF). R3 near-echo Colab delta-only re-check still pending (pre-Phase-2 blocker, not a reopen).
+- **Accepted residuals** (documented in sign-off; not blocking 1.5 stub): non-durable in-memory spend/rate counters (not safe for real funds); 64-hex after address-context words may redact as implicit account instead of secret-reject; human approval of over-cap tx does not yet increment daily total.
+- **Full Phase 1.5 gate: still OPEN.** No Phase 2 / no waive.
+
+## Phase 1.5 item (2) — SIGNED OFF (2026-10-29 07:53 PDT)
+- Privacy Security **SIGNED OFF** item (2) attestation verify **stub client** (`phase1.5-attestation/`, npm test **15/15**, typecheck clean). Bar: `ATTESTATION_ACCEPTANCE.md`. Evidence: `SECURITY_SIGNOFF_ATTESTATION_ITEM2.md` (+ `phase1.5-attestation/EVIDENCE_ITEM2.md`, `DESIGN.md`).
+- Items **(1)–(5)** all signed at stub/criteria level. Does **not** authorize live remote inference or open Phase 2.
+- **Phase 2 still BLOCKED** (no waive):
+  - (a) R3 near-echo 7B Colab re-green + Privacy Security delta-only re-check (does not reopen item 5).
+  - (b) Real DCAP/gateway/GPU verifier plugs + Privacy Security–approved allowlist (non-`test_only`) before live remote.
+  - (c) `provider_tee` response-signature binding on the completions path.
+- Repo allowlist remains empty ⇒ deny-all remote. **No Phase 2 / no waive.**

@@ -5,7 +5,7 @@
 
 ![visibility](https://img.shields.io/badge/repo-private-black)
 ![phase](https://img.shields.io/badge/Phase-1%20SLM%20foundation-blue)
-![gate](https://img.shields.io/badge/Phase%201.5%20gate-OPEN-orange)
+![gate](https://img.shields.io/badge/Phase%201.5%20stubs-SIGNED-green) ![p2](https://img.shields.io/badge/Phase%202-BLOCKED-orange)
 ![refusal](https://img.shields.io/badge/refusal%20eval%207B-8%2F8%20signed%20off-brightgreen)
 ![phase2](https://img.shields.io/badge/Phase%202-not%20started-lightgrey)
 
@@ -107,23 +107,23 @@ The model **proposes**. It never signs. Every arrow fails closed. Details: [ARCH
 
 ```mermaid
 flowchart LR
-  P1["Phase 1<br/>SLM foundation<br/>🟦 in progress"] --> G{{"Phase 1.5<br/>Privacy gate<br/>🟧 OPEN"}}
+  P1["Phase 1<br/>SLM foundation<br/>🟦 in progress"] --> G{{"Phase 1.5<br/>stub 1–5 ✅<br/>🟧 P2 BLOCKED"}}
   G --> P2["Phase 2<br/>Agent + private inference<br/>⬜"]
   P2 --> P3["Phase 3<br/>Contracts · Intents · Chain Sigs<br/>⬜"]
   P3 --> P4["Phase 4<br/>Hardening + production<br/>⬜"]
 ```
 
-Nothing ships to Phase 2 until every gate item below is signed off.
+Phase 1.5 stub/criteria items **(1)–(5) are SIGNED OFF**. **Phase 2 is still BLOCKED** (no waive) by the residuals below — stub sign-off alone does not open Phase 2.
 
 | Phase 1.5 gate item | Status |
 |---|---|
-| (1) Threat model | ☐ |
-| (2) Attestation verify client (fail-closed) | ☐ |
-| (3) Sanitizer stub + tests | ☐ |
-| (4) Policy / spend stub | ☐ |
-| (5) Refusal / must-not-echo eval | ✅ **SIGNED OFF**. Privacy Security confirmed 7B Colab 8/8 |
+| (1) Threat model | ✅ **SIGNED OFF** — `SECURITY_SIGNOFF_PHASE1.5_1_3_4.md` |
+| (2) Attestation verify client (fail-closed) | ✅ **SIGNED OFF** (stub) — `SECURITY_SIGNOFF_ATTESTATION_ITEM2.md` (`phase1.5-attestation/` 15/15) |
+| (3) Sanitizer stub + tests | ✅ **SIGNED OFF** — `SECURITY_SIGNOFF_PHASE1.5_1_3_4.md` |
+| (4) Policy / spend stub | ✅ **SIGNED OFF** — `SECURITY_SIGNOFF_PHASE1.5_1_3_4.md` |
+| (5) Refusal / must-not-echo eval | ✅ **SIGNED OFF** — 7B Colab 8/8; `SECURITY_SIGNOFF_REFUSAL_7B.md` |
 
-Parked delta before Phase 2: an R3 near-echo forbid harden. The notebook is already rebuilt and will get a Colab re-check before any Phase 2 tool merge. Item (5) stays closed.
+**Phase 2 blockers:** (a) R3 near-echo 7B Colab re-green + Privacy Security delta-only re-check (item 5 stays closed); (b) real DCAP/gateway + PS-approved allowlist before live remote; (c) `provider_tee` response binding on the completions path. **No Phase 2 / no waive.**
 
 ## What's in Phase 1 now
 

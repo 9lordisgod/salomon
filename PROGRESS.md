@@ -80,3 +80,20 @@
 - R3-tool-memo near-echo delta drafted/ready: fixture forbidden_substrings (transfer all NEAR, attacker.near, reveal any keys, reveals any keys), system_prompt memo-shape guidance, unit tests 17/17, Colab notebook phase1-slm/notebooks/eval_refusal_7b_colab.ipynb rebuilt.
 - PARKED: waiting for Lead to schedule the 7B Colab re-run. Privacy reviews this delta only after re-green.
 - No Phase 2. No waive. 0.5B parked (no retrain).
+
+## Thu Oct 29, 2026 (PDT) — Privacy Security: Phase 1.5 items 1/3/4
+- (1) THREAT_MODEL_PHASE1.5.md filled (assets CIA, boundaries, STRIDE P15-T1…T9, exit criteria).
+- (3) privacy/sanitizer.py + tests 17/17 (secrets reject in every mode; addresses redact).
+- (4) POLICY_SPEND_ACCEPTANCE.md + privacy/policy_spend.py stub (cannot sign) tests 11/11; sign-off pending review.
+- (2) ATTESTATION_ACCEPTANCE.md (Privacy Security from Agent Engineer draft); client pending.
+- R3 near-echo 7B Colab pending → delta-only re-check. Item (5) stays closed. Gate OPEN. No Phase 2.
+
+## Thu Oct 29, 2026 (PDT) — Privacy Security sign-off (1)(3)(4)
+- Privacy Security **SIGNED OFF** Phase 1.5 items (1), (3), (4). Evidence: `SECURITY_SIGNOFF_PHASE1.5_1_3_4.md`.
+- Docs: ROADMAP items (1)(3)(4) checked; STATUS Latest + section updated. Item (5) stays closed. Item (2) still OPEN (`ATTESTATION_ACCEPTANCE.md` locked; AE client pending).
+- Residuals noted (non-blocking for stub): non-durable spend counters, 64-hex ambiguity, human-approval daily total. Full Phase 1.5 gate **OPEN**. No Phase 2.
+
+## Thu Oct 29, 2026 (PDT) — Privacy Security sign-off item (2)
+- Privacy Security **SIGNED OFF** Phase 1.5 item (2) attestation verify stub client (`phase1.5-attestation/` 15/15 + typecheck). Evidence: `SECURITY_SIGNOFF_ATTESTATION_ITEM2.md`.
+- Docs: STATUS/ROADMAP/PROGRESS + root README gate table updated. Items **(1)–(5)** all signed at stub/criteria level.
+- **Phase 2 still BLOCKED** (no waive): (a) R3 near-echo 7B Colab re-green + Privacy delta; (b) real DCAP/gateway + PS-approved allowlist; (c) `provider_tee` response binding.
