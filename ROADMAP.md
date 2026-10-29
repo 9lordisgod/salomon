@@ -44,17 +44,19 @@ Owners: Privacy Security owns gate acceptance and reviews every Phase 2 PR touch
 - [ ] **M4 G3** — execute/sign/simulate — **NOT opened**
 
 ## Phase 3 — Local research agent for journalists (MVP)
-> Product niche locked (`docs/notes/PRODUCT_NICHE.md`). Must-haves: local-first (fail closed), refuse/must-not-echo, sanitizer + untrusted tool output, read-only tools + hard caps, propose-only + approval outside the model, credentials outside the model, plain-language refuse reasons.
+> Product niche locked (`docs/notes/PRODUCT_NICHE.md`). Success bar: no cloud-by-default · no secret echo · no silent exposure · source-ID masked before model (M2) · credentials outside model · plain refuse/mask reasons.
 >
-> **M0 OPENED** — Phase 3 kicked off (Lead 2026-10-29); niche + Product brief locked on main `f9d75fd`.
-> **M1 IN FLIGHT** — journalist MVP: local CLI research agent (shell + approval stub; read-only notes/docs/transcripts path). Kickoff: `docs/notes/PHASE3_CLI_KICKOFF.md`.
-- [ ] **M1** Research workspace (CLI first): ingest local documents (PDF, notes, transcripts), summarize, cross-reference, build timelines — shell + approval stub first
-- [ ] Read-only local tools: notes/file search, document read, transcript read (bounded, sanitized, untrusted)
-- [ ] Source-protection layer: detect and mask source identities, contacts and identifying details before anything leaves the device; refuse to echo them into exports
-- [ ] Untrusted-input handling for leaked documents, web pages and emails (injection-safe tool output, already proven in Phase 2)
-- [ ] Propose-only actions (save, export, share) with explicit approval; credentials outside the model; no network by default
+> **M0 DONE** — Scope lock: Lead approved the Phase 3 journalist MVP brief.
+> **M1 IN FLIGHT** — Local run path: offline/local `ask` end-to-end (fail closed if model missing). **Primary surface = Next.js web app + API** (`POST /api/ask` → `askLocal`); **CLI secondary**. Runbook: `docs/notes/PHASE3_MVP_RUNBOOK.md`. Web stack: `docs/notes/PHASE3_WEB_STACK.md`.
+>
+> Later: **M2** ingest + source-identity masking · **M3** propose-only save/export + approval UX · **M4** dogfood cut. Dataset **PARKED**. Do not claim M2/M3 as shipped.
+- [ ] **M1** Offline/local `ask` on Next.js + API (primary); CLI optional/secondary; fail closed if model missing
+- [ ] **M2** Local document ingest + source-identity masking before the model
+- [ ] **M3** Propose-only save/export with explicit approval; credentials outside the model
+- [ ] Untrusted-input handling for leaked documents, web pages and emails (injection-safe tool output — proven in Phase 2)
 - [ ] Plain-language refuse/sanitize reasons in the UX
 - [ ] GGUF / llama.cpp quantized export so the model runs on a reporter's laptop, offline
+- [ ] **M4** Dogfood cut
 
 ## Phase 4 — Newsroom hardening
 - [ ] Durable policy engine (allowlists, export rules, per-project isolation)

@@ -2,6 +2,12 @@
 
 > **Niche (main `f9d75fd`, 2026-10-29):** Salomon is a local research agent for journalists and investigators that protects sources. Crypto archived under `docs/archive/`. Entries below remain history.
 
+## Thu Oct 29, 2026, ~15:40 PDT — Phase 3 surface amend + MVP runbook (Docs Lead)
+- Product confirmed Docs language: one-liner + hero from `docs/notes/PRODUCT_NICHE.md` / README on `f9d75fd` verbatim; **M0 = scope lock DONE**; **M1 = local offline `ask`**.
+- Lead/Product scope: **Next.js web + API is primary MVP surface**; CLI secondary — STATUS/ROADMAP must **not** say CLI-only.
+- Added `docs/notes/PHASE3_MVP_RUNBOOK.md` (local-run docs; no M2/M3 claims; dataset PARKED; Privacy soft-review checklist).
+- Amended STATUS/ROADMAP/PROGRESS + noted `PHASE3_WEB_STACK.md` / `phase3-runtime/LOCAL_RUN.md` as engineering pointers.
+
 ## Thu Oct 29, 2026, ~15:35 PDT — Phase 3 OPEN · M1 in flight (Docs Lead)
 - Lead opened **Phase 3 M1** (journalist MVP). **M0 OPENED** (niche + Product brief locked on main `f9d75fd`). **M1 IN FLIGHT**: local CLI research agent shell + approval stub; kickoff `docs/notes/PHASE3_CLI_KICKOFF.md`.
 - STATUS/ROADMAP/PROGRESS updated: Phase line → 3 M1; niche banners included for Lead push. Product language from `docs/notes/PRODUCT_NICHE.md` (approved brief). No engineering status invented beyond Lead open.
