@@ -1,0 +1,102 @@
+{
+  "slug": "z_ai_glm_5_3_flash",
+  "model_id": "z-ai/glm-5.3-flash",
+  "nonceHash": "2d9cb01f85268d40e6bc89ebf6fd6a7f3f61577e8f0002d0a81af64e4a64cb17",
+  "verified_at_utc": "2026-10-29T17:22:35.309Z",
+  "model_quote": {
+    "ok": true,
+    "quote_sha256": "7353497af0490001711740a5c97a765005c28172b50385eb565299cac9e19098",
+    "tcbStatus": "UpToDate",
+    "advisoryIds": [],
+    "mrtd": "df4d77c857de652bd0fafa343a2026b51071ee03773d076d283abf1a7d36ff91ffa279ee4a617ac664f7e2a2c8d5891b",
+    "rtmr3": "463b2e18f0dde370e2be8d6b4cb07aac5efc4d8bc712cea2714d103e4db57cea4ce50197973d557306b25e70f82277d6",
+    "mrconfigid": "01a0e3c6f4f21a60ea3f5c96bc7ef319b03a184ca2049605399275fbcea74e8c5f000000000000000000000000000000"
+  },
+  "gateway": {
+    "ok": true,
+    "quoteSha256": "7850b7efc16e08ce4f578ade733e6627c2b91ad334c06fcc486d9ddffaec3813"
+  },
+  "gateway_quote": {
+    "tcbStatus": "UpToDate",
+    "advisoryIds": [],
+    "rtmr3": "495252dff3283d36ac404960e839cf585b4bddf2cb970c4802c8f93891bbc13fbf2de6f732dff41dabd6ed90f8dfce99",
+    "mrconfigid": "01f571e5dafe8f96baf116a271b4be9cba228b447dd6ebe502bbda81ede7bcc7ce000000000000000000000000000000",
+    "mrtd": "7fe60787222bd394cb516abca2435f22f035ab2cc9c0a4b4b3b148e46297f3d931a237b72f359052c6e657d8c1409173"
+  },
+  "rtmr3_replay": {
+    "recomputed": "463b2e18f0dde370e2be8d6b4cb07aac5efc4d8bc712cea2714d103e4db57cea4ce50197973d557306b25e70f82277d6",
+    "matches_quote": true,
+    "imr3_digests": [
+      "f9974020ef507068183313d0ca808e0d1ca9b2d1ad0c61f5784e7157c362c06536f5ddacdad4451693f48fcc72fff624",
+      "5c149c8719975dc6285de58d94db7e6a75c46e796c319b751db8ee14e6748b6c2638d13cf12f54396e08299944766537",
+      "df4756f67d118a29a18aad073b48bcf213eb01b4a523cd239992568e0b5d0c80a13363f5bd9845813be4e7e446028bed",
+      "b5078e64589effb098e78b5a78db93155aee83647ffdc05f22d5074cf800f495af5b4b83423fa24e7e7121f9333dbae6",
+      "98bd7e6bd3952720b65027fd494834045d06b4a714bf737a06b874638b3ea00ff402f7f583e3e3b05e921c8570433ac6",
+      "9efa75a2c8cd830c5e540c63be1389fd19c27083d7b82248b33bdf7e3a9db0bfc5a0e8f7c34d0e3c43b7ff4a2de617da",
+      "47eb743b8bd069e71b6ab3cc6a7afbcd79fdd60bb6d4d630d0b6cd3746126ea4c074f0df8a517747bd1e23d4433ec9a6",
+      "9de6782ab6dfadb59a95bab8378e28a748331441c6f3acc822bcebc5cf01ceada3d5b2bb7d985aae8ac2482756895fe8",
+      "ba51104636900268b0e059fa3d266419d079d1e94aea26fb9fcbb8d764bf4c89a67ac271b8a0d1a3989945132a111fc7",
+      "1a76b2a80a0be71eae59f80945d876351a7a3fb8e9fd1ff1cede5734aa84ea11fd72b4edfbb6f04e5a85edd114c751bd",
+      "87143ab83cba4e0e89ab2acb5aecb898649dfc982d58edbd824d996bfad05e90c72ba6dac822d2e949af62e8b84ef6e0"
+    ]
+  },
+  "compose": {
+    "app_compose_sha256": "a0e3c6f4f21a60ea3f5c96bc7ef319b03a184ca2049605399275fbcea74e8c5f",
+    "expected_mrconfigid": "01a0e3c6f4f21a60ea3f5c96bc7ef319b03a184ca2049605399275fbcea74e8c5f000000000000000000000000000000",
+    "matches_quote": true,
+    "info_compose_hash": "a0e3c6f4f21a60ea3f5c96bc7ef319b03a184ca2049605399275fbcea74e8c5f",
+    "app_name": "dstack-nvidia-0.5.11"
+  },
+  "report_data": {
+    "matches": true
+  },
+  "signing_address_sha256": "2631ece102bd298b2614d74c1f8d420b9ec467e5c68da2d0218a4980a7a69fda",
+  "nvidia_payload_sha256": "60c390f1b796d94c50ad3c35066db3fb193405be8e999feb5d0a120554ea967c",
+  "nras": {
+    "ok": true
+  },
+  "provider_tee": {
+    "signature_kind": "provider_tee",
+    "signing_algo": "ecdsa",
+    "text_matches_exact_bytes": true,
+    "request_sha256": "57ce589a6bd6c8280d8b6bb176bcd7e9db442d600b65064b7de91da07578db4b",
+    "response_sha256": "e4fc038e2de61deb825b8b9152ebec19a2fcfcb7057912f4c54563f94625c472",
+    "signer_matches_model_attestation": true,
+    "signature_sha256": "50ede7e4dc08cd589461f596ac512b314d71efd80ae3656f9a43bcee1e3ffb1b",
+    "binder": {
+      "ok": true
+    }
+  },
+  "compose_manager": {
+    "ok": true,
+    "quote_sha256": "a2185b3f3105b2847253ade44c55c8f7bd1746c7be963a6cff5f577c15e47934",
+    "tcbStatus": "UpToDate",
+    "advisoryIds": [],
+    "rtmr3": "463b2e18f0dde370e2be8d6b4cb07aac5efc4d8bc712cea2714d103e4db57cea4ce50197973d557306b25e70f82277d6",
+    "mrtd": "df4d77c857de652bd0fafa343a2026b51071ee03773d076d283abf1a7d36ff91ffa279ee4a617ac664f7e2a2c8d5891b",
+    "mrconfigid": "01a0e3c6f4f21a60ea3f5c96bc7ef319b03a184ca2049605399275fbcea74e8c5f000000000000000000000000000000",
+    "report_data_eq_actions_hash_nonce": true,
+    "nonce_source": "client",
+    "actions_hash_record_only": "669b972ed93200b409becbe38c9df7bd6dd7d4e8aab50037f15b7e672984e1e6",
+    "actions_count": 224,
+    "latest_compose_up": {
+      "timestamp": "2026-10-28T03:40:08.260766737+00:00",
+      "file": "prod/GLM-5.3-Flash-SGL-TP2x4-W4AFP8-V12Q8.yaml",
+      "file_sha256": "904054f502ccdb2f913d6b80f156ea658b8bc5cb6f8af06082723581d62a45c0",
+      "tag": "v0.0.521",
+      "commit": "7ee4a4c741259d0c69a81e5cda22c3dfce21cbc2",
+      "services": [
+        "otelcol-contrib"
+      ]
+    },
+    "compose_manager_images": [
+      "nearaidev/compose-manager@sha256:6e035c8fb99c1d31f41760d25af178683a658cca4afd73cd0d366fbb5bf884be",
+      "nearaidev/compose-manager@sha256:bc44e44e619dc003b3b5bcf53420b759a0ea058d0b81cf0caffc063a9d733193",
+      "nearaidev/compose-manager@sha256:a320bb4882341c8e19ef1944436f6591ed73303732009ed5db9f6db6c9da756a"
+    ],
+    "vm_config_image": "dstack-nvidia-0.5.12"
+  },
+  "instance_id": "19aea1693533dc2d529db03e3f725f20bde8d66d",
+  "app_id": "2c0a0c96cb6dbd659bf1446e2f3fce58172ff91b",
+  "verifyReport_empty_allowlist": "DENY allowlist_load attestation denied [allowlist_load]: allowlist empty (deny-all)"
+}

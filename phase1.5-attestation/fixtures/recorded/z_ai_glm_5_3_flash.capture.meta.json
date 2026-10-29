@@ -1,0 +1,16 @@
+{
+  "model_id": "z-ai/glm-5.3-flash",
+  "captured_at_utc": "2026-10-29T16:10:45.257Z",
+  "gateway": "https://cloud-api.near.ai/v1",
+  "status": {
+    "report": 200,
+    "completion": 200,
+    "signature": 200
+  },
+  "nonceHash": "2d9cb01f85268d40e6bc89ebf6fd6a7f3f61577e8f0002d0a81af64e4a64cb17",
+  "report_sha256": "18348243769879b02bfdaf013371dee6e1f7739a049697e8b1f34a30ead2b2b8",
+  "chat_id": "3b15d1f6993a4d4eadbd0319c880e105",
+  "request_sha256": "57ce589a6bd6c8280d8b6bb176bcd7e9db442d600b65064b7de91da07578db4b",
+  "response_sha256": "e4fc038e2de61deb825b8b9152ebec19a2fcfcb7057912f4c54563f94625c472",
+  "signature_present": true
+}
