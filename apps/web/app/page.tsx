@@ -78,8 +78,12 @@ export default function Research() {
           }
         }
       } else {
-        const q = text.split('\n\n--- Notes (untrusted data) ---')[0];
-        const res = await fetch('/api/ask', { method: 'POST', signal: ac.signal, headers: { 'content-type': 'application/json' }, body: JSON.stringify({ question: text.length <= 8000 ? text : q }) });
+        // askLocal questionMax ~8k; never silently drop attached notes (Runtime preferred: separate notes field later).
+        if (text.length > 8000) {
+          patch(aid, () => 'Too long — trim notes (local ask cap is 8k until a separate notes field lands). Nothing was sent.');
+          return;
+        }
+        const res = await fetch('/api/ask', { method: 'POST', signal: ac.signal, headers: { 'content-type': 'application/json' }, body: JSON.stringify({ question: text }) });
         const j = await res.json().catch(() => ({ ok: false, reason: 'bad_response', message: `HTTP ${res.status}` }));
         patch(aid, () => (j.ok ? String(j.answer ?? '') : `Refused (${j.reason}): ${j.message}`));
       }
@@ -166,7 +170,7 @@ export default function Research() {
           <div className="flex items-center justify-between px-1">
             <div className="flex items-center gap-3">
             <label className="flex items-center gap-1.5 text-[11px] text-zinc-500">
-              <input type="checkbox" checked={attach} onChange={(e) => setAttach(e.target.checked)} className="accent-zinc-400" /> Attach notes ({notes.length} chars, masked)
+              <input type="checkbox" checked={attach} onChange={(e) => setAttach(e.target.checked)} className="accent-zinc-400" /> Attach notes ({notes.length} chars, masked){attach && notes && (input.length + notes.length + 40) > 8000 ? <span className="text-amber-400/80"> · over 8k — trim before send</span> : null}
             </label>
             <label title={mode?.gatewayAvailable ? 'Sends masked text to a cloud model. Not local.' : 'No gateway key configured'} className={`flex items-center gap-1.5 text-[11px] ${remote ? 'text-sky-400/80' : 'text-zinc-500'} ${mode?.gatewayAvailable ? '' : 'opacity-40'}`}>
               <input type="checkbox" disabled={!mode?.gatewayAvailable || busy} checked={remote} onChange={(e) => setPreferRemote(e.target.checked)} className="accent-sky-500" /> REMOTE · cloud (labeled)
