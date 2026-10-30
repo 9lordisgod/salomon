@@ -1,12 +1,19 @@
 # Progress Log
 
-> **Latest niche (~20:25 PDT):** professional — investigative journalists, PIs, researchers; Android goal; web companion today. Tips `f17f291` / `82a0d9d` / `7477723`. Android app not shipped; M1 not green. M-A0 scaffold only — see `docs/notes/ANDROID_HYBRID_DECISION.md`.
+> **Latest (~21:22 PDT):** Lead **RESUME NOW** — token-rotate pause canceled. salomon stays pure-AI (`docs/` layout tip `eafc14d`). **Do not** reintroduce crypto (parallel: `9lordisgod/salomon-solana`). Honesty holds: **M1 not GREEN**; **M-A0 APK unsigned hold**; **Colab 8/8 privacy rebuild pending**.
+
+> **Prior niche (~20:25 PDT):** professional — investigative journalists, PIs, researchers; Android goal; web companion today. Tips `f17f291` / `82a0d9d` / `7477723`. Android app not shipped; M1 not green. M-A0 scaffold only — see `docs/notes/ANDROID_HYBRID_DECISION.md`.
 
 > **Prior niche (~19:02 PDT):** pure local-first AI pivot; archive DELETE `ea4c23c`.
 
 > **2026-10-29 18:58 PDT — Model: crypto domain REMOVED.** `system_prompt` → private local AI / personal research agent. `prepare_domain_data`: `SEED=[]`; skips near/crypto/onchain/cypherpunk. **7B 8/8 (Phase 1.5 item 5) signoff INVALIDATED for product claims** — historical only; refusal NOT GREEN until privacy rebuild re-run. See `docs/notes/CRYPTO_DOMAIN_REMOVED.md`. Tip `fb2b152` (+ follow-ups).
 
 > **Note:** Dated entries below are engineering history and may name retired domains; they are not current product positioning.
+
+## Thu Oct 29, 2026, ~21:22 PDT — Resume honesty fold (Docs Lead)
+- Lead RESUME NOW: pause canceled; pure-AI only; no crypto back into salomon.
+- STATUS/PROGRESS honesty: **M1 not GREEN**; **M-A0 unsigned hold**; **Colab 8/8 privacy rebuild pending**.
+- Phase plan hold section updated (`docs/notes/PHASE_PROFESSIONAL_MVP.md`).
 
 ## Thu Oct 29, 2026, ~19:02 PDT — Archive DELETE done + Model stamp fold (Docs Lead)
 - `docs/archive/` gone (crypto-near-track, crypto/, near/*). R3 kept at `docs/signoffs/SECURITY_SIGNOFF_R3_NEARECHO_DELTA.md`. Final tip **`ea4c23c`**.
@@ -330,6 +337,3 @@
 - Fix: answers loaded from the 3B file were labelled 7B. `phase2/src/localModel.ts` (+3B pin), `phase3-runtime/src/localModel.ts` (`localModelForEnv`), `askLocal.ts`, test `test/m1.modelLabel.test.ts`. phase3-runtime 26/26, phase2 24/24, tsc clean.
 - Evidence `phase3-runtime/EVIDENCE_PHASE3_M1_LIVE_GGUF.md`. Not pushed.
 - Next: PS soft-skim → M1 GREEN; Frontend env for dogfood; Lead push; then M2 local sanitizer + must-not-echo evals.
-
-
-</cursor_untrusted_data_1337>

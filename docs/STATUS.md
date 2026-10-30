@@ -1,6 +1,6 @@
 # Status — Salomon
 
-_Updated Thu Oct 29, 2026, ~20:40 PDT (America/Vancouver)._ Full dated log: [docs/notes/STATUS_HISTORY.md](notes/STATUS_HISTORY.md) · engineering log: [PROGRESS.md](PROGRESS.md).
+_Updated Thu Oct 29, 2026, ~21:22 PDT (America/Vancouver)._ Full dated log: [docs/notes/STATUS_HISTORY.md](notes/STATUS_HISTORY.md) · engineering log: [PROGRESS.md](PROGRESS.md).
 
 ## Product
 
@@ -15,15 +15,15 @@ Niche: [PRODUCT_NICHE](notes/PRODUCT_NICHE.md) · scope: [PRODUCT_SCOPE](notes/P
 
 ## Phase
 
-**Phase 3 — Professional Android MVP. M1 in flight (not green).**
+**Phase 3 — Professional Android MVP. M1 in flight (not GREEN).**
 
 | Item | State |
 |---|---|
 | M0 — scope / niche lock | **Done** |
-| M1 — local `ask` end-to-end, fail closed | **In flight** — today on web companion (`POST /api/ask`); CLI secondary |
+| M1 — local `ask` end-to-end, fail closed | **In flight — not GREEN** — today on web companion (`POST /api/ask`); CLI secondary |
 | M2 — document ingest + source-ID masking | **Gated** — criteria accepted, not opened, not shipped |
 | M3 — explicit export approval UX | **Gated** — not opened, not shipped |
-| Android app / Play / on-device phone inference | **Not shipped** (M-A0 scaffold only) |
+| Android app / Play / on-device phone inference | **Not shipped** — M-A0 scaffold only; **APK unsigned hold** |
 | Hybrid / verified remote | **Not shipped** |
 
 ## Foundation
@@ -32,18 +32,26 @@ Niche: [PRODUCT_NICHE](notes/PRODUCT_NICHE.md) · scope: [PRODUCT_SCOPE](notes/P
 |---|---|
 | Phase 2 — agent loop, sanitizer, caps, propose-only | **Green** (M1–M3) |
 | Phase 1.5 items (1)–(4) — threat model, verified-remote client, sanitizer, policy stub | **Signed** |
-| Phase 1.5 item (5) / refusal eval | **Historical only** — invalidated for product claims; rebuild pending |
+| Phase 1.5 item (5) / refusal eval | **Historical only** — invalidated for product claims; **Colab 8/8 privacy rebuild pending** |
 | Phase 1 dataset | **Parked** — refresh toward source/PII/secret must-not-echo when unparked |
+
+## Holds (honest)
+
+- **M1 not GREEN** — desk → `/api/ask` + offline smoke still open.
+- **M-A0 unsigned hold** — Compose/Rust scaffold may proceed; no signed/public APK claim.
+- **Colab 8/8 pending** — privacy-domain refusal rebuild not re-run green; do not cite historical crypto 8/8 for product.
+
+Token-rotate pause **canceled** (Lead resume ~21:22 PDT). Parallel Solana work lives in `9lordisgod/salomon-solana` — **do not** reintroduce crypto into this repo.
 
 ## Next
 
 1. Turn M1 green: desk → `/api/ask` + offline smoke ([runbook](notes/PHASE3_MVP_RUNBOOK.md)).
-2. Privacy-domain rebuild evals (journalism must-not-echo).
-3. Open M2 (ingest + mask), then M3 (approvals), then signed Android build.
+2. Privacy-domain Colab 8/8 rebuild (journalism must-not-echo).
+3. Open M2 (ingest + mask), then M3 (approvals), then signed Android build (after unsigned hold lifts).
 
 ## Recent tips (main)
 
-`f17f291` / `82a0d9d` niche lock · `7477723` scope + pricing · `e228e24` ROADMAP scrub · `527d8e9` / `2a402f0` residual fold · this pass: repo organization (REPO_LAYOUT, docs indexes, STATUS split).
+`eafc14d` docs move + LICENSE · `d5af5c4` org soft sync · `0f18c21` org pass · niche `f17f291` / `82a0d9d` / `7477723` · residual `527d8e9` / `2a402f0`.
 
 ## Links
 

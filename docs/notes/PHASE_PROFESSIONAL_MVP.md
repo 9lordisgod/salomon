@@ -19,7 +19,13 @@
 
 ## Hold / resume
 
-Work paused ~7 days for token rotate (yoxi 2026-10-29). Resume routine: 2026-11-05 10:00 America/Vancouver. Leave M-A0 APK unsigned until reopen; Colab 8/8 privacy rebuild held.
+**Resume NOW** (Lead, 2026-10-29 ~21:22 PDT America/Vancouver) — token-rotate pause **canceled**. salomon stays pure-AI; crypto/Solana lives in parallel repo `9lordisgod/salomon-solana` only.
+
+Still held (honesty):
+
+- **M1 not GREEN**
+- **M-A0 APK unsigned** — scaffold OK; no signed/public APK claim until hold lifts
+- **Colab 8/8 privacy rebuild pending** — do not claim historical crypto 8/8 for product
 
 ## Phase 4 (later — not Pro minimum)
 
