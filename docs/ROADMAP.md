@@ -1,14 +1,14 @@
 # Roadmap
 > **Product niche (locked ~20:25 PDT):** local-first research agent for investigative journalists, private investigators, and researchers who cannot send sensitive sources/docs to cloud AI — on-device by default. See `docs/notes/PRODUCT_NICHE.md`.
 
-**Current: Phase 3 — professional Android MVP · M1 IN FLIGHT** · Phase 2 M1–M3 GREEN · Phase 1 gate historical (item 5 INVALIDATED for product claims) · dataset PARKED · Phase 1.5 (1)–(4) SIGNED · Niche locked tips `f17f291` / `82a0d9d` / `7477723`
+**Current: Phase 3 — professional Android MVP · M1 GREEN (scoped)** · Phase 2 M1–M3 GREEN · Phase 1 gate historical (item 5 INVALIDATED for product claims; Colab privacy rebuild pending) · dataset PARKED · Phase 1.5 (1)–(4) SIGNED · Niche locked tips `f17f291` / `82a0d9d` / `7477723`
 
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'background':'#0a0a0a','primaryColor':'#18181b','primaryTextColor':'#fafafa','primaryBorderColor':'#a1a1aa','secondaryColor':'#09090b','secondaryBorderColor':'#71717a','tertiaryColor':'#27272a','lineColor':'#a1a1aa','textColor':'#fafafa','mainBkg':'#18181b','nodeBorder':'#a1a1aa','clusterBkg':'#000000','titleColor':'#fafafa','edgeLabelBackground':'#18181b'}}}%%
 flowchart LR
   P1[Phase 1<br/>Small model + refusal<br/>gate done · dataset parked] --> G{{Phase 1.5<br/>privacy gate 1–5 ✅}}
   G --> P2[Phase 2<br/>Agent loop · tools · sanitizer<br/>M1–M3 GREEN]
-  P2 --> P3[Phase 3<br/>Professional Android MVP<br/>M1 IN FLIGHT]
+  P2 --> P3[Phase 3<br/>Professional Android MVP<br/>M1 GREEN scoped]
   P3 --> P4[Phase 4<br/>Hardening]
   P2 -.archived.-> X[Prior crypto/NEAR<br/>archived]
 
@@ -16,7 +16,7 @@ flowchart LR
   class P1,G,P2,P3,P4,X mono
 ```
 
-Flow in words: Phase 1 (parked dataset) → Phase 1.5 privacy gate → Phase 2 green agent loop → Phase 3 professional Android MVP (M1 in flight) → Phase 4 hardening; prior crypto/NEAR track archived.
+Flow in words: Phase 1 (parked dataset) → Phase 1.5 privacy gate → Phase 2 green agent loop → Phase 3 professional Android MVP (M1 GREEN scoped) → Phase 4 hardening; prior crypto/NEAR track archived.
 
 ## Phase 1 — Small model that refuses to leak
 - [x] Model choice (Qwen2.5-7B-Instruct; Llama-3.1-8B alt) — configs/model_config.yaml
@@ -52,10 +52,10 @@ Owners: Privacy Security owns gate acceptance and reviews every Phase 2 PR touch
 > Product niche locked (`docs/notes/PRODUCT_NICHE.md`). Success bar: no cloud-by-default · no secret echo · no silent exposure · source-ID masked before model (M2) · credentials outside model · plain refuse/mask reasons.
 >
 > **M0 DONE** — Scope lock: Lead approved the Phase 3 journalist MVP brief.
-> **M1 IN FLIGHT** — Local run path: offline/local `ask` end-to-end (fail closed if model missing). **Primary surface = Next.js web app + API** (`POST /api/ask` → `askLocal`); **CLI secondary**. Runbook: `docs/notes/PHASE3_MVP_RUNBOOK.md`. Web stack: `docs/notes/PHASE3_WEB_STACK.md`.
+> **M1 GREEN (scoped)** — local `ask` + pinned GGUF offline fail-closed; PS SOFT CLEAR. **Primary surface today = Next.js web app + API** (`POST /api/ask` → `askLocal`); **CLI secondary**. **Not** Android/on-phone. Runbook: `docs/notes/PHASE3_MVP_RUNBOOK.md`. Web stack: `docs/notes/PHASE3_WEB_STACK.md`.
 >
 > Later: **M2** ingest + source-identity masking · **M3** propose-only save/export + approval UX · **M4** dogfood cut. Dataset **PARKED**. Do not claim M2/M3 as shipped.
-- [ ] **M1** Offline/local `ask` on Next.js + API (primary); CLI optional/secondary; fail closed if model missing — **live GGUF smoke PASS (runtime + `/api/ask`)**; GREEN pending PS soft-skim
+- [x] **M1 GREEN (scoped)** Offline/local `ask` on Next.js + API (primary); CLI optional/secondary; fail closed if model missing — live GGUF + PS SOFT CLEAR. Not Android/on-phone. Item (5) still INVALIDATED; M2 eng not open.
 - [ ] **M2** Local document ingest + source-identity masking before the model
 - [ ] **M3** Propose-only save/export with explicit approval; credentials outside the model
 - [ ] Untrusted-input handling for leaked documents, web pages and emails (injection-safe tool output — proven in Phase 2)
@@ -71,5 +71,3 @@ Owners: Privacy Security owns gate acceptance and reviews every Phase 2 PR touch
 
 ## Archived — prior crypto / NEAR track (parked 2026-10-29, Lead pivot)
 Not the product. Tree removed tip `ea4c23c`. See `docs/notes/CRYPTO_DOMAIN_REMOVED.md` (git history for old evidence).
-
-

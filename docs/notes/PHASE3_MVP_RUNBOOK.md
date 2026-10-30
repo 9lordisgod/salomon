@@ -1,7 +1,7 @@
 # Phase 3 MVP runbook — local research agent (Docs Lead)
 
 **When:** 2026-10-29 ~15:40 PDT (America/Vancouver); niche aligned ~20:40 PDT  
-**Status:** M1 **IN FLIGHT** — document the local `ask` path only. Do **not** claim M2/M3 as shipped.  
+**Status:** M1 **GREEN (scoped)** — local `ask` + pinned GGUF offline fail-closed (PS SOFT CLEAR). Do **not** claim M2/M3, Android/on-phone, or item (5) refusal-eval green.  
 **Audience:** engineers dogfooding M1; Product/Lead scope lock.  
 **Privacy:** soft-review before any public claim that goes beyond what this runbook states.
 
@@ -39,12 +39,12 @@ Do **not** describe the MVP as CLI-only. Do **not** claim an Android / Play / on
 | ID | One line | State |
 |---|---|---|
 | **M0** | Scope lock: professional niche (journalists / PIs / researchers; Android goal) | **DONE** |
-| **M1** | Local run path: offline/local `ask` end-to-end; fail closed if model missing | **IN FLIGHT** |
+| **M1** | Local run path: offline/local `ask` end-to-end; fail closed if model missing | **GREEN (scoped)** — not Android/on-phone |
 | **M2** | Local ingest + source-identity masking | Not started — do not claim |
 | **M3** | Propose-only save/export + approval UX | Not started — do not claim |
 | **M4** | Dogfood cut | Later |
 
-## What M1 is allowed to claim (when green)
+## What M1 is allowed to claim (GREEN scoped)
 
 - Offline/local `ask` through the hardened loop (sanitize → local completer → answer).
 - Fail closed if the local model/GGUF is missing (no auto-download, no cloud fallback on `ask`).
@@ -97,7 +97,7 @@ If the model file is missing, `ask` must refuse with a plain reason — never do
 
 ## Privacy soft-review checklist (before overclaim)
 
-- [ ] Claims match **only** M1 landed evidence (or say "in flight / design").
+- [ ] Claims match **only** M1 GREEN scoped evidence (local ask + GGUF offline); do not widen to Android / refusal-eval / M2.
 - [ ] No "masks source IDs" / "propose-approve save" until M2/M3 green.
 - [ ] No cloud-default or auto-download on ask.
 - [ ] Credentials never described as held by the model.
@@ -108,5 +108,5 @@ If the model file is missing, `ask` must refuse with a plain reason — never do
 
 - Status of record: [`STATUS.md`](../STATUS.md) · history: [`STATUS_HISTORY.md`](STATUS_HISTORY.md) · plan: [`ROADMAP.md`](../ROADMAP.md)
 - Niche: [`PRODUCT_NICHE.md`](PRODUCT_NICHE.md) · chart style: [`CHART_STYLE.md`](CHART_STYLE.md)
-- M1 claims / Product acceptance: [`PHASE3_M1_PRODUCT_ACCEPTANCE.md`](PHASE3_M1_PRODUCT_ACCEPTANCE.md) — M1 is **not green** until desk → `/api/ask` + offline smoke pass.
+- M1 claims / Product acceptance: [`PHASE3_M1_PRODUCT_ACCEPTANCE.md`](PHASE3_M1_PRODUCT_ACCEPTANCE.md) — **M1 GREEN (scoped)** on PS SOFT CLEAR + live GGUF evidence; not Android/on-phone. Item (5) INVALIDATED; M2 eng not open.
 - M2 criteria (accepted; M2 not opened): [`../acceptance/PHASE3_M2_SOURCE_MASK_ACCEPT.md`](../acceptance/PHASE3_M2_SOURCE_MASK_ACCEPT.md)

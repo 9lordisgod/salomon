@@ -47,7 +47,7 @@ Phase 2's read-only tool pattern (allowlist guards, caps, untrusted envelopes) p
 1. Small model + refusal: gate done; dataset parked
 1.5. Privacy merge gate: (1)–(5) signed
 2. Agent loop, sanitizer, caps, propose-only: M1–M3 green
-3. Android MVP (goal): local ask on phone; today Next.js web + `POST /api/ask`; CLI secondary; notes/docs ingest (M2), credential store, propose-only approval (M3) — M2/M3 not shipped
+3. Android MVP (goal): **M1 GREEN (scoped)** on web companion (`POST /api/ask` + pinned GGUF offline); CLI secondary; Android/on-phone not shipped; notes/docs ingest (M2), credential store, propose-only approval (M3) — M2 eng not open; M3 not shipped; item (5) INVALIDATED
 4. Hardening + optional confidential compute
 
 

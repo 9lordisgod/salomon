@@ -6,7 +6,7 @@ Documents and notes stay on-device by default. AI helps analyze without defaulti
 
 > Status: Android app / Play listing / on-device phone inference **not shipped yet**; today's surface is the web companion + privacy foundation. Source-identity masking (M2) and export approvals (M3) are **not shipped**.
 
-1. **Local-first, fail closed (goal).** The model is designed to run on-device by default and fail closed when no local model is connected. Phase 3 M1 (local `ask`) is in flight; the current surface is a Next.js web app that may run in a labeled `DEMO · REMOTE` / `DEMO · stub` mode. Remote paths are opt-in and labeled — never silent, never default.
+1. **Local-first, fail closed (goal).** The model is designed to run on-device by default and fail closed when no local model is connected. Phase 3 **M1 GREEN** (scoped): local `ask` + pinned GGUF offline fail-closed on the web companion; the surface may still show labeled `DEMO · REMOTE` / `DEMO · stub` when not local. Remote paths are opt-in and labeled — never silent, never default.
 2. **Sources and secrets stay protected.** The model won’t echo keys or sensitive material, and it never holds credentials. Source-identity masking before the model is Phase 3 **M2 — criteria accepted, not opened, not shipped**.
 3. **You decide every consequential step.** The agent proposes; policy and you approve before anything is exported, sent, published, or changed.
 
@@ -58,7 +58,7 @@ Investigative journalists, private investigators, and researchers who work with 
 flowchart LR
   P1["Phase 1: small model that refuses (historical gate, dataset parked)"] --> G["Phase 1.5: (1)-(4) signed · (5) rebuild pending"]
   G --> P2["Phase 2: agent loop, sanitizer, caps (M1-M3 green)"]
-  P2 --> P3["Phase 3: Professional Android MVP (M1 in flight)"]
+  P2 --> P3["Phase 3: Professional Android MVP (M1 GREEN scoped)"]
   P3 --> P4["Phase 4: hardening, optional confidential compute"]
 
   classDef mono fill:#18181b,stroke:#a1a1aa,color:#fafafa
@@ -70,13 +70,13 @@ flowchart LR
 | Phase 1 — small model that refuses | Historical gate; item (5) INVALIDATED for product claims; dataset parked |
 | Phase 1.5 — privacy gate | (1)–(4) signed; (5) historical only — rebuild pending |
 | Phase 2 — agent loop, sanitizer, caps | M1–M3 green |
-| Phase 3 — professional Android MVP | M1 in flight (not green); M2/M3 gated |
+| Phase 3 — professional Android MVP | **M1 GREEN** (scoped — local ask + GGUF offline); M2/M3 gated; Android not shipped |
 | Phase 4 — hardening, optional confidential compute | Not started |
 
 - **Phase 1 (historical gate).** Qwen2.5-7B-Instruct + QLoRA harness. Prior refusal eval was **8/8** on 7B (`docs/signoffs/SECURITY_SIGNOFF_REFUSAL_7B.md`; R3 cleared at `docs/signoffs/SECURITY_SIGNOFF_R3_NEARECHO_DELTA.md`) — **INVALIDATED for product claims** after crypto-domain remove; refusal **NOT GREEN** until privacy rebuild re-run. See `docs/notes/CRYPTO_DOMAIN_REMOVED.md`. Dataset **parked** (`SEED=[]` rebuild path). When unparked, refresh toward source/PII/secret must-not-echo for professional research.
 - **Phase 1.5.** Threat model, fail-closed verified-remote client, sanitizer, and policy stub: items **(1)–(4) signed** in `docs/signoffs/`. Item **(5)** historically signed — **INVALIDATED for product claims**; rebuild pending.
-- **Phase 2 (M1–M3 green).** Agent loop with hard caps, TS sanitizer on `role:tool` output, multi-step read-only tool chaining, and a reviewed propose-only pattern. Execute/sign was never opened. The safe agent-loop pattern (caps, sanitizer, propose-only) is green; research web dogfood is **Phase 3 M1 in flight** (local ask path). Ingest/mask (M2) and propose-save (M3) are **not shipped**.
-- **Phase 3 (M1 in flight, not green).** **Goal surface:** Android app (not shipped). **Today:** Next.js web app + `POST /api/ask`; CLI secondary. M1 is not green until desk → `/api/ask` + offline smoke pass. A Q4_K_M GGUF is pinned and scripts exist, but there is **no live local GGUF** / on-device phone inference until that lands.
+- **Phase 2 (M1–M3 green).** Agent loop with hard caps, TS sanitizer on `role:tool` output, multi-step read-only tool chaining, and a reviewed propose-only pattern. Execute/sign was never opened. The safe agent-loop pattern (caps, sanitizer, propose-only) is green. Ingest/mask (**M2**) and propose-save (**M3**) are **not shipped** — M2 eng **not open**.
+- **Phase 3 — M1 GREEN (scoped).** Local `ask` + pinned GGUF offline fail-closed (PS SOFT CLEAR); web companion today (`POST /api/ask`); CLI secondary. **Not** Android / Play / on-device phone inference. Item **(5) INVALIDATED** for product claims (Colab privacy rebuild pending). **M2** eng not open; **M3** not shipped.
 - **Prior framing:** earlier niche experiments were retired from the product narrative; this repo is a local-first research agent for journalists, PIs, and researchers.
 
 Status of record: [STATUS.md](docs/STATUS.md) · plan: [ROADMAP.md](docs/ROADMAP.md) · design: [ARCHITECTURE.md](docs/ARCHITECTURE.md).
