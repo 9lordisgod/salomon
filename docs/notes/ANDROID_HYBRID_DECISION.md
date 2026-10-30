@@ -111,3 +111,12 @@ Workspace `Cargo.toml` at repo root or under `crates/`. Do **not** put Rust unde
 - **Docs:** pure-AI goal tense + archive deletes in flight (separate track).
 
 — Lead Architect · Salomon
+
+## Platform refine (2026-10-29)
+
+- **Crate name:** Lead's `crates/salomon-core` (not `salomon-native`). M-A0 is a single crate, `crate-type = ["cdylib", "rlib"]`, optional `jni` feature. Split out `salomon-android` later only if needed.
+- **NDK/AGP:** target NDK **r28** + AGP ≥ 8.5.1 (16 KB page-size). r26 is the floor, not the target.
+- **M-A0 ask stub:** `MissingModel` when no GGUF path; `Stub` when `SALOMON_ASK_STUB=1`; never remote. Thin secret-shape refuse (ed25519-style key, PEM private key, `sk-` key, seed-phrase) → `Refused`. Policy lives in Rust; full sanitizer port stays a stub trait.
+- **ABI:** arm64-v8a first; x86_64 emulator optional/debug only.
+- **GGUF:** discovery stub only. `SALOMON_GGUF` must be an existing file; no download; `*-of-*` shard paths refused. llama.cpp is not linked; an existing file returns `MissingModel` with error `runner_not_linked`.
+- **Status semantics** match TS: `MissingModel | Stub | Local | Refused`. `Local` cannot be reached in M-A0.
