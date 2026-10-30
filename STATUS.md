@@ -4,11 +4,16 @@
 
 > **Prior niches (historical only):** earlier research-agent framings (main `f9d75fd`) and brief mobile-distribution experiments (~17:41–18:46 PDT) — retired from hero. Dated engineering log lines below may still name retired domains.
 
-**Phase:** **3 (Android MVP; pure local-first AI) — M1 IN FLIGHT.** Phase 1 gate done (7B refusal 8/8). Dataset **PARKED** at 362 seed rows. Phase 1.5 (1)–(5) SIGNED. Phase 2 M1–M3 **GREEN**. M4 propose-only pattern (G1+G2 ACCEPTED, salomon `79c0f99`) reused for approvals; G3 never opened.
+**Phase:** **3 (Android MVP; pure local-first AI) — M1 IN FLIGHT.** Phase 1 gate historically signed (7B 8/8) — **INVALIDATED for product claims** after crypto-domain remove; refusal **NOT GREEN** until privacy rebuild re-run. Dataset **PARKED** (SEED=[] rebuild path). Phase 1.5 (1)–(4) SIGNED; (5) historical only. Phase 2 M1–M3 **GREEN**. M4 propose-only pattern (G1+G2 ACCEPTED, salomon `79c0f99`) reused for approvals; G3 never opened.
 - **M0 DONE** — Scope lock: Product niche locked (pure AI / Android goal).
 - **M1 IN FLIGHT** — Local run path: offline/local `ask` end-to-end (fail closed if model missing). **Goal surface = Android app (not shipped).** **Today = Next.js web companion + API** (`POST /api/ask`); CLI secondary. Runbook: `docs/notes/PHASE3_MVP_RUNBOOK.md`.
+- **M-A0 OPEN (scaffold only):** Android hybrid decision **LOCKED** (Rust core + Compose UI); M-A0 Compose+Rust stub open; Android app **not shipped**. See `docs/notes/ANDROID_HYBRID_DECISION.md`.
 
-**Latest (~18:58 PDT):** Pivot locked: Salomon = pure local-first AI (Android goal primary; web companion). Prior domain tracks scrubbed from live narrative (archive delete tips follow). Core unchanged — local default, fail closed, no silent remote, credentials out of the model. Android app / Play listing / on-device phone inference **not shipped**; M1 not green; M2 eng NOT OPEN; hybrid not shipped. Residual: apps/web = salomon-app confirm. Tips `eed2f77` / `56b466d` / `9137931` / `ed48792`.
+**Latest (~19:02 PDT — Docs):** Prior-domain **archive DELETE done** — `docs/archive/` removed (crypto-near-track, `docs/archive/crypto/`, `docs/archive/near/*`). R3 signoff kept at `docs/signoffs/SECURITY_SIGNOFF_R3_NEARECHO_DELTA.md`. Final delete tip **`ea4c23c`**. Soft tips `622b35a` / `dc28ddf`. Attestation provider names kept as eng record.
+
+**Prior (~18:58 PDT — Model):** crypto domain **REMOVED** (tip `fb2b152` + follow-ups). `system_prompt` → private local AI / personal research agent. `prepare_domain_data`: `SEED=[]`; skips near/crypto/onchain/cypherpunk. **7B 8/8 (Phase 1.5 item 5) signoff INVALIDATED for product claims** — historical only; refusal **NOT GREEN** until privacy rebuild re-run. See `docs/notes/CRYPTO_DOMAIN_REMOVED.md`.
+
+**Prior (~18:58 PDT — docs):** Pivot locked: Salomon = pure local-first AI (Android goal primary; web companion). Prior domain tracks scrubbed from live narrative. Core unchanged — local default, fail closed, no silent remote, credentials out of the model. Android app / Play listing / on-device phone inference **not shipped**; M1 not green; M2 eng NOT OPEN; hybrid not shipped. Residual: apps/web = salomon-app confirm. Tips `eed2f77` / `56b466d` / `9137931` / `ed48792`.
 
 **Prior (~17:41–18:46 PDT):** Mobile-distribution experiment tips (`b3b4b43` / `f0e8fa1` / `66c5efd` era) — retired from hero under pure-AI lock. Details in git history; not current product positioning.
 
@@ -24,12 +29,12 @@
 > Framing A honesty notes (local vs labeled remote) still apply. Pure-AI Android pivot ~18:55 PDT is current hero.
 - **Framing LOCKED:** source-protected research agent — local = privacy floor + default; optional verified remote only after **mask→sanitize→attest→complete**; no auto-fallback; no cloud-by-default.
 - Design note: `docs/notes/FRAMING_SOURCE_PROTECTED_DRAFT.md`. Trust boundaries: `docs/notes/HYBRID_TRUST_BOUNDARIES.md`. PS skim **SOFT CLEAR**: `docs/reviews/SECURITY_SOFT_SKIM_FRAMING_SOURCE_PROTECTED.md` (one-liner soft-edit: after mask, sanitization, and attestation).
-- **README hero:** pure local-first AI / Android goal tense; app / Play / on-device phone inference not shipped. Crypto scrubbed from live narrative.
+- **README hero:** pure local-first AI / Android goal tense; app / Play / on-device phone inference not shipped. Prior domain tracks scrubbed from live narrative.
 - Sequence: **M1-live → M2 mask → hybrid spike later.** Prior domain tracks retired from product narrative. **Do not claim hybrid shipped.** Demo gateway ≠ verified remote. M2 eng still NOT OPEN; M1 not green.
 
 ### Model Engineer niche reflection (2026-10-29 ~15:58 PDT)
 - M1 `ask_local.py --json` + `configs/source_care_system.txt` live for LocalCompleter (exits 0/2/3/4). Pin: `salomon-qwen25-7b-instruct-Q4_K_M.gguf` (bartowski single-file); split/Abliterated refuse. **Weight fetch APPROVED** (yoxi 2026-10-29) — Release/ME fetching pinned GGUF; Runtime owns live smoke after verify.
-- Dataset **PARKED @ 362** (domain-heavy seed; refresh pending). After M1 path: general privacy / PII must-not-echo seed+eval when unparked. Item (5) SIGNED.
+- Dataset **PARKED** — crypto domain **REMOVED** (`SEED=[]`; see `docs/notes/CRYPTO_DOMAIN_REMOVED.md`). Item (5) **INVALIDATED for product claims**; refusal NOT GREEN until privacy rebuild re-run.
 - Do not claim laptop-local product / tuned adapter / source-masking until those land. Full note: `docs/notes/SHIP_REFLECTION_MODEL_ENGINEER.md`.
 
 ## Lead answers (2026-10-29)
@@ -67,7 +72,7 @@ docs/reviews/SECURITY_REVIEW_PHASE1.md landed (Privacy Security). Lead Architect
 0. **PS S1 SOFT CLEAR** (reskim stamp) — M1 dogfood copy OK. Soft note 1 closed (desk → /api/ask `16c4d50`; Sources `973883a`). PS **Sources + desk soft CLEAR** (stamp `docs/reviews/SECURITY_SOFT_SKIM_SALOMON_APP_SOURCES_RESKIM.md`; SHAs `16c4d50`/`973883a` verified). Soft residual: confirm remote apps/web = salomon-app. S2 ACCEPT. M2 NOT OPEN. Do not claim M1 green / M2/M3.
 0b. **Phase 3 M1 IN FLIGHT:** local offline `ask` — primary Next.js web+API; CLI secondary. Runbook `docs/notes/PHASE3_MVP_RUNBOOK.md`. M0 scope lock DONE. Do not claim M2 ingest/mask or M3 propose-save. Dataset PARKED. Follow-up: SECURITY + phase READMEs niche align; Privacy soft-review before overclaim.
 1. Get a GPU host for the real QLoRA run (7B, 4-bit). Then do a full-data 0.5B LoRA run on CPU and compare tuned vs. baseline eval.
-2. **PARKED (user, via Lead 2026-10-29 ~11:44 PDT):** no 2k / multi-turn expansion. Seed stays at **362** rows. Gate item (5) stays **SIGNED**. Resume only when unparked. Note: seed still crypto-heavy (archived domain); Lead answer: refresh toward privacy AI for journalism (sources/PII/secrets) when unparked.
+2. **PARKED (user, via Lead 2026-10-29 ~11:44 PDT):** no 2k / multi-turn expansion. Seed stays at **362** rows. Gate item (5) historically SIGNED — **INVALIDATED for product claims**. Resume only when unparked. Note: seed rebuild pending privacy domain; Lead: refresh toward general privacy AI when unparked.
 3. ~~Phase 1.5 items (1)–(5)~~ — SIGNED OFF.
 4. ~~Pin `transformers>=5,<6`~~ — done.
 5. Archived: M4 G1+G2 ACCEPTED propose-only stubs (salomon `79c0f99`); G3 not opened and not planned.

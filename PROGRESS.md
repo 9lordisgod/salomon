@@ -1,8 +1,16 @@
 # Progress Log
 
-> **Latest niche (~18:53 PDT):** pure local-first AI (Android goal primary; web companion). Crypto/Solana/NEAR scrubbed from live narrative. Android app not shipped; M1 not green.
+> **Latest niche (~19:02 PDT):** pure local-first AI (Android goal primary; web companion). Prior-domain archive DELETE done (`ea4c23c`). Android app not shipped; M1 not green. M-A0 scaffold only (Rust+Compose) — see `docs/notes/ANDROID_HYBRID_DECISION.md`.
+
+> **2026-10-29 18:58 PDT — Model: crypto domain REMOVED.** `system_prompt` → private local AI / personal research agent. `prepare_domain_data`: `SEED=[]`; skips near/crypto/onchain/cypherpunk. **7B 8/8 (Phase 1.5 item 5) signoff INVALIDATED for product claims** — historical only; refusal NOT GREEN until privacy rebuild re-run. See `docs/notes/CRYPTO_DOMAIN_REMOVED.md`. Tip `fb2b152` (+ follow-ups).
 
 > **Note:** Dated entries below are engineering history and may name retired domains; they are not current product positioning.
+
+## Thu Oct 29, 2026, ~19:02 PDT — Archive DELETE done + Model stamp fold (Docs Lead)
+- `docs/archive/` gone (crypto-near-track, crypto/, near/*). R3 kept at `docs/signoffs/SECURITY_SIGNOFF_R3_NEARECHO_DELTA.md`. Final tip **`ea4c23c`**.
+- Folded Model crypto-domain REMOVED stamp into STATUS + PROGRESS (hero held aiming/goal tense). Attestation provider names kept.
+- Lead Android hybrid decision noted: M-A0 scaffold only (`docs/notes/ANDROID_HYBRID_DECISION.md`).
+
 
 ## Thu Oct 29, 2026, ~16:39 PDT — Product GGUF PASS (Release) + Model local confirm
 - Release: `salomon-qwen25-7b-instruct-Q4_K_M.gguf` on disk; sha256 `65b8fcd92af6b4fefa935c625d1ac27ea29dcb6ee14589c55a8f115ceaaa1423`; 4683074240 B.
