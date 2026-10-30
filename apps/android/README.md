@@ -9,17 +9,13 @@ Private local AI / personal agent shell for the **goal** Play/APK surface. Web r
 - Engine chip: `LOCAL` | `STUB` | `MODEL MISSING` | `REFUSED`
 
 ## Core wiring
-Platform C ABI in `libsalomon_core.so`:
-- `salomon_ask(prompt) → char*` JSON `{"status":"MissingModel|Stub|Local|Refused","text":...,"error":...|null}` — free with `salomon_free_string`
-- `salomon_version()`
+`System.loadLibrary("salomon_core")` → `libsalomon_core.so` at `app/src/main/jniLibs/arm64-v8a/`.
 
-App ships a tiny JNI shim (`app/src/main/cpp/salomon_jni_shim.c` → `libsalomon_jni.so`) exporting:
-- `Java_ai_salomon_core_SalomonCore_nativeAskJson`
-- `Java_ai_salomon_core_SalomonCore_nativeVersion`
+JNI (Compose):
+- `Java_ai_salomon_core_SalomonCore_nativeAsk` → `[statusCode, text, error]`
+- Codes: **0 MissingModel · 1 Stub · 2 Local · 3 Refused**
 
-Kotlin: `SalomonCore.ask(prompt): AskResult` (parses JSON) and `askJson(prompt): String`.
-
-Drop the `.so` at `app/src/main/jniLibs/arm64-v8a/libsalomon_core.so`. CMake shim builds only when that file exists.
+Kotlin: `SalomonCore.ask(prompt): AskResult`. C ABI JSON is **not** used by the UI.
 
 ## Build
 ```bash

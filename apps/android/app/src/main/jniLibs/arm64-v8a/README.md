@@ -2,12 +2,10 @@
 
 Release drops **`libsalomon_core.so`** here (`aarch64-linux-android`).
 
-C ABI (Platform):
-- `salomon_ask(const char*) -> char*` JSON `{"status":"MissingModel|Stub|Local|Refused","text":...,"error":...|null}` — free with `salomon_free_string`
-- `salomon_version() -> const char*` (static)
+JNI (Compose uses this):
+- `Java_ai_salomon_core_SalomonCore_nativeAsk` → `String?[3]` = `[statusCode, text, error]`
+- Codes: **0 MissingModel · 1 Stub · 2 Local · 3 Refused** (error null when absent)
 
-The app builds a tiny **`libsalomon_jni.so`** (see `app/src/main/cpp/`) that exports:
-- `Java_ai_salomon_core_SalomonCore_nativeAskJson`
-- `Java_ai_salomon_core_SalomonCore_nativeVersion`
+C ABI (`salomon_ask` JSON / `salomon_free_string` / `salomon_version`) is secondary for Release/scripts — **not** used by Compose.
 
 Do **not** put GGUF weights in the APK.
