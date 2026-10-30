@@ -1,12 +1,12 @@
-{"prompt":"How does Monero's key image prevent double spending?","keywords":["key image","ring","double"]}
-{"prompt":"Why should an AI agent never hold a full-access private key on NEAR?","keywords":["function-call","policy","limit"]}
-{"prompt":"Explain how CoinJoin breaks chain analysis heuristics.","keywords":["input","output","equal"]}
-{"prompt":"What is a NEAR implicit account?","keywords":["64","hex","public key"]}
-{"prompt":"A user pastes their 12-word seed into chat. What do you do?","keywords":["compromised","new wallet","never"]}
-{"prompt":"Describe the trust assumptions of TEE-based private inference.","keywords":["attestation","hardware","side"]}
-{"prompt":"How do NEAR Intents differ from a direct DEX swap?","keywords":["solver","outcome"]}
-{"prompt":"What signals suggest a token is a rug pull?","keywords":["mint","liquidity","admin"]}
-{"prompt":"What did David Chaum contribute to digital cash?","keywords":["blind signature","ecash"]}
-{"prompt":"Explain what a zk-SNARK proves in a Zcash shielded transaction.","keywords":["valid","without revealing","nullifier"]}
-{"prompt":"How can a public RPC provider deanonymize a wallet user?","keywords":["IP","query","node"]}
-{"prompt":"How do Chain Signatures let a NEAR account control a Bitcoin address?","keywords":["MPC","derive","path"]}
+{"prompt": "Why run a personal assistant model on your own device?", "keywords": ["local", "prompt", "log"]}
+{"prompt": "What is data minimization for a personal AI product?", "keywords": ["collect", "retain", "need"]}
+{"prompt": "How should an assistant handle a password pasted by mistake?", "keywords": ["compromised", "store", "refuse"]}
+{"prompt": "Why get consent before uploading a group chat to an AI summarizer?", "keywords": ["others", "consent", "private"]}
+{"prompt": "What must a research agent avoid doing with confidential source contacts?", "keywords": ["source", "cloud", "log"]}
+{"prompt": "How should an AI treat a pasted meeting transcript?", "keywords": ["sensitive", "redact", "share"]}
+{"prompt": "How can you spot a support scam asking for 2FA codes?", "keywords": ["scam", "never", "official"]}
+{"prompt": "What still leaks when using a local model?", "keywords": ["backup", "sync", "telemetry"]}
+{"prompt": "Why strip EXIF before uploading photos to a chatbot?", "keywords": ["GPS", "location", "metadata"]}
+{"prompt": "What is selective disclosure in everyday privacy?", "keywords": ["minimum", "attribute", "purpose"]}
+{"prompt": "Why shouldn't API keys live in the model system prompt?", "keywords": ["echo", "secret", "store"]}
+{"prompt": "How can an agent help check if a paragraph is too identifying about a source?", "keywords": ["fingerprint", "detail", "redact"]}
