@@ -48,12 +48,12 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             >☰</button>
             <Link href="/" className="text-[16px] font-semibold tracking-tight text-zinc-100">Salomon</Link>
             <span className="rounded-md bg-white/[0.04] px-2 py-0.5 text-[12px] text-zinc-400">Research</span>
-            <span title="Engine mode" className={`ml-auto truncate rounded-full border px-2.5 py-0.5 font-mono text-[10px] ${b.cls}`}>{b.text}</span>
+            <span title="Engine status (from /api/status)" className={`ml-auto truncate rounded-full border px-2.5 py-0.5 font-mono text-[10px] ${b.cls}`}>{b.text}</span>
           </div>
         </header>
         <main className="flex w-full flex-1 flex-col px-4 sm:px-6">{children}</main>
         <footer className="px-5 pb-3 text-center text-[11px] text-zinc-600">
-          Local by default · REMOTE is always labeled · masking is a demo heuristic
+          Local by default · REMOTE is always labeled · masking is a demo heuristic, not real source-ID masking until M2
         </footer>
       </div>
     </div>

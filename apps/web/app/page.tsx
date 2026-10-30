@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { maskText } from '@/lib/mask';
 import { saveThread, useMaskMap, useNotes, useProposals, useThreads } from '@/lib/store';
-import { isRemote, modeLabel, useMode } from '@/lib/useMode';
+import { chipOf, isRemote, modeLabel, useMode } from '@/lib/useMode';
 import { usePreferRemote } from '@/lib/preferRemote';
 
 type Msg = { id: string; role: 'user' | 'assistant'; text: string };
@@ -19,6 +19,8 @@ export default function Research() {
   const [preferRemote, setPreferRemote] = usePreferRemote();
   const remote = isRemote(mode, preferRemote);
   const label = modeLabel(mode, preferRemote);
+  const missing = !!mode && !remote && chipOf(mode) === 'missing';
+  const [maskOpen, setMaskOpen] = useState(false);
   const [messages, setMessages] = useState<Msg[]>([]);
   const [status, setStatus] = useState<'ready' | 'submitted' | 'streaming'>('ready');
   const [error, setError] = useState<Error | null>(null);
@@ -120,12 +122,12 @@ export default function Research() {
       } else {
         // askLocal questionMax ~8k; never silently drop attached notes (Runtime preferred: separate notes field later).
         if (text.length > 8000) {
-          patch(aid, () => 'Too long — trim notes (local ask cap is 8k until a separate notes field lands). Nothing was sent.');
+          patch(aid, () => 'Refused (notes_too_long): Too long — trim notes (local ask cap is 8k until a separate notes field lands). Nothing was sent.');
           return;
         }
         const res = await fetch('/api/ask', { method: 'POST', signal: ac.signal, headers: { 'content-type': 'application/json' }, body: JSON.stringify({ question: text }) });
         const j = await res.json().catch(() => ({ ok: false, reason: 'bad_response', message: `HTTP ${res.status}` }));
-        patch(aid, () => (j.ok ? String(j.answer ?? '') : `Refused (${j.reason}): ${j.message}`));
+        patch(aid, () => (j.ok ? String(j.answer ?? '') : `Refused (${j.reason ?? 'refused'}): ${j.message ?? ''}`));
       }
     } catch (e) {
       if ((e as Error).name === 'AbortError') {
@@ -160,13 +162,21 @@ export default function Research() {
             value={notes}
             onChange={(e) => setNotes(e.target.value.slice(0, 20000))}
             rows={4}
-            placeholder="Paste interview notes here (masked before send)…"
+            placeholder="Paste interview notes here (demo masking before send — not real source-ID masking until M2)…"
             className="block w-full resize-none bg-transparent px-1 py-1 font-mono text-[12px] text-zinc-300 outline-none placeholder:text-zinc-600"
           />
           <label className="mt-1 flex items-center gap-1.5 px-1 text-[11px] text-zinc-500">
             <input type="checkbox" checked={attach} onChange={(e) => setAttach(e.target.checked)} className="accent-zinc-400" />
             Attach on send ({notes.length} chars){overCap ? <span className="text-amber-400/80"> · over 8k — trim</span> : null}
           </label>
+        </div>
+      )}
+      {maskOpen && map.length > 0 && (
+        <div className="mx-1 mb-2 max-h-48 overflow-auto rounded-xl border border-white/[0.06] bg-black/20 p-2 text-[11px]">
+          <p className="mb-1.5 text-zinc-500">Demo heuristic until M2 — not real source-ID masking. Tokens stay on this device.</p>
+          <ul className="space-y-0.5 font-mono">
+            {map.map((e) => (<li key={e.token} className="flex gap-2"><span className="text-zinc-300">{e.token}</span><span className="text-zinc-600">{e.kind}</span></li>))}
+          </ul>
         </div>
       )}
       <div className="mt-1 flex items-center justify-between gap-2 px-1">
@@ -177,6 +187,15 @@ export default function Research() {
             className={`rounded-full px-2.5 py-1 text-[11px] ${notesOpen || (attach && notes) ? 'bg-white/[0.06] text-zinc-300' : 'text-zinc-500 hover:text-zinc-300'}`}
           >
             Notes{notes ? ` · ${notes.length}` : ''}
+          </button>
+          <button
+            type="button"
+            onClick={() => setMaskOpen((o) => !o)}
+            disabled={map.length === 0}
+            title="Demo heuristic until M2 — not real source-ID masking"
+            className={`rounded-full px-2.5 py-1 text-[11px] ${maskOpen ? 'bg-white/[0.06] text-zinc-300' : 'text-zinc-500 hover:text-zinc-300'} disabled:opacity-40`}
+          >
+            Mask map · {map.length} <span className="text-zinc-600">(demo)</span>
           </button>
           <label
             title={mode?.gatewayAvailable ? 'Sends masked text to a cloud model. Not local.' : 'No gateway key configured'}
@@ -203,7 +222,13 @@ export default function Research() {
           <div className="flex flex-col items-center text-center">
             <div className="mb-4 rounded-full border border-emerald-400/15 bg-emerald-400/[0.05] px-3 py-1 text-[11px] text-emerald-300/80">🔒 Local-first research desk</div>
             <h1 className="text-[2rem] font-semibold tracking-tight text-zinc-50 sm:text-[2.25rem]">What are you reporting on?</h1>
-            <p className="mt-3 max-w-md text-[14px] leading-relaxed text-zinc-400">Ask about your story. Answers stay on this machine unless you switch on REMOTE — names in your notes are masked before send.</p>
+            <p className="mt-3 max-w-md text-[14px] leading-relaxed text-zinc-400">Ask about your story. Answers stay on this machine unless you switch on REMOTE. Names in notes may be masked before send — a <span className="text-zinc-300">demo heuristic, not real source-ID masking until M2</span>.</p>
+            {missing && (
+              <div role="status" className="mt-7 w-full rounded-2xl border border-amber-700/50 bg-amber-500/[0.07] px-4 py-3 text-left">
+                <div className="font-mono text-[11px] uppercase tracking-wide text-amber-400">Model missing</div>
+                <p className="mt-1 text-[14px] leading-6 text-amber-200">Local model missing. Install GGUF (SALOMON_GGUF) or explicitly enable labeled REMOTE.</p>
+              </div>
+            )}
             <div className="mt-9 w-full text-left">{composer}</div>
             <div className="mt-5 grid w-full grid-cols-1 gap-2.5 sm:grid-cols-2">
               {SUGGESTIONS.map((s) => (
@@ -235,7 +260,14 @@ export default function Research() {
               ) : (
                 <article key={m.id}>
                   <div className="mb-1.5 text-[11px] text-zinc-500">{label.who}</div>
-                  <div className={`whitespace-pre-wrap text-[15px] leading-7 ${refused ? 'text-amber-300/90' : 'text-zinc-200'}`}>{shown}</div>
+                  {refused ? (
+                    <div role="alert" className="rounded-xl border border-amber-700/50 bg-amber-500/[0.07] px-4 py-3 text-amber-200">
+                      <div className="font-mono text-[11px] uppercase tracking-wide text-amber-400">Refused{(/^Refused \(([^)]+)\)/.exec(shown)?.[1]) ? ` · ${/^Refused \(([^)]+)\)/.exec(shown)![1]}` : ''}</div>
+                      <div className="mt-1 whitespace-pre-wrap text-[14px] leading-6">{shown.replace(/^Refused \([^)]+\):\s*/, '')}</div>
+                    </div>
+                  ) : (
+                    <div className="whitespace-pre-wrap text-[15px] leading-7 text-zinc-200">{shown}</div>
+                  )}
                   {!busy && !refused && text && (
                     <div className="mt-2 flex gap-3 text-[12px] text-zinc-600">
                       <button type="button" onClick={() => propose(text, 'save')} className="hover:text-zinc-300">Propose save</button>

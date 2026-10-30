@@ -1,3 +1,5 @@
+// TRANSITIONAL DEMO·REMOTE path. /api/ask is the primary local desk (askLocal, fail-closed).
+// Server masking before any model call stays as-is.
 import { convertToModelMessages, createUIMessageStreamResponse, simulateReadableStream, streamText, toUIMessageStream, UIMessage } from 'ai';
 import { MockLanguageModelV4 } from 'ai/test';
 import { SYSTEM_PROMPT } from '@/lib/prompt';
