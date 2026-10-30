@@ -15,14 +15,14 @@ const IMPLICIT_RX = /\b(?:account|receiver|recipient|implicit|address|to)\b[\s:=
 const NAMED_RX = /(?<![\w.-])(?:[a-z0-9_-]+\.)*[a-z0-9_-]+\.(?:near|testnet)\b/g;
 const EVM_RX = /(?<![0-9a-fA-Fx])0x[0-9a-fA-F]{40}(?![0-9a-fA-F])/g;
 const ADDRESS_RULES: [string, RegExp, string][] = [
-  ["near_implicit_account", IMPLICIT_RX, "[NEAR_IMPLICIT]"], ["near_named_account", NAMED_RX, "[NEAR_ACCOUNT]"], ["evm_address", EVM_RX, "[EVM_ADDRESS]"]];
+  ["implicit_account", IMPLICIT_RX, "[IMPLICIT_ACCOUNT]"], ["named_account", NAMED_RX, "[NAMED_ACCOUNT]"], ["evm_address", EVM_RX, "[EVM_ADDRESS]"]];
 
 const STOP = new Set("the and of to is in for that with you it are be as on by or an this from at not".split(" "));
 const WORD_RUN = /(?:\b[a-z]{3,8}\b[ \t,\-]+){11,}\b[a-z]{3,8}\b/g;
 const SECRET_PATTERNS: [string, RegExp][] = [
   ["pem_private_key", /-----BEGIN (?:[A-Z]+ )?PRIVATE KEY-----/],
   ["hex_key_64+", /(?<![0-9a-fA-F])(?:0x)?[0-9a-fA-F]{64,}(?![0-9a-fA-F])/],
-  ["near_ed25519_secret", /ed25519:[1-9A-HJ-NP-Za-km-z]{80,}/],
+  ["ed25519_secret", /ed25519:[1-9A-HJ-NP-Za-km-z]{80,}/],
   ["api_key_sk", /\bsk-[A-Za-z0-9_\-]{16,}/],
   ["api_key_assignment", /\bapi[_-]?key\b\s*[:=]\s*['"]?[A-Za-z0-9_\-]{12,}/i],
   ["base64_blob", /(?<![A-Za-z0-9+/])[A-Za-z0-9+/]{60,}={0,2}(?![A-Za-z0-9+/=])/],
@@ -68,11 +68,13 @@ const PUBKEY_RX = /\b(?:ed25519|secp256k1):[1-9A-HJ-NP-Za-km-z]{32,}\b/g;
  * TS-only M4 rule key_material_in_context (applies to EVERY role incl. wrapped role:tool; never relaxed).
  * Secret-length only: ed25519 secret = 64 bytes (~86-88 base58); public ed25519 (32 bytes, ~43-44) is NOT matched.
  * secp256k1 secrets (32B) are indistinguishable by length from public data, so they are caught only when labelled.
+ * Labelled assignments also cover password/passwd (soft; prefer false positive over paste-through).
  */
 const KEY_MATERIAL_RULES: RegExp[] = [
   /ed25519:[1-9A-HJ-NP-Za-km-z]{80,}/,
   /-----BEGIN [A-Z ]*PRIVATE KEY-----/,
-  /\b(?:private[_ ]?key|secret[_ ]?key|signing[_ ]?key|seed[_ ]?phrase|mnemonic|xprv)\b\\?["']?\s*[:=]\s*\\?["']?[^\s"'\\]{8,}/i,
+  // Soft 2026-10-29: also labelled password/passwd (FE co-smoke: "password: …" was falling through to local_model_unavailable).
+  /\b(?:private[_ ]?key|secret[_ ]?key|signing[_ ]?key|seed[_ ]?phrase|mnemonic|xprv|password|passwd)\b\\?["']?\s*[:=]\s*\\?["']?[^\s"'\\]{8,}/i,
   /\bsecp256k1:[1-9A-HJ-NP-Za-km-z]{40,46}\b(?=[^\n]{0,40}\b(?:secret|private)\b)|\b(?:secret|private)\b[^\n]{0,40}secp256k1:[1-9A-HJ-NP-Za-km-z]{40,46}\b/i,
   /\bxprv[1-9A-HJ-NP-Za-km-z]{100,}/,
 ];

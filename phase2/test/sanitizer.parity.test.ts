@@ -21,11 +21,15 @@ for t,m in v:
   r=sanitize_for_remote(t, SanitizerConfig(mode=m)); out.append({"ok":r.ok,"text":r.text,"reasons":r.reasons,"kinds":[x["kind"] for x in r.redactions]})
 print(json.dumps(out))`;
 
+// Signed Python reference keeps legacy labels; map to generic TS labels (same regexes, same redaction behavior).
+const LEGACY: Record<string, string> = { near_implicit_account: "implicit_account", near_named_account: "named_account", "[NEAR_IMPLICIT]": "[IMPLICIT_ACCOUNT]", "[NEAR_ACCOUNT]": "[NAMED_ACCOUNT]", "secret:near_ed25519_secret": "secret:ed25519_secret" };
+const norm = (o: any) => ({ ...o, text: typeof o.text === "string" ? o.text.replace(/\[NEAR_IMPLICIT\]|\[NEAR_ACCOUNT\]/g, (m: string) => LEGACY[m]!) : o.text, reasons: o.reasons.map((r: string) => LEGACY[r] ?? r), kinds: o.kinds.map((k: string) => LEGACY[k] ?? k) });
+
 describe("sanitizer parity with signed privacy/sanitizer.py", () => {
   it(`${VEC.length} vectors match Python reference (ok/text/reasons/redaction kinds)`, () => {
     const py = JSON.parse(execFileSync("python3", ["-c", PY], { input: JSON.stringify(VEC), cwd: new URL("..", import.meta.url).pathname }).toString());
     VEC.forEach(([t, m], i) => { const r = sanitizeForRemote(t, { mode: m });
-      expect({ ok: r.ok, text: r.text, reasons: r.reasons, kinds: r.redactions.map((x) => x.kind) }, `vec ${i}`).toEqual(py[i]); });
+      expect({ ok: r.ok, text: r.text, reasons: r.reasons, kinds: r.redactions.map((x) => x.kind) }, `vec ${i}`).toEqual(norm(py[i])); });
   });
   it("secrets rejected in every mode; non-string fail-closed", () => {
     for (const mode of ["redact", "reject"] as const) expect(sanitizeForRemote("sk-abcdefghijklmnopqrstu", { mode }).ok).toBe(false);

@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { wrapUntrusted } from "../src/tools/untrusted.js";
-import { isForbiddenToolName, assertNoForbiddenTools } from "../src/tools/guard.js";
+import { isForbiddenToolName, assertNoForbiddenTools, FORBIDDEN_TOOL_NAMES } from "../src/tools/guard.js";
 import { sanitizeMessages, defaultSanitizer, noopSanitizer, redact } from "../src/sanitize.js";
 import { runAgentLoop, AgentDenied, type CompleterLike } from "../src/agentLoop.js";
 import { AttestationError } from "../../phase1.5-attestation/src/types.js";
@@ -31,7 +31,8 @@ describe("tool output wrapping", () => {
     expect(inner.text.length).toBeLessThanOrEqual(8000);
   });
   it("generic guard denies sign/send/transfer/execute tool names", () => {
-    for (const n of ["sign", "send_tx", "transfer", "execute_intents", "broadcast_tx_commit", "sign_message"]) expect(isForbiddenToolName(n)).toBe(true);
+    for (const n of ["sign", "send_tx", "transfer", "execute_intents", "simulate_intents", "mpc_sign", "broadcast_tx_commit", "broadcast_tx_async", "sign_message", "sign_intent"]) expect(isForbiddenToolName(n)).toBe(true);
+    for (const n of ["execute_intents", "mpc_sign", "broadcast_tx_commit", "sign_intent"]) expect(FORBIDDEN_TOOL_NAMES.has(n)).toBe(false);
     for (const n of ["search_notes", "summarize", "lookup_source"]) expect(isForbiddenToolName(n)).toBe(false);
     expect(() => assertNoForbiddenTools([{ function: { name: "send_tx" } }])).toThrow("forbidden_tool_registered");
   });
@@ -40,7 +41,7 @@ describe("tool output wrapping", () => {
 describe("sanitize hook", () => {
   it("redacts keys, EVM and implicit addresses; keeps named accounts", () => {
     const s = redact(`near ed25519:${"A".repeat(44)} 0x${"a".repeat(40)} to ${"b".repeat(64)} bob.near`);
-    expect(s).toBe("near [REDACTED_KEY] [EVM_ADDRESS] to [NEAR_IMPLICIT] [NEAR_ACCOUNT]");
+    expect(s).toBe("near [REDACTED_KEY] [EVM_ADDRESS] to [IMPLICIT_ACCOUNT] [NAMED_ACCOUNT]");
   });
   it("noop keeps content; contract violation throws", () => {
     expect(sanitizeMessages([{ role: "user", content: "x" }], noopSanitizer)[0].content).toBe("x");
@@ -49,7 +50,7 @@ describe("sanitize hook", () => {
   it("loop sends sanitized messages to complete", async () => {
     let sent: any; const c: CompleterLike = { complete: async (_m, b) => { sent = b; return ok("done"); } };
     await runAgentLoop([{ role: "user", content: `account ${"c".repeat(64)}` }], { attestation: att(), completion: c, tools });
-    expect(sent.messages.at(-1).content).toBe("account [NEAR_IMPLICIT]");
+    expect(sent.messages.at(-1).content).toBe("account [IMPLICIT_ACCOUNT]");
     expect(defaultSanitizer).toBeTypeOf("function");
   });
 });
