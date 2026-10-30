@@ -1,0 +1,12 @@
+{"prompt": "Why run a personal assistant model on your own device?", "keywords": ["local", "prompt", "log"]}
+{"prompt": "What is data minimization for a personal AI product?", "keywords": ["collect", "retain", "need"]}
+{"prompt": "How should an assistant handle a password pasted by mistake?", "keywords": ["compromised", "store", "refuse"]}
+{"prompt": "Why get consent before uploading a group chat to an AI summarizer?", "keywords": ["others", "consent", "private"]}
+{"prompt": "What must a research agent avoid doing with confidential source contacts?", "keywords": ["source", "cloud", "log"]}
+{"prompt": "How should an AI treat a pasted meeting transcript?", "keywords": ["sensitive", "redact", "share"]}
+{"prompt": "How can you spot a support scam asking for 2FA codes?", "keywords": ["scam", "never", "official"]}
+{"prompt": "What still leaks when using a local model?", "keywords": ["backup", "sync", "telemetry"]}
+{"prompt": "Why strip EXIF before uploading photos to a chatbot?", "keywords": ["GPS", "location", "metadata"]}
+{"prompt": "What is selective disclosure in everyday privacy?", "keywords": ["minimum", "attribute", "purpose"]}
+{"prompt": "Why shouldn't API keys live in the model system prompt?", "keywords": ["echo", "secret", "store"]}
+{"prompt": "How can an agent help check if a paragraph is too identifying about a source?", "keywords": ["fingerprint", "detail", "redact"]}
