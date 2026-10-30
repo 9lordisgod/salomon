@@ -1,42 +1,24 @@
 package ai.salomon.core
 
 /**
- * Facade over libsalomon_core.so (C ABI → JSON).
- *
- * Platform exports: salomon_ask / salomon_free_string / salomon_version.
- * A tiny JNI shim (`salomon_jni_shim.c`) exposes [nativeAskJson] until/unless the
- * crate ships Java_* itself. Fail-closed if the library is absent — no remote.
+ * JNI facade over libsalomon_core.so.
+ * Platform exports: Java_ai_salomon_core_SalomonCore_nativeAsk → String?[3] = [statusCode, text, error]
+ * Codes: 0 MissingModel · 1 Stub · 2 Local · 3 Refused.
+ * Fail-closed if the library is absent — no remote fallback.
  */
 object SalomonCore {
     /** Set by the app from BuildConfig.SALOMON_ALLOW_ASK_STUB (debug opt-in only). */
     @Volatile var allowStub: Boolean = false
 
     val nativeLoaded: Boolean = try {
-        // Prefer shim lib (links prebuilt salomon_core); fall back to core if it exports JNI.
-        try {
-            System.loadLibrary("salomon_jni")
-        } catch (_: UnsatisfiedLinkError) {
-            System.loadLibrary("salomon_core")
-        }
-        true
-    } catch (_: Throwable) {
-        false
-    }
+        System.loadLibrary("salomon_core"); true
+    } catch (_: Throwable) { false }
 
     private const val MISSING =
         "Local model missing. Install GGUF on-device or wait for Core — nothing was sent anywhere."
 
-    /** JNI → JSON string from salomon_ask (caller-free done in shim). */
-    @JvmStatic private external fun nativeAskJson(prompt: String): String
-
-    /** Optional version string from salomon_version; empty if unavailable. */
-    @JvmStatic private external fun nativeVersion(): String
-
-    /** Public wire: JSON from Core (or fail-closed MissingModel JSON). */
-    fun askJson(prompt: String): String = ask(prompt).let { r ->
-        val err = r.error?.let { "\"${escape(it)}\"" } ?: "null"
-        """{"status":"${r.status.name}","text":"${escape(r.text)}","error":$err}"""
-    }
+    /** Native: [statusCode, text, error] — error may be null. */
+    @JvmStatic private external fun nativeAsk(prompt: String): Array<String?>
 
     fun ask(prompt: String): AskResult {
         if (prompt.isBlank()) return AskResult(AskStatus.Refused, "", "Empty prompt.")
@@ -45,20 +27,11 @@ object SalomonCore {
             else AskResult(AskStatus.MissingModel, "", MISSING)
         }
         return try {
-            AskResult.fromJson(nativeAskJson(prompt))
+            val r = nativeAsk(prompt)
+            val status = AskStatus.fromCode(r.getOrNull(0)?.toIntOrNull() ?: AskStatus.MissingModel.code)
+            AskResult(status, r.getOrNull(1).orEmpty(), r.getOrNull(2))
         } catch (t: Throwable) {
             AskResult(AskStatus.MissingModel, "", "Native core error: ${t.javaClass.simpleName}")
         }
     }
-
-    fun version(): String = try {
-        if (nativeLoaded) nativeVersion() else ""
-    } catch (_: Throwable) { "" }
-
-    private fun escape(s: String) = s
-        .replace("\\", "\\\\")
-        .replace("\"", "\\\"")
-        .replace("\n", "\\n")
-        .replace("\r", "\\r")
-        .replace("\t", "\\t")
 }

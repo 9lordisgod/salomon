@@ -1,16 +1,10 @@
 package ai.salomon.core
 
-/** Honest engine status. Matches salomon-core JSON `"status"` strings. */
-enum class AskStatus {
-    MissingModel, Stub, Local, Refused;
+/** Honest engine status. Mirrors salomon-core JNI status codes (0/1/2/3). */
+enum class AskStatus(val code: Int) {
+    MissingModel(0), Stub(1), Local(2), Refused(3);
 
     companion object {
-        fun fromWire(raw: String?): AskStatus = when (raw?.trim()) {
-            "Stub" -> Stub
-            "Local" -> Local
-            "Refused" -> Refused
-            "MissingModel" -> MissingModel
-            else -> MissingModel // fail closed
-        }
+        fun fromCode(code: Int): AskStatus = entries.firstOrNull { it.code == code } ?: MissingModel
     }
 }
