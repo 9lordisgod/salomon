@@ -29,7 +29,7 @@ function td10Of(report: DcapVerifiedReport["report"]): any | null {
 
 /**
  * Real Intel DCAP / TDX verifier (PRE_PHASE2_ACCEPTANCE.md §A): @phala/dcap-qvl getCollateralAndVerify
- * (Phala PCCS default; set pccsUrl = INTEL_PCS_URL / env NEAR_ATTEST_PCCS_URL to use Intel PCS).
+ * (Phala PCCS default; set pccsUrl = INTEL_PCS_URL / env ATTEST_PCCS_URL to use Intel PCS).
  * Rejects SGX quotes and TDX debug (td_attributes bit0). Any collateral/network/parse error ⇒ DENY.
  * TCB/advisory policy is enforced by verify.ts (interim UpToDate + empty advisory allowlist).
  */
@@ -44,7 +44,7 @@ export class DcapQuoteVerifier implements QuoteVerifier {
     const h = typeof intelQuoteHex === "string" ? nhex(intelQuoteHex) : "";
     if (!h || h.length % 2 || !/^[0-9a-f]+$/.test(h)) return { ok: false, reason: "quote_hex_invalid" };
     let r: DcapVerifiedReport;
-    try { r = await this.impl(Buffer.from(h, "hex"), this.opts.pccsUrl ?? process.env.NEAR_ATTEST_PCCS_URL); }
+    try { r = await this.impl(Buffer.from(h, "hex"), this.opts.pccsUrl ?? process.env.ATTEST_PCCS_URL); }
     catch { return { ok: false, reason: "dcap_verify_failed" }; }
     const td = r && td10Of(r.report);
     if (!td) return { ok: false, reason: "not_tdx_quote" };

@@ -145,7 +145,7 @@ describe("AttestationClient", () => {
       const nonce = new URL(url).searchParams.get("nonce")!;
       return { ok: true, status: 200, json: async () => body(nonce) };
     };
-  const env = { NEAR_AI_CLOUD_API_KEY: "test-key-not-real" };
+  const env = { ATTEST_API_KEY: "test-key-not-real" };
 
   it("default client (shipped GLM allowlist + stub verifiers) denies and never becomes ready", async () => {
     const lines: string[] = [];
@@ -159,7 +159,7 @@ describe("AttestationClient", () => {
   });
   it("SKIP_ATTEST / ALLOW_NO_ATTEST refuse AttestationClient construction", () => {
     for (const f of ["SKIP_ATTEST", "ALLOW_NO_ATTEST", "NEAR_SKIP_ATTEST", "ATTEST_SKIP"] as const) {
-      expect(() => new AttestationClient({ env: { [f]: "1", NEAR_AI_CLOUD_API_KEY: "x" } }))
+      expect(() => new AttestationClient({ env: { [f]: "1", ATTEST_API_KEY: "x" } }))
         .toThrow(AttestationError);
       try { new AttestationClient({ env: { [f]: "1" } }); expect.fail("should throw"); }
       catch (e) { expect(e).toMatchObject({ check: "skip_attest_banned" }); expect(String((e as Error).message)).toContain(f); }

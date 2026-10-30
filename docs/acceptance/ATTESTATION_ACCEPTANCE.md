@@ -6,7 +6,7 @@
 **Gate:** Required before any remote inference or write-capable tools. **No Phase 2 / no waive.** Item (5) refusal eval is separate and stays closed.
 
 ## 0. Scope / non-goals
-- Gateway base: `https://cloud-api.near.ai/v1`. **Green acceptance is gateway-path only.** Direct `{slug}.completions.near.ai` is out of scope for item (2) green (experimental / weaker verification).
+- Gateway base: default provider TEE host `/v1` (`ATTEST_API_BASE_V1`). **Green acceptance is gateway-path only.** Direct `{slug}.completions.near.ai` is out of scope for item (2) green (experimental / weaker verification).
 - Attestation proves *which* code/config ran — not that the code is good. Allowlisted measurements still need human review of compose/image.
 - Non-goals for 1.5: live Cloud soak, sealed long-term evidence warehouse, IronClaw, unlinkable payments.
 
@@ -40,7 +40,7 @@
 
 ## 2. What must be verified (preflight, every candidate)
 - [ ] Client nonce: 32-byte CSPRNG hex, generated locally per preflight (single-use)
-- [ ] Fetch: `GET /v1/attestation/report` with `model=<canonical>`, `provider=near`, `signing_algo` (`ecdsa`|`ed25519` per policy), `nonce`, `include_tls_fingerprint=false`; headers `Accept: application/json`, `x-no-aliasing: true`, `Authorization: Bearer <NEAR_AI_CLOUD_API_KEY>`
+- [ ] Fetch: `GET /v1/attestation/report` with `model=<canonical>`, `provider=near`, `signing_algo` (`ecdsa`|`ed25519` per policy), `nonce`, `include_tls_fingerprint=false`; headers `Accept: application/json`, `x-no-aliasing: true`, `Authorization: Bearer <ATTEST_API_KEY>`
 - [ ] **Gateway vs model separation:** verify gateway attestation (gateway path) **and** each model candidate; gateway ≠ model trust
 - [ ] For each `model_attestations[]` candidate:
   1. Verify `intel_quote` with Intel DCAP (e.g. dcap-qvl) + configured TCB/advisory policy

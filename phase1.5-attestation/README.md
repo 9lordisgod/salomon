@@ -10,12 +10,12 @@ npm run typecheck # tsc --noEmit
 ```
 
 Env:
-- `NEAR_AI_CLOUD_API_KEY` — only source of the key; never logged.
-- `NEAR_ATTEST_ALLOWLIST_PATH` — optional; default `allowlist/measurements.json`.
+- `ATTEST_API_KEY` — only source of the key; never logged.
+- `ATTEST_ALLOWLIST_PATH` — optional; default `allowlist/measurements.json`.
 - `SKIP_ATTEST` / `ALLOW_NO_ATTEST` — **banned**; client refuses to start if set.
 
 Allowlist: `allowlist/measurements.json` ships as `{"entries":[]}`. **Empty (or missing) allowlist ⇒ deny-all remote.** Entries are PR-only with Privacy Security review; `test_only: true` entries never load in production or without `allowTestOnly: true`.
-Gateway: `gateway_attestation` is mandatory and verified via a `GatewayVerifier` plug (stub denies). GPU: verify-if-present, `require_gpu` default false. Base URL defaults to `https://cloud-api.near.ai/v1`.
+Gateway: `gateway_attestation` is mandatory and verified via a `GatewayVerifier` plug (stub denies). GPU: verify-if-present, `require_gpu` default false. Base URL defaults to the provider TEE host (`ATTEST_API_BASE_V1`).
 
 Usage (future Phase 2 caller):
 ```ts
@@ -35,7 +35,7 @@ RTMR3 is replayed per NEAR docs (each IMR3 digest recomputed; provided non-empty
 
 ## Production plugs (wired, pending PS sign-off on genuine fixtures)
 ```ts
-const qv = new DcapQuoteVerifier({ pccsUrl: process.env.NEAR_ATTEST_PCCS_URL });
+const qv = new DcapQuoteVerifier({ pccsUrl: process.env.ATTEST_PCCS_URL });
 const client = new AttestationClient({ requireProductionPlugs: true, quoteVerifier: qv,
   gatewayVerifier: new DcapGatewayVerifier(qv), gpuVerifier: new NrasGpuVerifier(), responseBinder: new NobleResponseBinder() });
 // then: verifyForModel → assertReadyForRemoteInference → completion → assertBoundCompletion(set, ev, binder)
