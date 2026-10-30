@@ -33,7 +33,7 @@ Flow in words: documents and notes go through the sanitizer into a local model; 
 
 Android (Google Play or APK) is the primary product path so a source-protected research agent can live on the phone professionals already use in the field. The web app is a companion surface. The Android app is not shipped yet — this is the product direction.
 
-> Today's code is the privacy foundation (sanitizer, local ask path, refusal gates) plus the web companion. See [STATUS.md](STATUS.md).
+> Today's code is the privacy foundation (sanitizer, local ask path, refusal gates) plus the web companion. See [STATUS.md](docs/STATUS.md).
 
 ## Who it's for
 
@@ -79,15 +79,15 @@ flowchart LR
 - **Phase 3 (M1 in flight, not green).** **Goal surface:** Android app (not shipped). **Today:** Next.js web app + `POST /api/ask`; CLI secondary. M1 is not green until desk → `/api/ask` + offline smoke pass. A Q4_K_M GGUF is pinned and scripts exist, but there is **no live local GGUF** / on-device phone inference until that lands.
 - **Prior framing:** earlier niche experiments were retired from the product narrative; this repo is a local-first research agent for journalists, PIs, and researchers.
 
-Status of record: [STATUS.md](STATUS.md) · plan: [ROADMAP.md](ROADMAP.md) · design: [ARCHITECTURE.md](ARCHITECTURE.md).
+Status of record: [STATUS.md](docs/STATUS.md) · plan: [ROADMAP.md](docs/ROADMAP.md) · design: [ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ## Repo map
 
-Full map: [REPO_LAYOUT.md](REPO_LAYOUT.md). Docs hub: [docs/README.md](docs/README.md) · notes index: [docs/notes/README.md](docs/notes/README.md).
+Full map: [REPO_LAYOUT.md](docs/REPO_LAYOUT.md). Docs hub: [docs/README.md](docs/README.md) · notes index: [docs/notes/README.md](docs/notes/README.md).
 
 ```
 .
-├── README · ARCHITECTURE · ROADMAP · STATUS · PROGRESS · SECURITY · REPO_LAYOUT
+├── README · SECURITY · LICENSE · NOTICE · CONTRIBUTING · Cargo.toml
 ├── apps/android/          primary product surface (scaffold; not shipped)
 ├── apps/web/              web companion (Next.js + POST /api/ask) — today's dogfood surface
 ├── crates/                Rust workspace crates
@@ -96,7 +96,8 @@ Full map: [REPO_LAYOUT.md](REPO_LAYOUT.md). Docs hub: [docs/README.md](docs/READ
 ├── phase2/                agent loop, read-only tools, sanitizer, propose-only pattern
 ├── phase3-*/              Phase 3 cli · eval · platform · runtime
 ├── privacy/               sanitizer + policy stubs
-└── docs/                  acceptance · threat-models · reviews · signoffs · notes
+└── docs/                  ARCHITECTURE · ROADMAP · STATUS · PROGRESS · REPO_LAYOUT
+                           + acceptance · threat-models · reviews · signoffs · notes
 ```
 
 ## Quickstart (phase1-slm)
@@ -121,12 +122,14 @@ For the 7B gate, open `notebooks/eval_refusal_7b_colab.ipynb` in Colab, choose a
 
 ## Docs
 
-[ARCHITECTURE](ARCHITECTURE.md) · [ROADMAP](ROADMAP.md) · [STATUS](STATUS.md) · [SECURITY](SECURITY.md) · [REPO_LAYOUT](REPO_LAYOUT.md) · [docs hub](docs/README.md) · [notes index](docs/notes/README.md) · [phase1-slm/README](phase1-slm/README.md)
+[ARCHITECTURE](docs/ARCHITECTURE.md) · [ROADMAP](docs/ROADMAP.md) · [STATUS](docs/STATUS.md) · [SECURITY](SECURITY.md) · [LICENSE](LICENSE) · [REPO_LAYOUT](docs/REPO_LAYOUT.md) · [docs hub](docs/README.md) · [notes index](docs/notes/README.md) · [phase1-slm/README](phase1-slm/README.md)
 
 ---
 
-🔒 This repo stays **private** until the architecture and security model are stable. It contains no secrets, real keys, user PII or source material.
+## License
 
-</cursor_untrusted_data_redacted>
+Copyright © 2026 **Anon Rothschild**. All rights reserved.
 
-</cursor_untrusted_data_redacted>
+This repository is **proprietary**. See [LICENSE](LICENSE) and [NOTICE](NOTICE). Contributions: [CONTRIBUTING.md](CONTRIBUTING.md).
+
+No secrets, real keys, user PII, or source material belong in this repository.

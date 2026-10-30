@@ -9,7 +9,7 @@
 
 > Local-first research agent for investigative journalists, private investigators, and researchers — on-device by default.
 
-Canonical niche: [`PRODUCT_NICHE.md`](PRODUCT_NICHE.md) · root [README](../../README.md) · [STATUS](../../STATUS.md).
+Canonical niche: [`PRODUCT_NICHE.md`](PRODUCT_NICHE.md) · root [README](../../README.md) · [STATUS](../STATUS.md).
 
 ## Success bar (MVP)
 
@@ -106,7 +106,7 @@ If the model file is missing, `ask` must refuse with a plain reason — never do
 
 ## Related
 
-- Status of record: [`STATUS.md`](../../STATUS.md) · history: [`STATUS_HISTORY.md`](STATUS_HISTORY.md) · plan: [`ROADMAP.md`](../../ROADMAP.md)
+- Status of record: [`STATUS.md`](../STATUS.md) · history: [`STATUS_HISTORY.md`](STATUS_HISTORY.md) · plan: [`ROADMAP.md`](../ROADMAP.md)
 - Niche: [`PRODUCT_NICHE.md`](PRODUCT_NICHE.md) · chart style: [`CHART_STYLE.md`](CHART_STYLE.md)
 - M1 claims / Product acceptance: [`PHASE3_M1_PRODUCT_ACCEPTANCE.md`](PHASE3_M1_PRODUCT_ACCEPTANCE.md) — M1 is **not green** until desk → `/api/ask` + offline smoke pass.
 - M2 criteria (accepted; M2 not opened): [`../acceptance/PHASE3_M2_SOURCE_MASK_ACCEPT.md`](../acceptance/PHASE3_M2_SOURCE_MASK_ACCEPT.md)

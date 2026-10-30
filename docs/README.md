@@ -1,6 +1,16 @@
 # Docs
 
-Supporting records for Salomon. Current status lives in the root [STATUS.md](../STATUS.md); repo map in [REPO_LAYOUT.md](../REPO_LAYOUT.md).
+Supporting records for Salomon. Project overview: root [README](../README.md) · security: [SECURITY.md](../SECURITY.md).
+
+## Project documents
+
+| Doc | Purpose |
+|---|---|
+| [STATUS.md](STATUS.md) | Short current status (history: [notes/STATUS_HISTORY.md](notes/STATUS_HISTORY.md)). |
+| [ROADMAP.md](ROADMAP.md) | Phase plan. |
+| [ARCHITECTURE.md](ARCHITECTURE.md) | System design. |
+| [PROGRESS.md](PROGRESS.md) | Dated engineering log. |
+| [REPO_LAYOUT.md](REPO_LAYOUT.md) | Repository map. |
 
 ## Product (canonical)
 
