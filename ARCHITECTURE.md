@@ -1,6 +1,6 @@
 # Architecture — Salomon
 
-> **Salomon is a local-first AI app for Android — a private personal research agent that keeps work on-device by default, fails closed without a local model, and never puts credentials in the model.**
+> **Salomon is aiming to be a local-first AI app for Android — a private personal research agent that keeps work on-device by default, fails closed without a local model, and never puts credentials in the model.**
 > Product lock 2026-10-29 ~18:55 PDT (America/Vancouver). Design goal: local-first; fail closed; credentials out of the model; refuse secrets. Android app not shipped — today = web companion + privacy foundation. Source-ID mask = M2 (not opened); approval UX = M3 (not opened).
 
 ## Diagram

@@ -1,6 +1,6 @@
 # STATUS — Thu Oct 29, 2026 (America/Vancouver, PDT) — Phase 3 M1 in flight
 
-> **Niche (pivot ~18:55 PDT):** Salomon is a local-first AI app for Android — private personal research agent; on-device by default; fail closed; credentials never in the model. Niche: `docs/notes/PRODUCT_NICHE.md`. Crypto scrubbed from narrative.
+> **Niche (pivot ~18:55 PDT):** Salomon is **aiming to be** a local-first AI app for Android — private personal research agent; on-device by default; fail closed; credentials never in the model. Niche: `docs/notes/PRODUCT_NICHE.md`. Prior domain tracks scrubbed from live narrative.
 
 > **Prior niches (historical only):** earlier research-agent framings (main `f9d75fd`) and brief mobile-distribution experiments (~17:41–18:46 PDT) — retired from hero. Dated engineering log lines below may still name retired domains.
 
@@ -8,7 +8,7 @@
 - **M0 DONE** — Scope lock: Product niche locked (pure AI / Android goal).
 - **M1 IN FLIGHT** — Local run path: offline/local `ask` end-to-end (fail closed if model missing). **Goal surface = Android app (not shipped).** **Today = Next.js web companion + API** (`POST /api/ask`); CLI secondary. Runbook: `docs/notes/PHASE3_MVP_RUNBOOK.md`.
 
-**Latest (~18:55 PDT):** Pivot locked: Salomon = pure local-first AI (Android goal primary; web companion). Crypto scrubbed from narrative. Core unchanged — local default, fail closed, no silent remote, credentials out of the model. Android app / Play listing / on-device phone inference **not shipped**; M1 not green; M2 eng NOT OPEN; hybrid not shipped. Residual: apps/web = salomon-app confirm. Docs tips `9137931` / `ed48792`; Product paste lock amend follows.
+**Latest (~18:58 PDT):** Pivot locked: Salomon = pure local-first AI (Android goal primary; web companion). Prior domain tracks scrubbed from live narrative (archive delete tips follow). Core unchanged — local default, fail closed, no silent remote, credentials out of the model. Android app / Play listing / on-device phone inference **not shipped**; M1 not green; M2 eng NOT OPEN; hybrid not shipped. Residual: apps/web = salomon-app confirm. Tips `eed2f77` / `56b466d` / `9137931` / `ed48792`.
 
 **Prior (~17:41–18:46 PDT):** Mobile-distribution experiment tips (`b3b4b43` / `f0e8fa1` / `66c5efd` era) — retired from hero under pure-AI lock. Details in git history; not current product positioning.
 

@@ -1,6 +1,6 @@
 # Salomon
 
-> **Salomon is a local-first AI app for Android — a private personal research agent that keeps work on-device by default, fails closed without a local model, and never puts credentials in the model.**
+> **Salomon is aiming to be a local-first AI app for Android — a private personal research agent that keeps work on-device by default, fails closed without a local model, and never puts credentials in the model.**
 
 Private local AI for personal research. On-device by default; fail closed; credentials stay out of the model; refuse secrets. Remote only if the user opts in and the path is labeled — never a silent fallback.
 
