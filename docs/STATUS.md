@@ -40,7 +40,7 @@ Niche: [PRODUCT_NICHE](notes/PRODUCT_NICHE.md) · scope: [PRODUCT_SCOPE](notes/P
 - **M1 GREEN is scoped** — local ask + pinned GGUF offline fail-closed only; does not widen to Android, refusal eval, or M2.
 - **Item (5) INVALIDATED** — L4 live decline is heuristic only, not refusal-eval green.
 - **No Android / Play / on-phone shipped.**
-- **M-A0 unsigned APK soft-skim queued** (PS) before any external distribute.
+- **M-A0 unsigned Compose APK: PS SOFT CLEAR** ([M-A0 skim](reviews/SECURITY_SOFT_SKIM_MA0_UNSIGNED_APK.md), sha256 `f2b7534…`) — OK for **internal dogfood only after user keystore**; **NOT Play / public**.
 - **M2 eng NOT OPEN.**
 - **M-A0 unsigned hold** — Compose/Rust scaffold may proceed; no signed/public APK claim.
 - **Colab 8/8 pending** — privacy-domain refusal rebuild not re-run green; do not cite historical crypto 8/8 for product.
@@ -50,7 +50,7 @@ Token-rotate pause **canceled** (Lead resume ~21:22 PDT). Dual track: Parallel S
 ## Next
 
 1. Privacy-domain Colab 8/8 rebuild (journalism must-not-echo).
-2. PS soft-skim of M-A0 unsigned APK; keystore.
+2. User keystore → internal dogfood of M-A0 APK (not Play/public).
 3. Open M2 (ingest + mask), then M3 (approvals), then signed Android build (after unsigned hold lifts).
 
 ## Recent tips (main)

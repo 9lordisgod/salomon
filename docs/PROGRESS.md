@@ -1,6 +1,8 @@
 # Progress Log
 
-> **Latest (~21:30 PDT):** PS SOFT CLEAR → Lead **M1 GREEN** (scoped: local ask + pinned GGUF offline fail-closed). Item (5) invalidated; no Android shipped; M-A0 APK soft-skim queued; M2 NOT OPEN.
+> **Latest (~21:30 PDT):** PS SOFT CLEAR → Lead **M1 GREEN** (scoped: local ask + pinned GGUF offline fail-closed). Item (5) invalidated; no Android shipped; M2 NOT OPEN.
+
+> **M-A0 (~21:30 PDT):** PS SOFT CLEAR on unsigned Compose APK (sha256 `f2b7534…`) — internal dogfood only after user keystore; NOT Play/public. Stamp `docs/reviews/SECURITY_SOFT_SKIM_MA0_UNSIGNED_APK.md`.
 
 > **Prior (~21:22 PDT):** Lead **RESUME NOW** — token-rotate pause canceled. salomon stays pure-AI (`docs/` layout tip `eafc14d`). **Do not** reintroduce crypto (parallel: `9lordisgod/salomon-solana`). Honesty holds: **M1 not GREEN**; **M-A0 APK unsigned hold**; **Colab 8/8 privacy rebuild pending**.
 
@@ -16,6 +18,7 @@
 - PS soft skim `docs/reviews/SECURITY_SOFT_SKIM_M1_LIVE_GGUF.md` + evidence `phase3-runtime/EVIDENCE_PHASE3_M1_LIVE_GGUF.md` pushed on tip `e3b50fd`.
 - GREEN scope: local ask + pinned GGUF offline fail-closed (7B default; 3B only via explicit `SALOMON_GGUF` / `SALOMON_GGUF_ROLE=mobile`); hashes match PIN/LOCK/SHA256SUMS; L2/L3 pre-model 422; no remote fallback.
 - Caveats: item (5) INVALIDATED (L4 heuristic only); no Android/Play/on-phone; M-A0 unsigned APK soft-skim queued; M2 eng NOT OPEN.
+- M-A0: PS SOFT CLEAR unsigned Compose APK sha256 `f2b753417a9e…2e088` — internal dogfood after user keystore only; NOT Play/public.
 - Residual (soft): `localModelForEnv` labels non-3B as 7B.
 
 ## Thu Oct 29, 2026, ~21:22 PDT — Resume honesty fold (Docs Lead)
