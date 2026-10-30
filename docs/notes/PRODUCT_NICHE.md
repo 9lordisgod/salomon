@@ -1,10 +1,21 @@
-# Product niche — locked
+# Product niche
 
-**Decision (2026-10-29, Lead):** Salomon is a **local research agent for journalists and investigators that protects sources.**
+> Locked 2026-10-29 ~17:41 PDT (Solana Mobile pivot).
 
-- **Who:** investigative reporters, newsroom researchers, fact-checkers, independent investigators, NGO researchers.
-- **Job:** read, summarize and cross-reference sensitive material (leaks, interview notes, transcripts, records) on the reporter's own machine.
-- **Promise (target across Phase 3 M1–M3; not shipped yet):** sources, contacts and identifying details stay on the device, are not echoed into output, and never reach a remote model without verification. Today: M1 local `ask` is **in flight**; source masking (M2) and propose-save (M3) are **not shipped**; the sanitizer is a demo heuristic, not a guarantee.
-- **How (already built):** local small model with a CI-gated refusal / must-not-echo eval (Phase 1), fail-closed remote verification as a pattern (Phase 1.5), injection-safe agent loop with read-only tools, hard caps and a sanitizer on every boundary (Phase 2).
+## Primary
+Crypto-native on Solana Mobile (Seeker / dApp Store) — on-device AI, notes local, keys never in the model.
 
-**Out of scope / parked:** crypto, NEAR Intents, tokens, staking, on-chain tools, and any specific cloud TEE provider as product backend. Evidence is kept as history — see [`../archive/crypto/README.md`](../archive/crypto/README.md).
+## Promise
+- Local-first / on-device by default; fail closed when no local model is connected.
+- Notes and chat stay on the device unless the user opts into a labeled remote path (never silent; never default).
+- Credentials and seed material stay out of the model; signatures go through Seed Vault.
+- Optional light Solana actions — user-explicit only (propose ≠ act).
+
+## Foundation (unchanged)
+Privacy / fail-closed stack: local ask path, refusal gates, sanitizer-oriented design. Remote and on-chain are opt-in and labeled — do not claim “local-only” or live source-identity protection as the hero.
+
+## Secondary / historical
+Source-protection research framing — not the hero. Journalist / source-protection research framing informed early privacy work. It is not the current hero narrative.
+
+## Out of scope for hero claims (until built + honest)
+Live source-ID masking as product fact; attested / verified remote; BYOK as default or silent fallback; unbuilt wallet/DeFi agents; auto-trading or silent chain calls.
