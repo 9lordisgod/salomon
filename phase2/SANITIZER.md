@@ -4,7 +4,7 @@
 `python3` on 17 shared vectors and asserts identical ok/text/reasons/redaction kinds.
 
 Contract: secrets (PEM, 64+ hex, ed25519 secret, sk-, api_key=, base64 blob, BIP39-like run) → **reject in every mode**;
-addresses (implicit-in-context, *.near/*.testnet, EVM) → redact (`[NEAR_IMPLICIT]`, `[NEAR_ACCOUNT]`, `[EVM_ADDRESS]`) or reject in `mode=reject`;
+addresses (implicit-in-context, *.near/*.testnet, EVM) → redact (`[IMPLICIT_ACCOUNT]`, `[NAMED_ACCOUNT]`, `[EVM_ADDRESS]`) or reject in `mode=reject`;
 internal error/non-string → fail-closed. In the loop, `defaultSanitizer` throws `SanitizerRejected` before attest/complete (remote never called).
 
 Known deltas (TS stricter only): ed25519:/secp256k1: public-key strings (32+ base58) additionally → `[REDACTED_KEY]`.
