@@ -1,14 +1,14 @@
 # STATUS — Thu Oct 29, 2026 (America/Vancouver, PDT) — Phase 3 M1 in flight
 
-> **Niche (pivot ~18:53 PDT):** Salomon is aiming to be a local-first AI app — a private personal research agent; on-device by default; fail closed without a local model; credentials never in the model. Niche: `docs/notes/PRODUCT_NICHE.md`. Prior domain-specific product tracks scrubbed from live positioning.
+> **Niche (pivot ~18:55 PDT):** Salomon is a local-first AI app for Android — private personal research agent; on-device by default; fail closed; credentials never in the model. Niche: `docs/notes/PRODUCT_NICHE.md`. Crypto scrubbed from narrative.
 
-> **Prior niches (historical only):** journalist / source-protection research framing (main `f9d75fd`); brief mobile-distribution experiments (~17:41–18:46 PDT) — retired from hero. Dated engineering log lines below may still name retired domains.
+> **Prior niches (historical only):** earlier research-agent framings (main `f9d75fd`) and brief mobile-distribution experiments (~17:41–18:46 PDT) — retired from hero. Dated engineering log lines below may still name retired domains.
 
 **Phase:** **3 (Android MVP; pure local-first AI) — M1 IN FLIGHT.** Phase 1 gate done (7B refusal 8/8). Dataset **PARKED** at 362 seed rows. Phase 1.5 (1)–(5) SIGNED. Phase 2 M1–M3 **GREEN**. M4 propose-only pattern (G1+G2 ACCEPTED, salomon `79c0f99`) reused for approvals; G3 never opened.
 - **M0 DONE** — Scope lock: Product niche locked (pure AI / Android goal).
 - **M1 IN FLIGHT** — Local run path: offline/local `ask` end-to-end (fail closed if model missing). **Goal surface = Android app (not shipped).** **Today = Next.js web companion + API** (`POST /api/ask`); CLI secondary. Runbook: `docs/notes/PHASE3_MVP_RUNBOOK.md`.
 
-**Latest (~18:53 PDT):** Pivot locked: Salomon = pure local-first AI (Android goal primary; web companion). Domain-specific chain/token product framing scrubbed from live narrative. Core unchanged — local default, fail closed, no silent remote, credentials out of the model. Android app / Play listing / on-device phone inference **not shipped**; M1 not green; M2 eng NOT OPEN; hybrid not shipped. Residual: apps/web = salomon-app confirm.
+**Latest (~18:55 PDT):** Pivot locked: Salomon = pure local-first AI (Android goal primary; web companion). Crypto scrubbed from narrative. Core unchanged — local default, fail closed, no silent remote, credentials out of the model. Android app / Play listing / on-device phone inference **not shipped**; M1 not green; M2 eng NOT OPEN; hybrid not shipped. Residual: apps/web = salomon-app confirm. Docs tips `9137931` / `ed48792`; Product paste lock amend follows.
 
 **Prior (~17:41–18:46 PDT):** Mobile-distribution experiment tips (`b3b4b43` / `f0e8fa1` / `66c5efd` era) — retired from hero under pure-AI lock. Details in git history; not current product positioning.
 
@@ -21,7 +21,7 @@
 
 
 ### Framing A LOCKED (yoxi, 2026-10-29 ~16:04 PDT) — STATUS fold (Docs)
-> Secondary/historical (journalist Framing A). Pure-AI Android pivot ~18:53 PDT is current hero; engineering honesty notes below still apply.
+> Framing A honesty notes (local vs labeled remote) still apply. Pure-AI Android pivot ~18:55 PDT is current hero.
 - **Framing LOCKED:** source-protected research agent — local = privacy floor + default; optional verified remote only after **mask→sanitize→attest→complete**; no auto-fallback; no cloud-by-default.
 - Design note: `docs/notes/FRAMING_SOURCE_PROTECTED_DRAFT.md`. Trust boundaries: `docs/notes/HYBRID_TRUST_BOUNDARIES.md`. PS skim **SOFT CLEAR**: `docs/reviews/SECURITY_SOFT_SKIM_FRAMING_SOURCE_PROTECTED.md` (one-liner soft-edit: after mask, sanitization, and attestation).
 - **README hero:** pure local-first AI / Android goal tense; app / Play / on-device phone inference not shipped. Crypto scrubbed from live narrative.

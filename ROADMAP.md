@@ -44,7 +44,7 @@ Owners: Privacy Security owns gate acceptance and reviews every Phase 2 PR touch
 ## Phase 3 — Android local AI MVP
 > Product niche locked (`docs/notes/PRODUCT_NICHE.md`). Success bar: no cloud-by-default · no secret echo · no silent exposure · source-ID masked before model (M2) · credentials outside model · plain refuse/mask reasons.
 >
-> **M0 DONE** — Scope lock: Phase 3 brief locked (journalist MVP historical; Android primary as of ~18:46 PDT).
+> **M0 DONE** — Scope lock: Phase 3 brief locked (Android local-AI MVP primary; pure-AI product lock ~18:55 PDT).
 > **M1 IN FLIGHT** — Local run path: offline/local `ask` end-to-end (fail closed if model missing). **Primary surface = Next.js web app + API** (`POST /api/ask` → `askLocal`); **CLI secondary**. Runbook: `docs/notes/PHASE3_MVP_RUNBOOK.md`. Web stack: `docs/notes/PHASE3_WEB_STACK.md`.
 >
 > Later: **M2** ingest + source-identity masking · **M3** propose-only save/export + approval UX · **M4** dogfood cut. Dataset **PARKED**. Do not claim M2/M3 as shipped.
@@ -60,7 +60,7 @@ Owners: Privacy Security owns gate acceptance and reviews every Phase 2 PR touch
 - [ ] Durable policy engine (allowlists, export rules, per-project isolation)
 - [ ] Encrypted local project vaults; audit log that never records source identities
 - [ ] Optional remote inference only on verified confidential compute (fail-closed verify client already exists)
-- [ ] Threat model refresh for journalist adversaries (device seizure, subpoena, targeted phishing); deployment guides; open-source release
+- [ ] Threat model refresh for on-device / personal-agent adversaries (device seizure, subpoena, targeted phishing); deployment guides; open-source release
 
 ## Retired narrative tracks
 Prior chain / domain-specific product tracks were removed from the live narrative (~18:53 PDT pure-AI lock). Evidence may remain under `docs/archive/` pending Lead delete OK — not product scope.

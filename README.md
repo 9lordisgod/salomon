@@ -1,12 +1,14 @@
 # Salomon
 
-> **Salomon is aiming to be a local-first AI app — a private personal research agent that keeps work on-device by default, fails closed without a local model, and never puts credentials in the model.** (Android app / Play listing / on-device phone inference not shipped yet; today's surface is the web companion + privacy foundation.)
+> **Salomon is a local-first AI app for Android — a private personal research agent that keeps work on-device by default, fails closed without a local model, and never puts credentials in the model.**
+
+Private local AI for personal research. On-device by default; fail closed; credentials stay out of the model; refuse secrets. Remote only if the user opts in and the path is labeled — never a silent fallback.
+
+> Status: Android app / Play listing / on-device phone inference **not shipped yet**; today's surface is the web companion + privacy foundation.
 
 ![visibility](https://img.shields.io/badge/repo-private-black)
 ![phase](https://img.shields.io/badge/Phase%203-M1%20in%20flight-orange)
 ![refusal](https://img.shields.io/badge/refusal%20eval%207B-8%2F8%20signed%20off-brightgreen) ![gate](https://img.shields.io/badge/Phase%201.5%20privacy%20gate-SIGNED-green) ![p2](https://img.shields.io/badge/Phase%202-M1%E2%80%93M3%20green-brightgreen)
-
-On-device by default. Optional remote only if the user opts in and the path is labeled — never silent fallback. Privacy-first personal research agent — not a cloud assistant by default.
 
 1. **Local-first, fail closed (goal).** The model is designed to run on-device by default and fail closed when no local model is connected. Phase 3 M1 (local `ask`) is in flight; the current surface is a Next.js web app that may run in a labeled `DEMO · REMOTE` / `DEMO · stub` mode. Remote paths are opt-in and labeled — never silent, never default.
 2. **Secrets are refused, not stored.** The model won’t echo keys or sensitive material, and it never holds credentials or seed material. Anything that would sign, send or change something stays outside the model.
@@ -33,13 +35,13 @@ Flow in words: notes go through the sanitizer into a local model; read-only tool
 
 ## Why Android
 
-Android (Google Play or APK) is the primary product path so a private agent can live on the phone people already use. The web app is a companion surface.
+Android (Google Play or APK) is the primary product path so a private agent can live on the phone people already use. The web app is a companion surface. The Android app is not shipped yet — this is the product direction.
 
-> Status: this is the product direction. An Android app (Play / APK), Play listing, and on-device phone inference are **not shipped**; today's code is the privacy foundation (sanitizer, local ask path, refusal gates) plus the web companion. See [STATUS.md](STATUS.md).
+> Today's code is the privacy foundation (sanitizer, local ask path, refusal gates) plus the web companion. See [STATUS.md](STATUS.md).
 
 ## Who it's for
 
-Users who want private local AI / personal research on-device — professional, privacy-first. Niche: [docs/notes/PRODUCT_NICHE.md](docs/notes/PRODUCT_NICHE.md).
+People who want a private local AI / personal research agent on their phone and a web companion — professional, privacy-first. Niche: [docs/notes/PRODUCT_NICHE.md](docs/notes/PRODUCT_NICHE.md).
 
 ## How Salomon handles it
 
