@@ -16,6 +16,12 @@ android {
         versionCode = 1
         versionName = "0.0.1-m-a0"
         ndk { abiFilters += listOf("arm64-v8a") }
+        externalNativeBuild {
+            cmake {
+                cppFlags += ""
+                arguments += listOf("-DANDROID_STL=c++_shared")
+            }
+        }
     }
     buildTypes {
         debug { buildConfigField("boolean", "SALOMON_ALLOW_ASK_STUB", allowStub.toString()) }
@@ -30,6 +36,14 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions { jvmTarget = "17" }
+    // JNI shim (salomon_jni_shim.c) links prebuilt libsalomon_core.so from jniLibs.
+    // Skip native build when .so is absent so the project still syncs.
+    val coreSo = file("src/main/jniLibs/arm64-v8a/libsalomon_core.so")
+    if (coreSo.exists()) {
+        externalNativeBuild {
+            cmake { path = file("src/main/cpp/CMakeLists.txt") }
+        }
+    }
 }
 
 dependencies {
