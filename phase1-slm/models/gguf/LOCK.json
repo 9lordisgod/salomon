@@ -1,0 +1,53 @@
+{
+  "schema": "salomon.gguf.lock/v1",
+  "milestone": "Phase3-M1",
+  "base_model": "Qwen/Qwen2.5-7B-Instruct",
+  "quant": "Q4_K_M",
+  "license": "Apache-2.0",
+  "adapter": null,
+  "reject": [
+    "abliterated",
+    "uncensored",
+    "no-refuse",
+    "*-of-*"
+  ],
+  "release_filename": "salomon-qwen25-7b-instruct-Q4_K_M.gguf",
+  "upstream_filename": "Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+  "default_for_cli": "bartowski_single",
+  "artifacts": {
+    "bartowski_single": {
+      "role": "m1_default",
+      "repo": "bartowski/Qwen2.5-7B-Instruct-GGUF",
+      "files": [
+        {
+          "filename": "salomon-qwen25-7b-instruct-Q4_K_M.gguf",
+          "upstream_filename": "Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+          "bytes": 4683074240,
+          "sha256": "65b8fcd92af6b4fefa935c625d1ac27ea29dcb6ee14589c55a8f115ceaaa1423",
+          "url": "https://huggingface.co/bartowski/Qwen2.5-7B-Instruct-GGUF/resolve/main/Qwen2.5-7B-Instruct-Q4_K_M.gguf"
+        }
+      ]
+    },
+    "bartowski_mobile_3b": {
+      "role": "mobile",
+      "repo": "bartowski/Qwen2.5-3B-Instruct-GGUF",
+      "files": [
+        {
+          "filename": "salomon-qwen25-3b-instruct-Q4_K_M.gguf",
+          "upstream_filename": "Qwen2.5-3B-Instruct-Q4_K_M.gguf",
+          "bytes": 1929903264,
+          "sha256": "9c9f56a391a3abbd5b89d0245bf6106081bcc3173119d4229235dd9d23253f94",
+          "url": "https://huggingface.co/bartowski/Qwen2.5-3B-Instruct-GGUF/resolve/main/Qwen2.5-3B-Instruct-Q4_K_M.gguf"
+        }
+      ],
+      "channel": "android_play"
+    }
+  },
+  "platform_resolve": {
+    "1": "SALOMON_GGUF (refuse *-of-*)",
+    "2": "SALOMON_GGUF_DIR + salomon-qwen25-7b-instruct-Q4_K_M.gguf",
+    "3": "phase3-runtime/artifacts/salomon-qwen25-7b-instruct-Q4_K_M.gguf",
+    "4": "phase1-slm/models/gguf/salomon-qwen25-7b-instruct-Q4_K_M.gguf"
+  },
+  "mobile_default": "bartowski_mobile_3b"
+}
