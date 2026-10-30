@@ -44,6 +44,6 @@ def scan_record(rec):
         hits.append(("tags", r))
     return hits
 
-SAFETY_MSG = ("[local guard] That looks like a seed phrase or private key. It was NOT sent to the model "
-              "and is not stored in chat history. Treat it as compromised: create a new wallet on a trusted "
-              "device and move your funds now. Never paste seeds/keys into any chat.")
+SAFETY_MSG = ("[local guard] That looks like a password, API key, or private key material. It was NOT sent "
+              "to the model and is not stored in chat history. Treat it as compromised: rotate the credential "
+              "in a password manager on a trusted device. Never paste secrets into any chat.")

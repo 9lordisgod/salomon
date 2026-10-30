@@ -23,3 +23,11 @@ Ordered by Lead (yoxi). Model Engineer slice; Data Curator owns data replacement
 - seed_prompts.jsonl regenerated: **165** rows (help 105 + refusal 60).
 - secret_scan / dataset_check: PASS.
 - Live evals not swapped; item (5) remains INVALIDATED.
+
+## Data Curator hygiene close-out (2026-10-29 ~21:25 PDT)
+- Live seed still **165**; live `eval_refusal.jsonl` (8) + `eval_prompts.jsonl` (12) crypto-noun clean; match drafts.
+- `prepare_domain_data` reads only `data/extra/*.jsonl` (not `_crypto_purged_archive/`).
+- Moved `data/eval_refusal.example.jsonl` → `data/extra/_crypto_purged_archive/eval_refusal.example.crypto.jsonl` (was crypto template, unused by make).
+- Makefile `smoke` prompt retargeted to source-memo privacy (was NEAR access-key).
+- `secret_scan.SAFETY_MSG` reworded off wallet/funds/seed phrasing (scanner heuristics unchanged; fail-closed intact).
+- Item (5) still **INVALIDATED** until Model/Eval 8/8 re-run GREEN. No Solana/on-chain rows added.

@@ -4,7 +4,7 @@ install: ; pip install -r requirements.txt
 data: ; python scripts/prepare_domain_data.py && python scripts/dataset_check.py
 dryrun: ; python scripts/finetune_qlora.py --model $(SMOKE) --max-samples 8 --max-steps 2 --batch-size 1 --grad-accum 1 --output outputs/dryrun
 train: ; python scripts/finetune_qlora.py --model $(MODEL)
-smoke: ; python scripts/local_inference.py --model $(SMOKE) --prompt "What is a NEAR function-call access key?" --max-new 128
+smoke: ; python scripts/local_inference.py --model $(SMOKE) --prompt "How should I keep source names out of a shared research memo?" --max-new 128
 eval: ; python scripts/eval_harness.py --model $(MODEL) $(if $(ADAPTER),--adapter $(ADAPTER),)
 # CI safety gate: use eval-refusal (refusal suite only, always data/eval_refusal.jsonl, fails non-zero). `eval` is informational + safety.
 eval-refusal: ; NEAR_PRIVACY_CI=1 .venv/bin/python scripts/eval_harness.py --model $(SMOKE) --refusal-only --require-refusal --refusal data/eval_refusal.jsonl --out outputs/eval_refusal_results.jsonl
@@ -17,3 +17,9 @@ eval-base-cpu: ; HF_HUB_OFFLINE=1 .venv/bin/python scripts/eval_harness.py --mod
 eval-tuned-cpu: ; HF_HUB_OFFLINE=1 .venv/bin/python scripts/eval_harness.py --model $(SMOKE) --adapter outputs/lora-0.5b-cpu --max-new 200 --out outputs/eval_tuned_0.5b.jsonl || true
 compare-cpu: ; .venv/bin/python scripts/compare_evals.py --base outputs/eval_base_0.5b.jsonl --tuned outputs/eval_tuned_0.5b.jsonl --out outputs/eval_compare_0.5b.md --base-label "Qwen2.5-0.5B base" --tuned-label "Qwen2.5-0.5B + LoRA (235 rows, 2 ep)"
 first-adapter-cpu: train-cpu eval-base-cpu eval-tuned-cpu compare-cpu
+
+# Phase 3 M1 — offline ask (GGUF product; transformers CI)
+ask-local: ; python scripts/ask_local.py --prompt "$(PROMPT)"
+fetch-gguf-smoke: ; scripts/fetch_gguf.sh smoke
+fetch-gguf-product: ; scripts/fetch_gguf.sh product
+smoke-ask-refusal: ; scripts/smoke_ask_refusal.sh
