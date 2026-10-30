@@ -20,7 +20,7 @@
     ],
     "paths": {
       "@/*": ["./*"],
-      "@salomon/runtime": ["../../phase3-runtime/src/index.ts"]
+      "salomon/runtime": ["../../phase3-runtime/src/index.ts"]
     }
   },
   "include": [

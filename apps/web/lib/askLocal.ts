@@ -2,7 +2,7 @@
 // Messages come only from Runtime REASONS. No gateway, no HF pull, no cloud fallback.
 import { existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
-import { askLocal as runtimeAskLocal, DEFAULT_LOCAL_MODEL, deny, findAskLocalScript, REASONS, CAPS, type AskRequest, type AskResult, type LocalCompleterLike } from '@salomon/runtime';
+import { askLocal as runtimeAskLocal, DEFAULT_LOCAL_MODEL, deny, findAskLocalScript, REASONS, CAPS, type AskRequest, type AskResult, type LocalCompleterLike } from 'salomon/runtime';
 
 export { deny, REASONS, CAPS };
 export type { AskResult };
