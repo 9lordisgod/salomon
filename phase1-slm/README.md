@@ -2,7 +2,7 @@
 
 Salomon's local model: a small instruction model tuned to handle private data safely — refuse to echo secrets, resist injected instructions, refuse harmful requests — and run fully on-device. Default model: **Qwen2.5-7B-Instruct** (see configs/model_config.yaml). Llama-3.1-8B-Instruct is the alternative.
 
-**Status:** refusal gate **8/8 PASS on 7B** (Phase 1.5 item 5 SIGNED). Dataset **PARKED** at 362 seed rows; when unparked (Lead, 2026-10-29) it refreshes toward general privacy AI — secret handling, PII, injection — not crypto depth. Current seed is still crypto-heavy (archived framing). See `../docs/notes/SLM_PIVOT_PRIVACY_FIRST.md`.
+**Status:** crypto domain **REMOVED** (2026-10-29). **7B 8/8 (Phase 1.5 item 5) signoff INVALIDATED for product claims (2026-10-29, Lead ACK): it was earned on a crypto-tuned system prompt + crypto-heavy 362-row seed. Historical evidence only; refusal is NOT GREEN until re-run on the privacy rebuild.** Privacy rebuild **OPEN** with Data Curator. See `../docs/notes/CRYPTO_DOMAIN_REMOVED.md`.
 
 ## Setup
 Python 3.11+. A GPU is optional: QLoRA on 7B needs about 16–24GB VRAM. The 0.5B smoke model runs on CPU.
