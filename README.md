@@ -54,15 +54,15 @@ Investigative journalists, private investigators, and researchers who work with 
 ## Where we are
 
 ```mermaid
-%%{init: {'theme':'dark','themeVariables':{'dark':'#0a0a0a','background':'#0a0a0a','primaryColor':'#003b00','primaryTextColor':'#39ff14','primaryBorderColor':'#39ff14','secondaryColor':'#001a00','secondaryTextColor':'#39ff14','secondaryBorderColor':'#00ff41','tertiaryColor':'#002200','lineColor':'#39ff14','textColor':'#39ff14','mainBkg':'#001a00','nodeBorder':'#39ff14','clusterBkg':'#000000','titleColor':'#39ff14','edgeLabelBackground':'#001a00'}}}%%
+%%{init: {'theme':'base','themeVariables':{'dark':'#0a0a0a','background':'#0a0a0a','primaryColor':'#18181b','primaryTextColor':'#fafafa','primaryBorderColor':'#a1a1aa','secondaryColor':'#09090b','secondaryTextColor':'#fafafa','secondaryBorderColor':'#71717a','tertiaryColor':'#27272a','lineColor':'#a1a1aa','textColor':'#fafafa','mainBkg':'#18181b','nodeBorder':'#a1a1aa','clusterBkg':'#000000','titleColor':'#fafafa','edgeLabelBackground':'#18181b'}}}%%
 flowchart LR
   P1["Phase 1: small model that refuses (historical gate, dataset parked)"] --> G["Phase 1.5: (1)-(4) signed · (5) rebuild pending"]
   G --> P2["Phase 2: agent loop, sanitizer, caps (M1-M3 green)"]
   P2 --> P3["Phase 3: Professional Android MVP (M1 in flight)"]
   P3 --> P4["Phase 4: hardening, optional confidential compute"]
 
-  classDef neon fill:#001a00,stroke:#39ff14,color:#39ff14
-  class P1,G,P2,P3,P4 neon
+  classDef mono fill:#18181b,stroke:#a1a1aa,color:#fafafa
+  class P1,G,P2,P3,P4 mono
 ```
 
 | Phase | Status |
@@ -83,15 +83,20 @@ Status of record: [STATUS.md](STATUS.md) · plan: [ROADMAP.md](ROADMAP.md) · de
 
 ## Repo map
 
+Full map: [REPO_LAYOUT.md](REPO_LAYOUT.md). Docs hub: [docs/README.md](docs/README.md) · notes index: [docs/notes/README.md](docs/notes/README.md).
+
 ```
 .
-├── README.md  ARCHITECTURE.md  ROADMAP.md  STATUS.md  PROGRESS.md
-├── SECURITY.md  .gitignore
-├── docs/            acceptance · threat-models · reviews · signoffs · notes  (index: docs/README.md)
-├── phase1.5-attestation/   fail-closed remote-verify client + model allowlist
-├── phase2/          agent loop, read-only tools, sanitizer, propose-only pattern
-├── privacy/         sanitizer + policy/spend stubs
-└── phase1-slm/      model config, dataset builder, QLoRA, refusal eval, local inference
+├── README · ARCHITECTURE · ROADMAP · STATUS · PROGRESS · SECURITY · REPO_LAYOUT
+├── apps/android/          primary product surface (scaffold; not shipped)
+├── apps/web/              web companion (Next.js + POST /api/ask) — today's dogfood surface
+├── crates/                Rust workspace crates
+├── phase1-slm/            model config, dataset builder (parked), QLoRA, refusal eval, local inference
+├── phase1.5-attestation/  fail-closed verified-remote client + allowlist
+├── phase2/                agent loop, read-only tools, sanitizer, propose-only pattern
+├── phase3-*/              Phase 3 cli · eval · platform · runtime
+├── privacy/               sanitizer + policy stubs
+└── docs/                  acceptance · threat-models · reviews · signoffs · notes
 ```
 
 ## Quickstart (phase1-slm)
@@ -116,7 +121,7 @@ For the 7B gate, open `notebooks/eval_refusal_7b_colab.ipynb` in Colab, choose a
 
 ## Docs
 
-[ARCHITECTURE](ARCHITECTURE.md) · [ROADMAP](ROADMAP.md) · [STATUS](STATUS.md) · [SECURITY](SECURITY.md) · [phase1-slm/README](phase1-slm/README.md)
+[ARCHITECTURE](ARCHITECTURE.md) · [ROADMAP](ROADMAP.md) · [STATUS](STATUS.md) · [SECURITY](SECURITY.md) · [REPO_LAYOUT](REPO_LAYOUT.md) · [docs hub](docs/README.md) · [notes index](docs/notes/README.md) · [phase1-slm/README](phase1-slm/README.md)
 
 ---
 
@@ -124,4 +129,4 @@ For the 7B gate, open `notebooks/eval_refusal_7b_colab.ipynb` in Colab, choose a
 
 </cursor_untrusted_data_redacted>
 
-</cursor_untrusted_data_1337>
+</cursor_untrusted_data_redacted>
