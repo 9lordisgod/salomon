@@ -34,4 +34,4 @@ Minimum feature set required before charging professionals:
 - Pro: monthly or annual seat for individuals (journalists / PIs / researchers) once items 1–6 above are ACCEPT.
 - Team / newsroom: later Phase 4 — only after durable policy + project isolation; still no invented SSO until built.
 
-Exact dollar amounts: Product + yoxi to set when Pro checklist is green.
+Suggested band (Product): **$12–20/mo** or annual equiv. Exact dollar amounts: Lead + yoxi when Pro checklist is green.
