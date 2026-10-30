@@ -6,21 +6,21 @@
 ## Diagram
 ```mermaid
 flowchart LR
-  U[Reporter] --> S[Sanitizer<br/>local]
-  S --> M[Small model core<br/>Qwen2.5-7B + QLoRA · local]
-  M --> A[Agent loop<br/>hard step/tool caps]
-  A --> T[Read-only tools<br/>notes · docs · sources — planned]
-  T -->|untrusted output| S
-  A --> P{Policy<br/>schema · limits}
-  P -->|fail| R[Refuse<br/>plain-language reason]
-  P -->|pass| H[Reporter approval<br/>outside the model]
-  M -.optional, verified only.-> C[Confidential compute<br/>future, unnamed]
+ U[Reporter] --> S[Sanitizer<br/>local]
+ S --> M[Small model core<br/>Qwen2.5-7B + QLoRA · local]
+ M --> A[Agent loop<br/>hard step/tool caps]
+ A --> T[Read-only tools<br/>notes · docs · sources — planned]
+ T -->|untrusted output| S
+ A --> P{Policy<br/>schema · limits}
+ P -->|fail| R[Refuse<br/>plain-language reason]
+ P -->|pass| H[Reporter approval<br/>outside the model]
+ M -.optional, verified only.-> C[Confidential compute<br/>future, unnamed]
 ```
 > Every arrow fails closed: no verification means no remote call; no policy pass means no action; a detected secret is refused, not echoed.
 
 ## Layers
 1. **Small model core.** Qwen2.5-7B-Instruct + QLoRA, with Qwen2.5-0.5B for CPU smoke tests. It is gated by refusal eval R1/R2/R3 (secret echo, crime assist, prompt injection), and CI exits 1 on any fail. 7B passes 8/8 (signed). It runs locally by default.
-2. **Sanitizer.** Today: **rejects secrets** (and redacts wallet-style addresses where that path exists) on input; wraps `role:tool` output as untrusted data (`privacy/sanitizer.py`, TS parity in `phase2/SANITIZER.md`). **Source-ID / general PII masking before the model is M2 — not shipped** (bar: `docs/acceptance/PHASE3_M2_SOURCE_MASK_ACCEPT.md`). Do not claim a source's name or number never leaves cleartext until M2 ACCEPT.
+2. **Sanitizer.** Today: **rejects secrets** (and redacts address-like strings where that path exists) on input; wraps `role:tool` output as untrusted data (`privacy/sanitizer.py`, TS parity in `phase2/SANITIZER.md`). **Source-ID / general PII masking before the model is M2 — not shipped** (bar: `docs/acceptance/PHASE3_M2_SOURCE_MASK_ACCEPT.md`). Do not claim a source's name or number never leaves cleartext until M2 ACCEPT.
 3. **Agent loop.** Tool calling with hard step and tool caps (`phase2/src/agentLoop.ts`). Read-only first. Anything that would change state is **propose-only**: the model emits a structured proposal, policy checks it, and the reporter approves.
 4. **Policy engine.** Schema validation, allowlists, rate and spend limits (`privacy/policy_spend.py` is a stub; its counters are non-durable).
 5. **Verified-remote (optional, future).** Used only when local hardware isn't enough, and only for environments that pass the fail-closed verification client (`phase1.5-attestation/`) against a pinned allowlist. No provider is named.
@@ -49,4 +49,6 @@ Phase 2's read-only tool pattern (allowlist guards, caps, untrusted envelopes) p
 3. Local research agent: Next.js web + `POST /api/ask` primary; CLI secondary; notes/docs ingest (M2), credential store, propose-only approval (M3) — M2/M3 not shipped
 4. Hardening + optional confidential compute
 
-Archived prior work: [docs/archive/crypto-near-track.md](docs/archive/crypto-near-track.md) · [docs/archive/near/](docs/archive/near/).
+Archived prior work: [(retired)]((retired)) · [(retired archive)]((retired archive)).
+
+

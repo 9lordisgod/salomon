@@ -1,8 +1,8 @@
 # Progress Log
 
-> **Latest niche (~18:46 PDT):** local-first Android AI (Play/APK primary, goal tense). Solana Mobile optional/secondary. Android app not shipped; M1 not green.
+> **Latest niche (~18:53 PDT):** pure local-first AI (Android goal primary; web companion). Crypto/Solana/NEAR scrubbed from live narrative. Android app not shipped; M1 not green.
 
-> **Niche (main `f9d75fd`, 2026-10-29):** Salomon is a local research agent for journalists and investigators that protects sources. Crypto/NEAR track archived: `docs/archive/near/` · `docs/archive/crypto-near-track.md`. Entries below remain history.
+> **Note:** Dated entries below are engineering history and may name retired domains; they are not current product positioning.
 
 ## Thu Oct 29, 2026, ~16:39 PDT — Product GGUF PASS (Release) + Model local confirm
 - Release: `salomon-qwen25-7b-instruct-Q4_K_M.gguf` on disk; sha256 `65b8fcd92af6b4fefa935c625d1ac27ea29dcb6ee14589c55a8f115ceaaa1423`; 4683074240 B.
