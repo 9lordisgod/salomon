@@ -35,7 +35,7 @@ fun ChatScreen() {
     val drawer = rememberDrawerState(DrawerValue.Closed)
     val threads = remember { mutableStateListOf(ChatThread(0)) }
     var currentId by remember { mutableIntStateOf(0) }
-    var status by remember { mutableStateOf(if (SalomonCore.nativeLoaded) AskStatus.Local else
+    var status by remember { mutableStateOf(
         if (SalomonCore.allowStub) AskStatus.Stub else AskStatus.MissingModel) }
     var inFlight by remember { mutableStateOf<Job?>(null) }
     var input by remember { mutableStateOf("") }
