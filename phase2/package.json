@@ -1,5 +1,5 @@
 {
-  "name": "@salomon/phase2-agent-loop",
+  "name": "salomon-phase2-agent-loop",
   "version": "0.1.0",
   "private": true,
   "type": "module",

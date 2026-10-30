@@ -1,5 +1,5 @@
 {
-  "name": "@salomon/phase3-platform",
+  "name": "salomon-phase3-platform",
   "version": "0.1.0",
   "private": true,
   "type": "module",
