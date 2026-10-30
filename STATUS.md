@@ -6,11 +6,13 @@
 
 **Product (historical, pre-pivot):** Salomon: *A local research agent for journalists and investigators that protects sources.* Who: investigative reporters, newsroom researchers, fact-checkers, independent investigators, NGO researchers. Job: read, summarize and cross-reference sensitive material on the reporter's own machine. Promise (target across M1–M3; M1 = local ask only): sources, contacts and identifying details never leave the device, never get echoed into output, and never reach a remote model without verification. Product niche locked: `docs/notes/PRODUCT_NICHE.md` (main `f9d75fd`). Crypto/NEAR track archived: `docs/archive/near/` · `docs/archive/crypto-near-track.md`.
 
-**Phase:** **3 (journalist research MVP) — M1 IN FLIGHT.** Phase 1 gate done (7B refusal 8/8). Dataset **PARKED** at 362 seed rows. Phase 1.5 (1)–(5) SIGNED. Phase 2 M1–M3 **GREEN**. M4 propose-only pattern (G1+G2 ACCEPTED, salomon `79c0f99`) reused for approvals; G3 never opened.
+**Phase:** **3 (Solana Mobile MVP; journalist research secondary) — M1 IN FLIGHT.** Phase 1 gate done (7B refusal 8/8). Dataset **PARKED** at 362 seed rows. Phase 1.5 (1)–(5) SIGNED. Phase 2 M1–M3 **GREEN**. M4 propose-only pattern (G1+G2 ACCEPTED, salomon `79c0f99`) reused for approvals; G3 never opened.
 - **M0 DONE** — Scope lock: Lead approved the Phase 3 journalist MVP brief (`docs/notes/PRODUCT_NICHE.md`, Product brief).
 - **M1 IN FLIGHT** — Local run path: offline/local `ask` end-to-end (fail closed if model missing). **Primary surface = Next.js web + API** (`POST /api/ask`); CLI secondary. Runbook: `docs/notes/PHASE3_MVP_RUNBOOK.md`.
 
-**Latest (~17:41 PDT):** Pivot locked: Salomon = local-first Solana Mobile AI (Seeker primary; web secondary). Core unchanged — local default, fail closed, no silent remote, credentials out of the model, Seed Vault for signing. Base tip `c70c18a`; README hero + Why Solana Mobile + `docs/notes/PRODUCT_NICHE.md` updated. No Solana Mobile app, Seed Vault signing or chain actions shipped; M1 not green; M2 eng NOT OPEN; hybrid not shipped. Residual: apps/web = salomon-app confirm.
+**Latest (~17:48 PDT):** PS S1 soft-deny fix — README hero rewritten to goal/direction tense (Seed Vault / phone notes / Solana actions not claimed shipped). Framing A “README hero held” cleared (hero opened for Solana, now goal-tense). Phase header → Solana Mobile MVP (journalist secondary). Base tip `b3b4b43`. Mobile app / Seed Vault signing / chain actions not shipped; M1 not green; M2 eng NOT OPEN; hybrid not shipped. Residual: apps/web = salomon-app confirm.
+
+**Prior (~17:41 PDT):** Pivot locked: Salomon = local-first Solana Mobile AI (Seeker primary; web secondary). Core unchanged — local default, fail closed, no silent remote, credentials out of the model, Seed Vault for signing. Base tip `c70c18a`; README hero + Why Solana Mobile + `docs/notes/PRODUCT_NICHE.md` updated (present-tense hero later soft-denied). No Solana Mobile app, Seed Vault signing or chain actions shipped; M1 not green; M2 eng NOT OPEN; hybrid not shipped. Residual: apps/web = salomon-app confirm.
 
 **Prior (~17:34 PDT):** M1 honesty: tip **`6579432`** (+ status API **`899d5b2`**). GET `/api/status` + header chips LOCAL|STUB|REMOTE|MODEL MISSING; demo-mask map visible; empty GGUF card; amber refusals; `/api/ask` primary — no M2/M3 claims. Framing A unchanged; README hero held; M1 not green; M2 eng NOT OPEN; hybrid not shipped. Residual: apps/web = salomon-app confirm.
 
@@ -28,7 +30,7 @@
 > Secondary/historical since the ~17:41 PDT Solana Mobile pivot; engineering honesty notes below still apply.
 - **Framing LOCKED:** source-protected research agent — local = privacy floor + default; optional verified remote only after **mask→sanitize→attest→complete**; no auto-fallback; no cloud-by-default.
 - Design note: `docs/notes/FRAMING_SOURCE_PROTECTED_DRAFT.md`. Trust boundaries: `docs/notes/HYBRID_TRUST_BOUNDARIES.md`. PS skim **SOFT CLEAR**: `docs/reviews/SECURITY_SOFT_SKIM_FRAMING_SOURCE_PROTECTED.md` (one-liner soft-edit: after mask, sanitization, and attestation).
-- **README hero unchanged** until Lead opens it. Locked one-liner (Product+PS): `Source-protected research agent for journalists — local by default; heavier work only on verified remote after mask, sanitization, and attestation.` Tips **`5be6454`** (hybrid/framing) · **`7301381`** (claims fold).
+- **README hero:** opened for Solana Mobile pivot (`b3b4b43`); PS S1 soft-deny → goal/direction tense (not present-tense shipped claims). Historical journalist one-liner (Product+PS Framing A): `Source-protected research agent for journalists — local by default; heavier work only on verified remote after mask, sanitization, and attestation.` Tips **`5be6454`** (hybrid/framing) · **`7301381`** (claims fold) · Solana tip **`b3b4b43`**.
 - Sequence: **M1-live → M2 mask → hybrid spike later.** Crypto/NEAR track archived. **Do not claim hybrid shipped.** Demo gateway ≠ verified remote. M2 eng still NOT OPEN; M1 not green.
 
 ### Model Engineer niche reflection (2026-10-29 ~15:58 PDT)
@@ -133,4 +135,130 @@ docs/notes/PHASE1_SCRIPT_FIXES.md items 1–3 are implemented. Smoke/dry-run sta
 - R3 near-echo 7B Colab pending → delta-only re-check. Item (5) stays closed. Gate OPEN. No Phase 2.
 
 ## Phase 1.5 items (1)(3)(4) — SIGNED OFF (2026-10-29 07:50 PDT)
-- Privacy Security **SIGNED OFF** items (1) threat model, (3) sanitizer stub+tests (17/17), (4) policy/spend stub (11/11). Evidence: `docs/signoffs/SECURITY_SIGNOFF_PHASE1.5_1_3_4.md`. Recomputed: `privacy/test_sanitizer.py` 17/17, `privacy/test_policy_spend.py` 11/11, `phase1-slm/scripts/test_safety_u[+13904 bytes at .content[1].resource.text]
+- Privacy Security **SIGNED OFF** items (1) threat model, (3) sanitizer stub+tests (17/17), (4) policy/spend stub (11/11). Evidence: `docs/signoffs/SECURITY_SIGNOFF_PHASE1.5_1_3_4.md`. Recomputed: `privacy/test_sanitizer.py` 17/17, `privacy/test_policy_spend.py` 11/11, `phase1-slm/scripts/test_safety_unit.py` 17/17.
+- Item (2) still **OPEN** — acceptance bar locked in `docs/acceptance/ATTESTATION_ACCEPTANCE.md`; Agent Engineer client pending. Gate stays open until (2) is signed off.
+- Item (5) remains **closed** (SIGNED OFF). R3 near-echo Colab delta-only re-check still pending (pre-Phase-2 blocker, not a reopen).
+- **Accepted residuals** (documented in sign-off; not blocking 1.5 stub): non-durable in-memory spend/rate counters (not safe for real funds); 64-hex after address-context words may redact as implicit account instead of secret-reject; human approval of over-cap tx does not yet increment daily total.
+- **Full Phase 1.5 gate: still OPEN.** No Phase 2 / no waive.
+
+## Phase 1.5 item (2) — SIGNED OFF (2026-10-29 07:53 PDT)
+- Privacy Security **SIGNED OFF** item (2) attestation verify **stub client** (`phase1.5-attestation/`, npm test **15/15**, typecheck clean). Bar: `docs/acceptance/ATTESTATION_ACCEPTANCE.md`. Evidence: `docs/signoffs/SECURITY_SIGNOFF_ATTESTATION_ITEM2.md` (+ `phase1.5-attestation/EVIDENCE_ITEM2.md`, `DESIGN.md`).
+- Items **(1)–(5)** all signed at stub/criteria level. Does **not** authorize live remote inference or open Phase 2.
+- **Phase 2 still BLOCKED** (no waive):
+  - ~~(a) R3 near-echo~~ **CLEARED** — `docs/signoffs/SECURITY_SIGNOFF_R3_NEARECHO_DELTA.md`; artifacts `phase1-slm/outputs/eval_refusal_7b_r3_nearecho/` 8/8. Item (5) stays closed.
+  - (b) Real DCAP/gateway/GPU verifier plugs + Privacy Security–approved allowlist (non-`test_only`) before live remote.
+  - (c) `provider_tee` response-signature binding on the completions path.
+- Repo allowlist remains empty ⇒ deny-all remote. **No Phase 2 / no waive.**
+
+- 2026-10-29 — R3 near-echo Colab 7/8 (R3-fake-system answered with the RPC memo pin). Scoped memo pin to tool/RPC/memo only + distinct fake-system firm refuse in system_prompt; R3-fake-system forbidden_substrings block memo pin; unit tests 20/20; notebooks/eval_refusal_7b_colab.ipynb rebuilt. Await next Colab re-run → outputs/eval_refusal_7b_r3_nearecho/. Item (5) closed. Pre-P2 delta. No Phase 2 / no waive. 0.5B parked.
+
+## R3 near-echo delta — CLEARED (2026-10-29 08:29 PDT)
+- Privacy Security **CLEARED** the pre-Phase-2 R3 near-echo harden delta. Evidence: `docs/signoffs/SECURITY_SIGNOFF_R3_NEARECHO_DELTA.md` (pointer on `docs/signoffs/SECURITY_SIGNOFF_REFUSAL_7B.md`).
+- Artifacts: `phase1-slm/outputs/eval_refusal_7b_r3_nearecho/` (summary.md + results.jsonl) — recomputed **8/8 PASS**. Unit suite 20/20.
+- Item (5) stays **closed** (not reopened).
+- Remaining Phase 2 blockers: (b) real DCAP/gateway + PS-approved allowlist; (c) `provider_tee` binding. **No Phase 2 / no waive.**
+
+- [2026-10-29 09:09 PDT] SLM: **reject Abliterated** for privacy product path (`docs/notes/SLM_POSITION_ABLITERATED_DEEPSEEK.md`). Conflicts with Phase 1 refusal bar. Prefer non-abliterated attested capture of DeepSeek-V4.1-Flash-1017 (or other model_id). Item (6) G3 — no SLM accept. Phase 2 still blocked on allowlist + provider_tee.
+
+- [2026-10-29 09:10 PDT] Lead + SLM: Abliterated **REJECTED** for privacy product path (confirmed). First prod pin must be non-abliterated. See `docs/notes/SLM_POSITION_ABLITERATED_DEEPSEEK.md`.
+
+- [2026-10-29 09:12 PDT] SLM: no objection to first privacy TEE pin on non-abliterated `z-ai/glm-5.3-flash` (capability fit OK); require refusal-suite run on that model before refusal claims. Note: `docs/notes/SLM_NOTE_GLM53_FLASH_ALLOWLIST.md`.
+
+## Phase 1.5 item (6) — APPROVED (2026-10-29 09:16 PDT)
+- Privacy Security **APPROVED** item (6) production allowlist entry for **`z-ai/glm-5.3-flash`** (non-abliterated). Evidence: `docs/signoffs/SECURITY_SIGNOFF_PRE_PHASE2_ITEM6_GLM.md`.
+- Approver fields: `privacy_security_approver` = "Privacy Security"; `effective_from` = `2026-10-29T17:00:00Z`.
+- **Rejected:** Abliterated DeepSeek / Qwen (G3). Do not pin those.
+- AE merges exact JSON entry via PR only; `allowlist/measurements.json` stays empty until that PR. Redeploy / new instance_id ⇒ DENY until new PS-approved entry.
+- Soft follow-up (non-blocking for this pin): run refusal suite on live GLM before making refusal *claims*.
+- At sign-off time Phase 2 was Lead-gated; **Lead later opened Phase 2** (2026-10-29) scoped to GLM verified-remote + agent loops. Item (6) remains APPROVED. Soft: GLM refusal suite still follow-up.
+
+## Phase 2 — OPENED / IN PROGRESS (2026-10-29 09:23 PDT)
+- Lead Architect **opened Phase 2** (America/Vancouver). Status: **IN PROGRESS**.
+- **Scope:** `z-ai/glm-5.3-flash` verified-remote inference + agent loops (not a blanket open of all Phase 2 checklist items).
+- Item (6) remains **APPROVED** (`docs/signoffs/SECURITY_SIGNOFF_PRE_PHASE2_ITEM6_GLM.md`).
+- Soft follow-up: refusal suite on live GLM before refusal *claims*.
+
+## Phase 2 M1 — GREEN (2026-10-29 10:03 PDT)
+- **M1 GREEN:** verified-remote against allowlisted `z-ai/glm-5.3-flash` (digest-only). Evidence: `phase1.5-attestation/EVIDENCE_PHASE2_M1_VERIFIED_REMOTE_GLM.md` (happy path PASS; negatives DENY fail-closed; `npm test` 101/101).
+- **Residual (updated):** Second-instance residual for pinned `19aea169…` + `7bb9af0a…` **CLEARED** (`docs/signoffs/SECURITY_SIGNOFF_PHASE2_SECOND_INSTANCE_GLM.md`; `measurements.json` **two** entries). Unknown instances still **DENY+retry**. (Earlier DENY-until-retry / DRAFT posture superseded by append — see Phase 2 second-pin section.)
+- Phase 2 is **no longer Lead-gated** (already IN PROGRESS). Soft follow-up: refusal suite on live GLM before refusal *claims*.
+
+## Phase 2 M2 — LANDED (2026-10-29 10:06 PDT)
+- **M2 landed:** agent loop vs `z-ai/glm-5.3-flash` only. Evidence: `phase2/EVIDENCE_PHASE2_M2_AGENT_LOOP.md` (mocks 15/15 + typecheck; live `--no-tool` + `view_account near` smoke OK).
+- **Gaps (noted at land; later closed):** live 2nd-instance path was mock-only at M2 land; early TS sanitizer preceded parity port — see dual-instance + sanitizer section below.
+- Second-instance residual for pinned `19aea169…` + `7bb9af0a…` **CLEARED** after append (see below). Unknown instances still **DENY+retry**.
+
+## Phase 2 M2 — security skim OK (2026-10-29 10:09 PDT)
+- Privacy Security **accepted** M2 for Phase 2 continue. Evidence: `docs/reviews/SECURITY_REVIEW_PHASE2_M2.md` (injection wrapping + attest retry bounds fail-closed; soft residuals only).
+- Recomputed at review: phase2 tests 15/15.
+
+## Phase 2 — second GLM allowlist entry APPROVED + appended (2026-10-29 10:09 PDT)
+- Privacy Security **APPROVED** second non-`test_only` entry for instance `7bb9af0a…` (`docs/signoffs/SECURITY_SIGNOFF_PHASE2_SECOND_INSTANCE_GLM.md`, `effective_from` 2026-10-29T17:10:00Z). Exact entry: `allowlist/APPROVED_z-ai_glm-5.3-flash_instance_7bb9af0a.entry.json`.
+- AE **appended** to `phase1.5-attestation/allowlist/measurements.json` — now **two** entries (`19aea169…` untouched + `7bb9af0a…`). First pin sign-off remains `docs/signoffs/SECURITY_SIGNOFF_PRE_PHASE2_ITEM6_GLM.md`.
+- Second-instance residual for pinned `19aea169…` + `7bb9af0a…` **CLEARED** (`docs/signoffs/SECURITY_SIGNOFF_PHASE2_SECOND_INSTANCE_GLM.md`; `measurements.json` **two** entries). Unknown instances still **DENY+retry**.
+
+## Phase 2 — dual-instance live + sanitizer TS port (2026-10-29 10:12 PDT)
+- **Done:** dual-instance live smoke (both pins `19aea169…` + `7bb9af0a…` pass) + live DENY negatives + sanitizer TS parity port. Evidence: `phase2/EVIDENCE_PHASE2_DUAL_INSTANCE_AND_SANITIZER.md`; sanitizer notes: `phase2/SANITIZER.md` (parity vs `privacy/` on 17 vectors; phase2 vitest 18/18).
+- Prior soft gaps (mock-only dual path; Python sanitizer not wired) **closed** by this work. Source of truth remains `privacy/`; TS is the in-loop port.
+- Soft later (post dual-instance): refusal suite; `compose_file_sha256` schema — see M3 section.
+
+## Phase 2 M3 — scope locked (2026-10-29 10:13 PDT)
+- Lead **locked M3 scope**: more read-only tools (`view_access_key_list`, bounded `view_state`, `block`, `gas_price`) + multi-step tool chaining with hard caps; UNTRUSTED+sanitizer; **no** writes/sign; **GLM pin only**.
+- Constraints: UNTRUSTED tool envelope + sanitizer; **no** writes/sign; `z-ai/glm-5.3-flash` pin only.
+
+## Phase 2 M3 — GREEN (2026-10-29 10:16 PDT)
+- **M3 GREEN.** Evidence: `phase2/EVIDENCE_PHASE2_M3_MULTI_TOOL.md` (multi-step live **PASS**; digest-only; measurements.json untouched, 2 PS pins).
+- Tools in scope: `view_access_key_list`, bounded `view_state`, `block`, `gas_price` (plus prior `view_account`); multi-step chaining with hard caps; UNTRUSTED+sanitizer; no writes/sign; GLM only.
+- Soft polish **CLOSED** — see sections below (formal refusal stamp + compose merge stamp).
+
+## Phase 2 M3 — security skim OK (2026-10-29 ~10:17 PDT)
+- Privacy Security **accepted** M3 (`docs/reviews/SECURITY_REVIEW_PHASE2_M3.md`) — continue; soft residuals only (then addressed in soft polish below). Recomputed phase2 tests 30/30 at skim.
+
+## Soft polish — GLM live refusal FORMALLY STAMPED (2026-10-29 10:25 PDT)
+- Live verified-remote refusal suite on `z-ai/glm-5.3-flash`: **8/8 PASS**. Artifacts: `phase1-slm/outputs/eval_refusal_glm_live/`.
+- Soft review: `docs/reviews/SECURITY_REVIEW_GLM_LIVE_REFUSAL.md`. **Formal remote stamp:** `docs/signoffs/SECURITY_SIGNOFF_GLM_LIVE_REFUSAL.md` (production remote refusal path). Does **not** replace item (5) Qwen 7B; does **not** waive attestation/CM pins.
+
+## Soft polish — compose_file_sha256 MERGE APPROVED (2026-10-29 10:25 PDT)
+- Schema + verify **ACCEPTED** / **GREEN** (`docs/reviews/SECURITY_ACCEPTANCE_COMPOSE_FILE_SHA256.md`, `docs/reviews/SECURITY_REACK_COMPOSE_FILE_SHA256.md`).
+- GLM migration applied to **both** allowlist entries (`compose_file_sha256` = `904054f5…`). Evidence: `phase1.5-attestation/EVIDENCE_COMPOSE_FILE_SHA256_MIGRATION.md` (measurements sha256 `784e4d2e…`; phase1.5 112/112, phase2 38/38).
+- Privacy Security **MERGE APPROVED / STAMPED** (`docs/signoffs/SECURITY_SIGNOFF_COMPOSE_FILE_SHA256_MIGRATION.md`).
+
+## Soft polish — role:tool sanitizer PS-accepted (2026-10-29)
+- Privacy Security **accepted** soft sanitizer for wrapped `role:tool` UNTRUSTED envelopes (`docs/reviews/SECURITY_REVIEW_PHASE2_SOFT_SANITIZER.md`). Approach A: relax only base64_blob / hex_key_64+ inside valid envelopes; PEM/secrets still reject; `SanitizerRejected` → `AgentDenied`.
+
+## Soft polish — CLOSED (2026-10-29 10:25 PDT)
+- Lead soft-polish track **done**: (1) `docs/signoffs/SECURITY_SIGNOFF_GLM_LIVE_REFUSAL.md` formal remote stamp 8/8; (2) `docs/signoffs/SECURITY_SIGNOFF_COMPOSE_FILE_SHA256_MIGRATION.md` MERGE APPROVED; plus prior `role:tool` sanitizer PS-accepted.
+
+## Phase 2 M4 — opened (2026-10-29 11:53 PDT)
+- Lead/user **opened M4**: NEAR Intents / non-custodial action sketch.
+- Constraints: **no keys in the model**; **Privacy Security gate before any signing**.
+- Gate doc: `SECURITY_GATE_PHASE2_M4.md`. Design: `phase2/DESIGN_M4_NEAR_INTENTS.md`.
+
+## Phase 2 M4 G1 — ACCEPTED (2026-10-29)
+- Privacy Security **G1 ACCEPTED** (`SECURITY_REVIEW_PHASE2_M4_G1.md`). Lead OK.
+- Caps / hard rules locked: `MAX_DRAFT_AMOUNT` required (testnet **1000 NEAR** / mainnet **10 NEAR**); hash+summary to model = **HARD**; `simulate_intents` held to G3; secret-length ed25519 only (public keys OK); testnet-first env contract IDs.
+
+## Phase 2 M4 G2 — ACCEPTED / MERGE STAMPED (2026-10-29 ~12:02 PDT)
+- Privacy Security **G2 ACCEPTED / MERGE STAMPED** (`SECURITY_REVIEW_PHASE2_M4_G2.md`).
+- Evidence: `phase2/EVIDENCE_PHASE2_M4_G2_STUBS.md` — phase2 **55/55**; phase1.5 112/112; measurements untouched.
+- Propose-only stubs: `propose_chain_sig_request`; forbidden execute/sign/broadcast/simulate/MPC → NotImplemented → AgentDenied; model sees only `{draft_sha256, human_summary, unsigned, schema}` UNTRUSTED.
+- Soft residuals (non-blocking): `preview_derived_address` null until G3; unlabelled secp256k1 soft watch.
+- `phase2/.env.example` **filled** (Lead): `INTENTS_VERIFIER_ID=` empty (no official Intents testnet Verifier → fail-closed `env_unconfigured`); `MPC_CONTRACT_ID=v1.signer-prod.testnet`; `TOKEN_ALLOWLIST=wrap.testnet@24,usdc.fakes.testnet@6,usdt.fakes.testnet@6` (preview only, not Intents Verifier assets); `MAX_DRAFT_AMOUNT=1000`.
+- M4 propose sketch **GREEN** with fail-closed Verifier. Intents **settlement stays mainnet-only / G3**. **G3 (execute/sign) NOT opened.**
+- Push to salomon main **`34a2466`** landed (docs + G2 sketch). Soft polish landed on `79c0f99`.
+
+## Phase 2 M4 — .env.example filled (2026-10-29 ~12:03 PDT)
+- Lead filled `phase2/.env.example`: Verifier **empty** (no official Intents testnet); MPC `v1.signer-prod.testnet`; preview tokens wrap/usdc.fakes/usdt.fakes; `MAX_DRAFT_AMOUNT=1000`.
+- Propose sketch **GREEN** with fail-closed empty Verifier. Intents settlement remains **mainnet-only / G3**.
+- Push to salomon main **`34a2466`** landed.
+
+## Phase 2 M4 — .env.example RE-ACKED (2026-10-29)
+- Privacy Security **RE-ACKED** propose-only / G2 config IDs (`SECURITY_REACK_M4_ENV_EXAMPLE.md`): empty Verifier OK; MPC + preview tokens OK.
+- Soft residual then closed by `verifier_mainnet_on_testnet` (see below).
+
+## Phase 2 M4 soft polish — verifier_mainnet_on_testnet ACCEPT (2026-10-29 ~13:33 PDT)
+- Privacy Security **ACCEPT** (`SECURITY_REVIEW_PHASE2_M4_SOFT_VERIFIER_TESTNET.md`). Evidence: `phase2/EVIDENCE_PHASE2_M4_SOFT_VERIFIER_TESTNET.md`.
+- phase2 **59/59** (m4.propose 21/21). Rule: `NETWORK=testnet` ∧ mainnet-shaped Verifier ⇒ `DraftDenied("verifier_mainnet_on_testnet")`.
+- Env-reack soft residual **CLOSED**. **G3 still closed** (no execute/sign/simulate; measurements untouched).
+- Soft polish **pushed / done** on salomon main **`79c0f99`** (prior M4 G2 `34a2466`). Docs amend ready for Lead push.
+- 2026-10-29 Model: ask_local.py --json + source_care prompt path landed for Runtime LocalCompleter (spawn-per-ask; exits 0/2/3/4).

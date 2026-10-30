@@ -1,6 +1,6 @@
 # Salomon
 
-> **Salomon is a local-first AI agent for Solana Mobile — on-device by default, notes stay on your phone, Seed Vault signs; light Solana actions only when you approve.**
+> **Salomon is aiming to be a local-first AI agent for Solana Mobile — on-device by default; notes stay on-device; Seed Vault for signing; light Solana actions only when you approve.** (Mobile app / Seed Vault signing / chain actions not shipped yet.)
 
 ![visibility](https://img.shields.io/badge/repo-private-black)
 ![phase](https://img.shields.io/badge/Phase%203-M1%20in%20flight-orange)
@@ -27,7 +27,7 @@ Flow in words: notes go through the sanitizer into a local model; read-only tool
 
 ## Why Solana Mobile
 
-Seeker puts a real phone + Seed Vault in crypto-native hands. Salomon runs the model on-device so prompts and notes never leave by default; any chain action is explicit and signed in Seed Vault — not by the model. dApp Store is the distribution path that matches that audience.
+Seeker puts a real phone + Seed Vault in crypto-native hands. Salomon aims to run the model on-device so prompts and notes stay local by default; any chain action would be explicit and signed in Seed Vault — not by the model. dApp Store is the distribution path that matches that audience.
 
 > Status: this is the product direction. A Solana Mobile app, Seed Vault signing and Solana actions are **not shipped**; today's code is the privacy foundation (sanitizer, local ask path, refusal gates) plus the web app. See [STATUS.md](STATUS.md).
 
