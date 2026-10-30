@@ -1,6 +1,10 @@
 # Salomon
 
-> **Salomon is a local-first research agent for investigative journalists, private investigators, and researchers who handle sensitive sources or documents and cannot send that material to cloud AI.**
+[![License: MIT](https://img.shields.io/badge/License-MIT-black.svg)](LICENSE)
+![Status: early](https://img.shields.io/badge/status-early%20%2F%20pre--release-lightgrey)
+![Local-first](https://img.shields.io/badge/AI-local--first-black)
+
+> **A local-first research agent for investigative journalists, private investigators, and researchers who handle sensitive sources or documents and cannot send that material to cloud AI.**
 
 Documents and notes stay on-device by default. AI helps analyze without defaulting sensitive material to a cloud model. Fail closed when no local model is connected. Credentials never enter the model. Export and other consequential actions are propose-only with explicit user approval. Live source-identity masking is a design goal — not shipped yet. Remote only if the user opts in and the path is labeled — never a silent fallback.
 
@@ -100,7 +104,20 @@ Full map: [REPO_LAYOUT.md](docs/REPO_LAYOUT.md). Docs hub: [docs/README.md](docs
                            + acceptance · threat-models · reviews · signoffs · notes
 ```
 
-## Quickstart (phase1-slm)
+## Quickstart
+
+**Web companion (today's dogfood surface)**
+
+```bash
+cd apps/web
+cp .env.example .env.local   # keep local-only; never commit real keys
+npm install
+npm run dev                  # http://localhost:3000
+```
+
+With no local model configured, asks fail closed (or show a labeled `stub`). Remote mode is opt-in and always labeled.
+
+**Safety harness (phase1-slm)**
 
 ```bash
 cd phase1-slm
@@ -126,10 +143,12 @@ For the 7B gate, open `notebooks/eval_refusal_7b_colab.ipynb` in Colab, choose a
 
 ---
 
-## License
+## Contributing
 
-Copyright © 2026 **Anon Rothschild**. All rights reserved.
-
-This repository is **proprietary**. See [LICENSE](LICENSE) and [NOTICE](NOTICE). Contributions: [CONTRIBUTING.md](CONTRIBUTING.md).
+Issues and pull requests are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md). Please report security issues privately via GitHub Security Advisories ([SECURITY.md](SECURITY.md)).
 
 No secrets, real keys, user PII, or source material belong in this repository.
+
+## License
+
+[MIT](LICENSE) © 2026 Anon Rothschild. Third-party components and model weights keep their own licenses — see [NOTICE](NOTICE).

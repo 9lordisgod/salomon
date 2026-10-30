@@ -1,6 +1,6 @@
 # Security — Salomon
 
-Local-first research agent for investigative journalists, private investigators, and researchers handling sensitive sources and documents. Android app not shipped; source-ID masking (M2) and export approval UX (M3) not shipped. Owners: **Privacy & Safety** (reviews, acceptance), **Lead Architect** (decisions).
+Local-first research agent for investigative journalists, private investigators, and researchers handling sensitive sources and documents. Android app not shipped; source-ID masking (M2) and export approval UX (M3) not shipped. 
 
 ## Hard rules (all phases)
 1. **No secrets in the model.** No private keys, seed phrases, API keys, passwords, or signing material in weights, prompts, logs, datasets, or adapters. The model *proposes*; anything privileged runs outside it, behind policy.
@@ -19,7 +19,7 @@ Local-first research agent for investigative journalists, private investigators,
 ## Agent runtime (Phase 2) — safe tools
 - Sanitizer (`privacy/sanitizer.py`, TS parity `phase2/src/sanitize.ts`) runs before **every** remote completion, including `role:tool` messages.
 - Tools are read-only and allowlisted; write/sign tool names are refused (`tool_not_permitted`). Results are wrapped as untrusted, size-capped, step-capped (default 8, hard 12).
-- Verified-remote: allowlist miss ⇒ re-verify ×3 then DENY; measurement missing / bind fail ⇒ immediate DENY. New pins only via Privacy & Safety.
+- Verified-remote: allowlist miss ⇒ re-verify ×3 then DENY; measurement missing / bind fail ⇒ immediate DENY. New pins require a security review.
 - Policy gate pattern (`privacy/policy_spend.py`): any future privileged action = proposal → schema validate → simulate → policy (allowlists, caps, rate limits) → human approval → executor. No model→execute path.
 
 ## Verified remote / confidential compute (optional, future)
@@ -34,4 +34,16 @@ Local-first research agent for investigative journalists, private investigators,
 - Run: `python3 privacy/test_sanitizer.py && python3 privacy/test_policy_spend.py`
 
 ## Review mandate
-Privacy & Safety reviews any change touching training data, inference (local or remote), tools, attestation, policy, secret handling, or logging. Findings go to the Lead Architect as short actionable notes.
+Any change touching training data, inference (local or remote), tools, attestation, policy, secret handling, or logging needs a security-focused review before merge.
+
+## Reporting a vulnerability
+
+Please **do not open a public issue** for security problems.
+
+Report privately through **GitHub Security Advisories**: go to the repository's
+**Security** tab → **Report a vulnerability** (private vulnerability reporting).
+Include steps to reproduce, affected files/commits, and impact. We aim to
+acknowledge reports within a few days.
+
+Never include real secrets, keys, seed phrases, or source material in a report —
+use obviously fake fixtures.
