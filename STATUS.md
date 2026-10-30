@@ -1,16 +1,21 @@
 # STATUS — Thu Oct 29, 2026 (America/Vancouver, PDT) — Phase 3 M1 in flight
 
-> **Niche (pivot ~17:41 PDT):** Salomon is a local-first AI agent for Solana Mobile — on-device by default, notes stay on your phone, Seed Vault signs; light Solana actions only when you approve. Niche: `docs/notes/PRODUCT_NICHE.md`. Journalist / source-protection framing below is secondary/historical.
+> **Niche (pivot ~18:46 PDT):** Salomon is aiming to be a local-first AI agent for Android — private research / personal agent on your phone, on-device by default. Niche: `docs/notes/PRODUCT_NICHE.md`. Solana Mobile / Seeker optional/secondary; journalist / source-protection framing secondary/historical.
+
+> **Prior niche (Solana Mobile, ~17:41–18:40 PDT, tips `b3b4b43`/`f0e8fa1`):** local-first AI agent for Solana Mobile (direction; app / Seed Vault / chain actions not shipped).
 
 > **Prior niche (historical, main `f9d75fd`):** Salomon is a local research agent for journalists and investigators that protects sources. Crypto/NEAR track archived: `docs/archive/near/` · `docs/archive/crypto-near-track.md`.
 
+
 **Product (historical, pre-pivot):** Salomon: *A local research agent for journalists and investigators that protects sources.* Who: investigative reporters, newsroom researchers, fact-checkers, independent investigators, NGO researchers. Job: read, summarize and cross-reference sensitive material on the reporter's own machine. Promise (target across M1–M3; M1 = local ask only): sources, contacts and identifying details never leave the device, never get echoed into output, and never reach a remote model without verification. Product niche locked: `docs/notes/PRODUCT_NICHE.md` (main `f9d75fd`). Crypto/NEAR track archived: `docs/archive/near/` · `docs/archive/crypto-near-track.md`.
 
-**Phase:** **3 (Solana Mobile MVP; journalist research secondary) — M1 IN FLIGHT.** Phase 1 gate done (7B refusal 8/8). Dataset **PARKED** at 362 seed rows. Phase 1.5 (1)–(5) SIGNED. Phase 2 M1–M3 **GREEN**. M4 propose-only pattern (G1+G2 ACCEPTED, salomon `79c0f99`) reused for approvals; G3 never opened.
+**Phase:** **3 (Android MVP; Solana Mobile secondary/parked; journalist historical) — M1 IN FLIGHT.** Phase 1 gate done (7B refusal 8/8). Dataset **PARKED** at 362 seed rows. Phase 1.5 (1)–(5) SIGNED. Phase 2 M1–M3 **GREEN**. M4 propose-only pattern (G1+G2 ACCEPTED, salomon `79c0f99`) reused for approvals; G3 never opened.
 - **M0 DONE** — Scope lock: Lead approved the Phase 3 journalist MVP brief (`docs/notes/PRODUCT_NICHE.md`, Product brief).
-- **M1 IN FLIGHT** — Local run path: offline/local `ask` end-to-end (fail closed if model missing). **Primary surface = Next.js web + API** (`POST /api/ask`); CLI secondary. Runbook: `docs/notes/PHASE3_MVP_RUNBOOK.md`.
+- **M1 IN FLIGHT** — Local run path: offline/local `ask` end-to-end (fail closed if model missing). **Goal surface = Android app (not shipped).** **Today = Next.js web + API** (`POST /api/ask`); CLI secondary. Runbook: `docs/notes/PHASE3_MVP_RUNBOOK.md`.
 
-**Latest (~17:48 PDT):** PS S1 soft-deny fix — README hero rewritten to goal/direction tense (Seed Vault / phone notes / Solana actions not claimed shipped). Framing A “README hero held” cleared (hero opened for Solana, now goal-tense). Phase header → Solana Mobile MVP (journalist secondary). Base tip `b3b4b43`. Mobile app / Seed Vault signing / chain actions not shipped; M1 not green; M2 eng NOT OPEN; hybrid not shipped. Residual: apps/web = salomon-app confirm.
+**Latest (~18:46 PDT):** Pivot locked: Salomon = local-first Android AI (Play/APK primary, goal tense). Solana Mobile optional/secondary. Core unchanged — local default, fail closed, no silent remote, credentials out of the model. README hero + Why Android + `docs/notes/PRODUCT_NICHE.md` + STATUS/ROADMAP updated. Android app / Play listing / on-device phone inference **not shipped**; M1 not green; M2 eng NOT OPEN; Seed Vault / chain / hybrid not shipped. Residual: apps/web = salomon-app confirm.
+
+**Prior (~17:48 PDT):** PS S1 soft-deny fix — README hero rewritten to goal/direction tense (Seed Vault / phone notes / Solana actions not claimed shipped). Framing A “README hero held” cleared (hero opened for Solana, now goal-tense). Phase header → Solana Mobile MVP (journalist secondary). Base tip `b3b4b43`. Mobile app / Seed Vault signing / chain actions not shipped; M1 not green; M2 eng NOT OPEN; hybrid not shipped. Residual: apps/web = salomon-app confirm.
 
 **Prior (~17:41 PDT):** Pivot locked: Salomon = local-first Solana Mobile AI (Seeker primary; web secondary). Core unchanged — local default, fail closed, no silent remote, credentials out of the model, Seed Vault for signing. Base tip `c70c18a`; README hero + Why Solana Mobile + `docs/notes/PRODUCT_NICHE.md` updated (present-tense hero later soft-denied). No Solana Mobile app, Seed Vault signing or chain actions shipped; M1 not green; M2 eng NOT OPEN; hybrid not shipped. Residual: apps/web = salomon-app confirm.
 
@@ -27,10 +32,10 @@
 
 
 ### Framing A LOCKED (yoxi, 2026-10-29 ~16:04 PDT) — STATUS fold (Docs)
-> Secondary/historical since the ~17:41 PDT Solana Mobile pivot; engineering honesty notes below still apply.
+> Secondary/historical since Solana Mobile (~17:41) and Android (~18:46) pivots; engineering honesty notes below still apply.
 - **Framing LOCKED:** source-protected research agent — local = privacy floor + default; optional verified remote only after **mask→sanitize→attest→complete**; no auto-fallback; no cloud-by-default.
 - Design note: `docs/notes/FRAMING_SOURCE_PROTECTED_DRAFT.md`. Trust boundaries: `docs/notes/HYBRID_TRUST_BOUNDARIES.md`. PS skim **SOFT CLEAR**: `docs/reviews/SECURITY_SOFT_SKIM_FRAMING_SOURCE_PROTECTED.md` (one-liner soft-edit: after mask, sanitization, and attestation).
-- **README hero:** opened for Solana Mobile pivot (`b3b4b43`); PS S1 soft-deny → goal/direction tense (not present-tense shipped claims). Historical journalist one-liner (Product+PS Framing A): `Source-protected research agent for journalists — local by default; heavier work only on verified remote after mask, sanitization, and attestation.` Tips **`5be6454`** (hybrid/framing) · **`7301381`** (claims fold) · Solana tip **`b3b4b43`**.
+- **README hero:** Android primary (goal tense; app / Play / on-device phone inference not shipped). Tips pending this push; prior Solana tip `f0e8fa1` (PS S1 SOFT CLEAR).
 - Sequence: **M1-live → M2 mask → hybrid spike later.** Crypto/NEAR track archived. **Do not claim hybrid shipped.** Demo gateway ≠ verified remote. M2 eng still NOT OPEN; M1 not green.
 
 ### Model Engineer niche reflection (2026-10-29 ~15:58 PDT)
@@ -262,3 +267,5 @@ docs/notes/PHASE1_SCRIPT_FIXES.md items 1–3 are implemented. Smoke/dry-run sta
 - Env-reack soft residual **CLOSED**. **G3 still closed** (no execute/sign/simulate; measurements untouched).
 - Soft polish **pushed / done** on salomon main **`79c0f99`** (prior M4 G2 `34a2466`). Docs amend ready for Lead push.
 - 2026-10-29 Model: ask_local.py --json + source_care prompt path landed for Runtime LocalCompleter (spawn-per-ask; exits 0/2/3/4).
+
+

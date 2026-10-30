@@ -1,13 +1,13 @@
 # Roadmap
-> **Product niche (locked 2026-10-29):** a local research agent for journalists and investigators that protects sources. See `docs/notes/PRODUCT_NICHE.md`.
+> **Product niche (locked 2026-10-29 ~18:46 PDT):** local-first AI agent for Android (Play/APK primary; app not shipped). Solana Mobile optional/secondary; journalist framing historical. See `docs/notes/PRODUCT_NICHE.md`.
 
-**Current: Phase 3 — journalist research MVP · M1 IN FLIGHT** · Phase 2 M1–M3 GREEN · Phase 1 gate done · dataset PARKED · Phase 1.5 (1)–(5) SIGNED · Niche locked on main `f9d75fd`
+**Current: Phase 3 — Android MVP · M1 IN FLIGHT** · Phase 2 M1–M3 GREEN · Phase 1 gate done · dataset PARKED · Phase 1.5 (1)–(5) SIGNED · Niche locked Android primary (Product+Lead ~18:46 PDT)
 
 ```mermaid
 flowchart LR
   P1[Phase 1<br/>Small model + refusal<br/>gate done · dataset parked] --> G{{Phase 1.5<br/>privacy gate 1–5 ✅}}
   G --> P2[Phase 2<br/>Agent loop · tools · sanitizer<br/>M1–M3 GREEN]
-  P2 --> P3[Phase 3<br/>Journalist research MVP<br/>M1 IN FLIGHT]
+  P2 --> P3[Phase 3<br/>Android MVP<br/>M1 IN FLIGHT]
   P3 --> P4[Phase 4<br/>Newsroom hardening]
   P2 -.archived.-> X[Prior crypto/NEAR<br/>archived]
 ```
@@ -18,7 +18,7 @@ flowchart LR
 - [x] QLoRA fine-tune script, eval harness, local inference CLI
 - [ ] Expand dataset to 2–5k curated examples — **PARKED**; on unpark = **privacy AI** (privacy / refusal / safe personal AI → journalism sources/PII/secrets), not crypto SLM (Lead pivot 2026-10-29 ~15:16 PDT). Seed 362. See `docs/notes/SLM_PIVOT_PRIVACY_FIRST.md`
 - [ ] First adapter trained + baseline vs. tuned eval report (0.5B CPU report landed 18:20 PDT, no gain; 7B GPU run pending)
-- [ ] GGUF/llama.cpp quantized export for local use — **landed:** pin (`salomon-qwen25-7b-instruct-Q4_K_M.gguf`, bartowski single-file) + fetch/run scripts (`docs/notes/PHASE3_M1_LOCAL_GGUF.md`). **Not landed:** weights fetched, own-adapter export, Runtime smoke. Unchecked; no live GGUF claim until Runtime smoke green.
+- [ ] GGUF/llama.cpp quantized export for local use — **landed:** pin (`salomon-qwen25-7b-instruct-Q4_K_M.gguf`, bartowski single-file) + fetch/run scripts (`docs/notes/PHASE3_M1_LOCAL_GGUF.md`). **Weights fetched + lock-verified (7B + 3B mobile); Runtime live smoke PASS 5/5 both, offline via netns (2026-10-29 ~18:15 PDT, `phase3-runtime/EVIDENCE_PHASE3_M1_LIVE_GGUF.md`).** Not landed: own-adapter export.
 
 ## Phase 1.5 — Privacy merge gate (Lead decision, Oct 28 2026)
 > Reframed 2026-10-29: this is a privacy merge gate for local-first + optional verified remote compute, not a product dependency on any specific cloud provider. Sign-offs below are unchanged.
@@ -49,7 +49,7 @@ Owners: Privacy Security owns gate acceptance and reviews every Phase 2 PR touch
 > **M1 IN FLIGHT** — Local run path: offline/local `ask` end-to-end (fail closed if model missing). **Primary surface = Next.js web app + API** (`POST /api/ask` → `askLocal`); **CLI secondary**. Runbook: `docs/notes/PHASE3_MVP_RUNBOOK.md`. Web stack: `docs/notes/PHASE3_WEB_STACK.md`.
 >
 > Later: **M2** ingest + source-identity masking · **M3** propose-only save/export + approval UX · **M4** dogfood cut. Dataset **PARKED**. Do not claim M2/M3 as shipped.
-- [ ] **M1** Offline/local `ask` on Next.js + API (primary); CLI optional/secondary; fail closed if model missing
+- [ ] **M1** Offline/local `ask` on Next.js + API (primary); CLI optional/secondary; fail closed if model missing — **live GGUF smoke PASS (runtime + `/api/ask`)**; GREEN pending PS soft-skim
 - [ ] **M2** Local document ingest + source-identity masking before the model
 - [ ] **M3** Propose-only save/export with explicit approval; credentials outside the model
 - [ ] Untrusted-input handling for leaked documents, web pages and emails (injection-safe tool output — proven in Phase 2)

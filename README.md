@@ -1,13 +1,15 @@
 # Salomon
 
-> **Salomon is aiming to be a local-first AI agent for Solana Mobile — on-device by default; notes stay on-device; Seed Vault for signing; light Solana actions only when you approve.** (Mobile app / Seed Vault signing / chain actions not shipped yet.)
+> **Salomon is aiming to be a local-first AI agent for Android — a private research / personal agent on your phone, on-device by default. Web + CLI are companions. Crypto/on-chain optional at most.** (Android app / Play listing / on-device phone inference not shipped yet.)
 
 ![visibility](https://img.shields.io/badge/repo-private-black)
 ![phase](https://img.shields.io/badge/Phase%203-M1%20in%20flight-orange)
 ![refusal](https://img.shields.io/badge/refusal%20eval%207B-8%2F8%20signed%20off-brightgreen) ![gate](https://img.shields.io/badge/Phase%201.5%20privacy%20gate-SIGNED-green) ![p2](https://img.shields.io/badge/Phase%202-M1%E2%80%93M3%20green-brightgreen)
 
+On-device by default. Optional remote only if the user opts in and the path is labeled — never silent fallback. Crypto / Solana Mobile features (if any) are optional add-ons, not the product promise.
+
 1. **Local-first, fail closed (goal).** The model is designed to run on-device by default and fail closed when no local model is connected. Phase 3 M1 (local `ask`) is in flight; the current surface is a Next.js web app that may run in a labeled `DEMO · REMOTE` / `DEMO · stub` mode. Remote and on-chain paths are opt-in and labeled — never silent, never default.
-2. **Secrets are refused, not stored.** The model won’t echo keys or sensitive material, and it never holds credentials or seed material. Signatures are meant to go through Seed Vault, not the model.
+2. **Secrets are refused, not stored.** The model won’t echo keys or sensitive material, and it never holds credentials or seed material. Anything that would sign, send or change something stays outside the model.
 3. **You decide every consequential step.** The agent proposes; policy and you approve before anything is sent, published, signed or changed.
 
 ```mermaid
@@ -25,15 +27,15 @@ Flow in words: notes go through the sanitizer into a local model; read-only tool
 
 ---
 
-## Why Solana Mobile
+## Why Android
 
-Seeker puts a real phone + Seed Vault in crypto-native hands. Salomon aims to run the model on-device so prompts and notes stay local by default; any chain action would be explicit and signed in Seed Vault — not by the model. dApp Store is the distribution path that matches that audience.
+Standard Android (Google Play or APK) is the primary path so a private agent can live on the phone people already use. Web and CLI stay secondary companions. Solana Mobile / Seeker is not the hero channel; crypto features, if any, stay optional.
 
-> Status: this is the product direction. A Solana Mobile app, Seed Vault signing and Solana actions are **not shipped**; today's code is the privacy foundation (sanitizer, local ask path, refusal gates) plus the web app. See [STATUS.md](STATUS.md).
+> Status: this is the product direction. An Android app (Play / APK), Play listing, and on-device phone inference are **not shipped**; today's code is the privacy foundation (sanitizer, local ask path, refusal gates) plus the web app. See [STATUS.md](STATUS.md).
 
 ## Who it's for
 
-Primary: crypto-native users on Solana Mobile (Seeker / dApp Store) who want on-device AI, notes kept local, and keys never in the model. Secondary / historical: source-protection research framing (journalists, investigators) informed the early privacy work; it is not the hero. Niche: [docs/notes/PRODUCT_NICHE.md](docs/notes/PRODUCT_NICHE.md).
+Primary: users who want private local research / a personal agent on Android — not a Seeker-only or crypto-native product. Secondary / historical: Solana Mobile framing (brief) and journalist / source-protection research framing; neither is the hero. Niche: [docs/notes/PRODUCT_NICHE.md](docs/notes/PRODUCT_NICHE.md).
 
 ## How Salomon handles it
 
@@ -45,7 +47,7 @@ Primary: crypto-native users on Solana Mobile (Seeker / dApp Store) who want on-
 - **Plain-language refusals.** When Salomon refuses or strips something, it says why.
 - **Optional confidential compute (future).** If a bigger model is needed, remote calls go only to an environment that passes a fail-closed verification check. No proof means no call. No provider is named or required.
 
-**Salomon is not:** a cloud service, a wallet or DeFi/auto-trading agent, or an agent that acts or signs without your approval.
+**Salomon is not:** a cloud service, a Seeker-only or crypto-native product, a wallet or DeFi/auto-trading agent, or an agent that acts or signs without your approval.
 
 ## Where we are
 
@@ -68,7 +70,7 @@ flowchart LR
 - **Phase 1 (gate done).** Qwen2.5-7B-Instruct + QLoRA harness. The refusal eval passes **8/8** on 7B (`docs/signoffs/SECURITY_SIGNOFF_REFUSAL_7B.md`), and the R3 near-echo delta is cleared. Dataset expansion is **parked** at 362 seed rows. When it unparks, the data gets refreshed toward general privacy (PII, secrets, keys).
 - **Phase 1.5 (signed).** Threat model, fail-closed verified-remote client, sanitizer, policy stub and refusal eval: items (1)–(5) are signed off in `docs/signoffs/`.
 - **Phase 2 (M1–M3 green).** Agent loop with hard caps, TS sanitizer on `role:tool` output, multi-step read-only tool chaining, and a reviewed propose-only pattern. Execute/sign was never opened. The safe agent-loop pattern (caps, sanitizer, propose-only) is green; research web dogfood is **Phase 3 M1 in flight** (local ask path). Ingest/mask (M2) and propose-save (M3) are **not shipped**.
-- **Phase 3 (M1 in flight, not green).** Primary surface: Next.js web app + `POST /api/ask`; CLI secondary. M1 is not green until desk → `/api/ask` + offline smoke pass. A Q4_K_M GGUF is pinned and scripts exist, but there is **no live local GGUF** until Runtime smoke is green.
+- **Phase 3 (M1 in flight, not green).** **Goal surface:** Android app (not shipped). **Today:** Next.js web app + `POST /api/ask`; CLI secondary. M1 is not green until desk → `/api/ask` + offline smoke pass. A Q4_K_M GGUF is pinned and scripts exist, but there is **no live local GGUF** / on-device phone inference until that lands.
 - **Archived prior work:** an earlier crypto/NEAR framing. See [crypto-near-track](docs/archive/crypto-near-track.md) · [near/](docs/archive/near/).
 
 Status of record: [STATUS.md](STATUS.md) · plan: [ROADMAP.md](ROADMAP.md) · design: [ARCHITECTURE.md](ARCHITECTURE.md).
@@ -113,3 +115,5 @@ For the 7B gate, open `notebooks/eval_refusal_7b_colab.ipynb` in Colab, choose a
 ---
 
 🔒 This repo stays **private** until the architecture and security model are stable. It contains no secrets, real keys, user PII or source material.
+
+
