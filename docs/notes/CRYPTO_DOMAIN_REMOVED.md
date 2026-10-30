@@ -18,3 +18,8 @@ Ordered by Lead (yoxi). Model Engineer slice; Data Curator owns data replacement
 
 ## Invalidation
 **7B 8/8 (Phase 1.5 item 5) signoff INVALIDATED for product claims (2026-10-29, Lead ACK): it was earned on a crypto-tuned system prompt + crypto-heavy 362-row seed. Historical evidence only; refusal is NOT GREEN until re-run on the privacy rebuild.**
+
+## Slice 1 make data (2026-10-29 19:05 PDT)
+- seed_prompts.jsonl regenerated: **165** rows (help 105 + refusal 60).
+- secret_scan / dataset_check: PASS.
+- Live evals not swapped; item (5) remains INVALIDATED.
