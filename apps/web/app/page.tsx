@@ -7,17 +7,9 @@ import { usePreferRemote } from '@/lib/preferRemote';
 
 type Msg = { id: string; role: 'user' | 'assistant'; text: string };
 
-const SAMPLE_NOTES = `Interview log — municipal water contract (draft, unverified)
-Mar 3: Call with source codename Heron (whistleblower, procurement office). Says bid for Riverside pumping contract was rewritten after deadline.
-Mar 5: Heron emailed scan of bid sheet from heron.tips@protonmail.com. Phone on file: 604-555-0182.
-Mar 9: Spoke to Maria Lopez (former council aide). Confirms deputy director Daniel Reyes met the winning bidder twice in February. On background only.
-Mar 12: Public records: contract awarded Feb 28 for $4.2M, 18% above runner-up. Council minutes show no discussion.
-Open: second source for the rewrite claim; Reyes has not responded to request for comment (@dreyes_city).`;
-
 const SUGGESTIONS = [
-  'Summarize the timeline and flag every claim that still needs a second source.',
-  'Draft three neutral questions for the right-of-reply request.',
-  'What public records could independently corroborate the bid rewrite?',
+  'Summarize what I know so far and flag gaps that need a second source.',
+  'Draft three neutral right-of-reply questions.',
 ];
 
 export default function Research() {
@@ -35,9 +27,12 @@ export default function Research() {
   const [notes, setNotes] = useNotes();
   const [proposals, setProposals] = useProposals();
   const [attach, setAttach] = useState(true);
+  const [notesOpen, setNotesOpen] = useState(false);
   const busy = status === 'submitted' || status === 'streaming';
   const end = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
   useEffect(() => { end.current?.scrollIntoView({ behavior: 'smooth', block: 'end' }); }, [messages]);
+  useEffect(() => { inputRef.current?.focus(); }, []);
 
   const ask = (q: string) => {
     if (!q.trim() || busy) return;
@@ -94,22 +89,80 @@ export default function Research() {
   const propose = (content: string, action: 'save' | 'export') =>
     setProposals([{ id: crypto.randomUUID(), action, title: content.slice(0, 60), content, status: 'pending', createdAt: new Date().toISOString() }, ...proposals]);
   const textOf = (m: Msg) => m.text;
+  const overCap = attach && notes && (input.length + notes.length + 40) > 8000;
+
+  const composer = (
+    <form onSubmit={(e) => { e.preventDefault(); ask(input); }} className="rounded-2xl border border-white/10 bg-[#16171a] p-2 shadow-lg shadow-black/20 focus-within:border-white/20">
+      <textarea
+        ref={inputRef}
+        value={input}
+        rows={messages.length === 0 ? 3 : 2}
+        onChange={(e) => setInput(e.target.value)}
+        onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); ask(input); } }}
+        placeholder="Ask anything about your reporting…"
+        className="block max-h-48 w-full resize-none bg-transparent px-2 py-2 text-[15px] text-zinc-100 outline-none placeholder:text-zinc-600"
+      />
+      {notesOpen && (
+        <div className="mx-1 mb-2 rounded-xl border border-white/[0.06] bg-black/20 p-2">
+          <textarea
+            value={notes}
+            onChange={(e) => setNotes(e.target.value.slice(0, 20000))}
+            rows={4}
+            placeholder="Paste interview notes here (masked before send)…"
+            className="block w-full resize-none bg-transparent px-1 py-1 font-mono text-[12px] text-zinc-300 outline-none placeholder:text-zinc-600"
+          />
+          <label className="mt-1 flex items-center gap-1.5 px-1 text-[11px] text-zinc-500">
+            <input type="checkbox" checked={attach} onChange={(e) => setAttach(e.target.checked)} className="accent-zinc-400" />
+            Attach on send ({notes.length} chars){overCap ? <span className="text-amber-400/80"> · over 8k — trim</span> : null}
+          </label>
+        </div>
+      )}
+      <div className="flex items-center justify-between gap-2 px-1">
+        <div className="flex flex-wrap items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setNotesOpen((o) => !o)}
+            className={`rounded-full px-2.5 py-1 text-[11px] ${notesOpen || (attach && notes) ? 'bg-white/[0.06] text-zinc-300' : 'text-zinc-500 hover:text-zinc-300'}`}
+          >
+            Notes{notes ? ` · ${notes.length}` : ''}
+          </button>
+          <label
+            title={mode?.gatewayAvailable ? 'Sends masked text to a cloud model. Not local.' : 'No gateway key configured'}
+            className={`flex items-center gap-1.5 text-[11px] ${remote ? 'text-sky-400/80' : 'text-zinc-500'} ${mode?.gatewayAvailable ? '' : 'opacity-40'}`}
+          >
+            <input type="checkbox" disabled={!mode?.gatewayAvailable || busy} checked={remote} onChange={(e) => setPreferRemote(e.target.checked)} className="accent-sky-500" />
+            REMOTE
+          </label>
+          {remote && <span className="text-[11px] text-sky-400/70">not local</span>}
+        </div>
+        {busy ? (
+          <button type="button" onClick={() => stop()} className="rounded-full border border-white/15 px-3 py-1 text-[12px] text-zinc-200">Stop</button>
+        ) : (
+          <button disabled={!input.trim()} className="rounded-full bg-zinc-100 px-3.5 py-1 text-[12px] font-medium text-zinc-900 disabled:opacity-30">Send</button>
+        )}
+      </div>
+    </form>
+  );
 
   return (
-    <div className="relative mx-auto flex min-h-[calc(100vh-9rem)] max-w-3xl flex-col">
-      <div className="flex-1 pb-44">
+    <div className="relative mx-auto flex min-h-[calc(100vh-7rem)] max-w-3xl flex-col">
+      <div className={`flex-1 ${messages.length === 0 ? 'flex flex-col justify-center pb-8' : 'pb-44'}`}>
         {messages.length === 0 ? (
-          <div className="flex flex-col items-center pt-[12vh] text-center">
+          <div className="flex flex-col items-center text-center">
             <h1 className="text-2xl font-medium tracking-tight text-zinc-100">What are you reporting on?</h1>
-            <p className="mt-2 max-w-md text-[13px] leading-relaxed text-zinc-500">
-              Names, emails, phones and handles are masked in your browser before sending — a demo heuristic, not a guarantee.
-            </p>
-            {!notes && (
-              <button onClick={() => setNotes(SAMPLE_NOTES)} className="mt-6 rounded-full border border-white/10 px-3.5 py-1.5 text-[13px] text-zinc-300 hover:bg-white/5">Load sample interview notes</button>
-            )}
-            <div className="mt-8 grid w-full gap-2 sm:grid-cols-2">
-              {SUGGESTIONS.slice(0, 2).map((s) => (
-                <button key={s} onClick={() => ask(s)} disabled={busy} className="rounded-xl border border-white/[0.07] px-4 py-3 text-left text-[13px] leading-snug text-zinc-400 hover:bg-white/[0.03] hover:text-zinc-200">{s}</button>
+            <p className="mt-2 max-w-sm text-[13px] text-zinc-500">Type a question. Answers stay local unless you turn on REMOTE.</p>
+            <div className="mt-8 w-full max-w-xl text-left">{composer}</div>
+            <div className="mt-4 flex w-full max-w-xl flex-wrap justify-center gap-2">
+              {SUGGESTIONS.map((s) => (
+                <button
+                  key={s}
+                  type="button"
+                  onClick={() => ask(s)}
+                  disabled={busy}
+                  className="rounded-full border border-white/[0.07] px-3 py-1.5 text-left text-[12px] text-zinc-500 hover:bg-white/[0.03] hover:text-zinc-300"
+                >
+                  {s}
+                </button>
               ))}
             </div>
           </div>
@@ -119,7 +172,7 @@ export default function Research() {
               const text = textOf(m);
               const user = m.role === 'user';
               const shown = user ? text.split('\n\n--- Notes (untrusted data) ---')[0] : text;
-              const refused = !user && /^(Refused|I won't)/.test(text);
+              const refused = !user && /^(Refused|I won't|Too long)/.test(text);
               return user ? (
                 <div key={m.id} className="flex flex-col items-end">
                   <div className="max-w-[85%] whitespace-pre-wrap rounded-2xl bg-white/[0.06] px-4 py-2.5 text-[15px] leading-relaxed text-zinc-100">{shown}</div>
@@ -131,57 +184,25 @@ export default function Research() {
                   <div className={`whitespace-pre-wrap text-[15px] leading-7 ${refused ? 'text-amber-300/90' : 'text-zinc-200'}`}>{shown}</div>
                   {!busy && !refused && text && (
                     <div className="mt-2 flex gap-3 text-[12px] text-zinc-600">
-                      <button onClick={() => propose(text, 'save')} className="hover:text-zinc-300">Propose save</button>
-                      <button onClick={() => propose(text, 'export')} className="hover:text-zinc-300">Propose export</button>
+                      <button type="button" onClick={() => propose(text, 'save')} className="hover:text-zinc-300">Propose save</button>
+                      <button type="button" onClick={() => propose(text, 'export')} className="hover:text-zinc-300">Propose export</button>
                     </div>
                   )}
                 </article>
               );
             })}
-            {status === 'submitted' && <p className="animate-pulse text-[13px] text-zinc-500">Reading masked notes…</p>}
+            {status === 'submitted' && <p className="animate-pulse text-[13px] text-zinc-500">Thinking…</p>}
             {error && <p className="text-[13px] text-red-400/90">Request failed. Nothing was saved or sent. {error.message}</p>}
             <div ref={end} />
           </div>
         )}
-
-        <details className="mt-12 text-[12px] text-zinc-500">
-          <summary className="cursor-pointer select-none text-zinc-600 hover:text-zinc-400">Protections · mask map ({map.length}) · {proposals.filter((p) => p.status === 'pending').length} pending approvals</summary>
-          <div className="mt-3 grid gap-4 rounded-xl border border-white/[0.07] p-4 sm:grid-cols-2">
-            <ul className="space-y-1">
-              <li>✓ Credentials stripped server-side</li>
-              <li>✓ No keys in browser or model context</li>
-              <li>◌ Masking: demo heuristic, not a guarantee (M2)</li>
-              <li>◌ Propose → approve gate (M3 placeholder)</li>
-            </ul>
-            <ul className="space-y-1 font-mono text-[11px]">
-              {map.length === 0 ? <li>Nothing masked yet</li> : map.slice(0, 10).map((e) => (
-                <li key={e.token} className="flex justify-between"><span className="text-zinc-300">{e.token}</span><span>{e.kind}</span></li>
-              ))}
-            </ul>
-          </div>
-        </details>
       </div>
 
-      <div className="sticky bottom-0 -mx-2 bg-gradient-to-t from-[#0e0f11] via-[#0e0f11] to-transparent px-2 pb-4 pt-6">
-        <form onSubmit={(e) => { e.preventDefault(); ask(input); }} className="rounded-2xl border border-white/10 bg-[#16171a] p-2 focus-within:border-white/20">
-          <textarea value={input} rows={2} onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); ask(input); } }}
-            placeholder="Ask about your reporting…" className="block max-h-48 w-full resize-none bg-transparent px-2 py-1.5 text-[15px] text-zinc-100 outline-none placeholder:text-zinc-600" />
-          <div className="flex items-center justify-between px-1">
-            <div className="flex items-center gap-3">
-            <label className="flex items-center gap-1.5 text-[11px] text-zinc-500">
-              <input type="checkbox" checked={attach} onChange={(e) => setAttach(e.target.checked)} className="accent-zinc-400" /> Attach notes ({notes.length} chars, masked){attach && notes && (input.length + notes.length + 40) > 8000 ? <span className="text-amber-400/80"> · over 8k — trim before send</span> : null}
-            </label>
-            <label title={mode?.gatewayAvailable ? 'Sends masked text to a cloud model. Not local.' : 'No gateway key configured'} className={`flex items-center gap-1.5 text-[11px] ${remote ? 'text-sky-400/80' : 'text-zinc-500'} ${mode?.gatewayAvailable ? '' : 'opacity-40'}`}>
-              <input type="checkbox" disabled={!mode?.gatewayAvailable || busy} checked={remote} onChange={(e) => setPreferRemote(e.target.checked)} className="accent-sky-500" /> REMOTE · cloud (labeled)
-            </label>
-            {remote && <span className="text-[11px] text-sky-400/70">not local — masked text leaves this machine</span>}
-            </div>
-            {busy ? <button type="button" onClick={() => stop()} className="rounded-full border border-white/15 px-3 py-1 text-[12px] text-zinc-200">Stop</button>
-              : <button disabled={!input.trim()} className="rounded-full bg-zinc-100 px-3.5 py-1 text-[12px] font-medium text-zinc-900 disabled:opacity-30">Send</button>}
-          </div>
-        </form>
-      </div>
+      {messages.length > 0 && (
+        <div className="sticky bottom-0 -mx-2 bg-gradient-to-t from-[#0e0f11] via-[#0e0f11] to-transparent px-2 pb-4 pt-6">
+          {composer}
+        </div>
+      )}
     </div>
   );
 }
