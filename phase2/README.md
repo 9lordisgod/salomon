@@ -23,4 +23,4 @@ npm run typecheck
 Layout: `src/model.ts` (model pin guard), `src/sanitize.ts`, `src/agentLoop.ts`, `src/tools/` (`guard.ts` allowlist guards, `untrusted.ts` envelopes), `src/localModel.ts`, `test/`, `evidence/`.
 
 ## Archived (history only)
-Earlier demo-domain tooling is archived under [`docs/archive/`](../docs/archive/) and is not product scope. Keep the **agent loop, sanitizer, caps, and propose-only approval pattern**. Next research tool domains are a Lead call (Phase 3 journalist MVP).
+Earlier demo-domain tooling was removed (see git history / [`CRYPTO_DOMAIN_REMOVED.md`](../docs/notes/CRYPTO_DOMAIN_REMOVED.md)) and is not product scope. Keep the **agent loop, sanitizer, caps, and propose-only approval pattern**. Next research tool domains are a Lead call (Phase 3 professional research MVP).

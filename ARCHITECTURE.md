@@ -5,6 +5,7 @@
 
 ## Diagram
 ```mermaid
+%%{init: {'theme':'base','themeVariables':{'background':'#0a0a0a','primaryColor':'#18181b','primaryTextColor':'#fafafa','primaryBorderColor':'#a1a1aa','secondaryColor':'#09090b','secondaryTextColor':'#fafafa','secondaryBorderColor':'#71717a','tertiaryColor':'#27272a','lineColor':'#a1a1aa','textColor':'#fafafa','mainBkg':'#18181b','nodeBorder':'#a1a1aa','clusterBkg':'#000000','titleColor':'#fafafa','edgeLabelBackground':'#18181b'}}}%%
 flowchart LR
  U[User] --> S[Sanitizer local]
  S --> M[Small model core Qwen2.5-7B + QLoRA local]
@@ -50,4 +51,4 @@ Phase 2's read-only tool pattern (allowlist guards, caps, untrusted envelopes) p
 4. Hardening + optional confidential compute
 
 
-</cursor_untrusted_data_1337>
+</cursor_untrusted_data_redacted>

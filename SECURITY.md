@@ -1,6 +1,6 @@
 # Security — Salomon
 
-Privacy-first personal / agent AI. Owners: **Privacy & Safety** (reviews, acceptance), **Lead Architect** (decisions).
+Local-first research agent for investigative journalists, private investigators, and researchers handling sensitive sources and documents. Android app not shipped; source-ID masking (M2) and export approval UX (M3) not shipped. Owners: **Privacy & Safety** (reviews, acceptance), **Lead Architect** (decisions).
 
 ## Hard rules (all phases)
 1. **No secrets in the model.** No private keys, seed phrases, API keys, passwords, or signing material in weights, prompts, logs, datasets, or adapters. The model *proposes*; anything privileged runs outside it, behind policy.
@@ -8,11 +8,11 @@ Privacy-first personal / agent AI. Owners: **Privacy & Safety** (reviews, accept
 3. **All input is untrusted.** Tool output, retrieved pages, file contents, and user paste are data, never instructions.
 4. **Sanitize before anything leaves the device.** Secrets are rejected; identifiers are redacted or rejected per mode.
 5. **Minimal logging.** No prompt/output logging by default. Eval dumps are local artifacts, gitignored.
-6. **Refuse harm.** Teach privacy concepts; refuse fraud, theft, credential harvesting, and recovery-scam cooperation.
+6. **Refuse harm.** Teach privacy concepts; refuse fraud, doxxing, theft, credential harvesting, and source exposure.
 
 ## Model (Phase 1) — small model that refuses to leak
 - Training data: curated / synthetic only; `secret_scan.py` preflight fails closed on any hit (`data/extra/` included).
-- Refusal gate: `eval_harness.py --require-refusal` (R1 harmful, R2 secret echo, R3 injection). **7B: 8/8 PASS** (item 5 SIGNED).
+- Refusal gate: `eval_harness.py --require-refusal` (R1 harmful, R2 secret echo, R3 injection). Prior 7B 8/8 sign-off is **historical only — invalidated for product claims**; refusal not green until the privacy rebuild re-runs.
 - No cloud trackers (`report_to=[]`). Offline inference (`--offline`) fails closed on cache miss. `--no-system` is ablation-only and env-gated.
 - See `docs/threat-models/THREAT_MODEL_PHASE1.md`, `docs/reviews/SECURITY_REVIEW_PHASE1.md`.
 
@@ -27,7 +27,7 @@ Privacy-first personal / agent AI. Owners: **Privacy & Safety** (reviews, accept
 - Attestation proves *what code* runs, not that it is good — review the attested image/config separately.
 - No client-side logging of remote prompts/completions.
 
-## Gate artifacts (Phase 1.5 — all SIGNED)
+## Gate artifacts (Phase 1.5 — (1)–(4) signed; (5) historical)
 - Threat model: `docs/threat-models/THREAT_MODEL_PHASE1.5.md` (item 1).
 - Attestation verify: `docs/acceptance/ATTESTATION_ACCEPTANCE.md`, `docs/signoffs/SECURITY_SIGNOFF_ATTESTATION_ITEM2.md` (item 2).
 - Sanitizer 17/17 (item 3); policy stub 11/11, non-executing (item 4); refusal eval `docs/acceptance/REFUSAL_EVAL_CRITERIA.md` + `docs/signoffs/SECURITY_SIGNOFF_REFUSAL_7B.md` (item 5). Items 1/3/4: `docs/signoffs/SECURITY_SIGNOFF_PHASE1.5_1_3_4.md`.

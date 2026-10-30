@@ -28,7 +28,7 @@ Canonical niche: [`PRODUCT_NICHE.md`](PRODUCT_NICHE.md) · hero on main `f9d75fd
 |---|---|
 | **Next.js web app + API** (`POST /api/ask`) | **Primary** — local `ask` |
 | CLI (`salomon ask`) | **Secondary** thin client over the same `askLocal` |
-| Crypto / on-chain | **Parked** — `docs/archive/crypto/` |
+| Crypto / on-chain | **Parked** — removed archive (see git history / `docs/notes/CRYPTO_DOMAIN_REMOVED.md`) |
 | Newsroom vaults / legal-founder hero | **Out** (vaults → Phase 4) |
 
 Do **not** describe the MVP as CLI-only.
