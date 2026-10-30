@@ -1,20 +1,37 @@
-# Salomon Android (M-A0) — goal, not shipped
+# Salomon Android (M-A0 — **not shipped**)
 
-**Goal:** a local-first private AI / personal agent for Android (Google Play / APK). **The Android app is not shipped.** There is no Play listing, no on-device GGUF inference yet, and M1 is not green. The web app (`apps/web`) is a companion.
+Private local AI / personal agent shell for the **goal** Play/APK surface. Web remains the companion. **No GGUF in the APK.** No Solana / Seed Vault / crypto hero.
 
-## M-A0 scope
-- Kotlin + Jetpack Compose single-activity shell: chat thread, composer, history drawer, mono engine chip, missing-model card.
-- JNI facade `ai.salomon.core.SalomonCore.ask(prompt): AskResult` expecting native `libsalomon_core.so` (`System.loadLibrary("salomon_core")`) from `crates/salomon-core`.
-- **Fail-closed without native:** if the library fails to load, every ask returns `MissingModel`. Nothing is sent anywhere; there is no remote/cloud fallback. A canned `Stub` reply exists only when `BuildConfig.SALOMON_ALLOW_ASK_STUB` is true (debug opt-in via `-PsalomonAllowAskStub=true`).
-- Chip labels: `LOCAL` · `STUB` · `MODEL MISSING` · `REFUSED`.
+## What M-A0 is
+- Kotlin + Jetpack Compose: chat + engine chip + missing-model card + history rail (abort on switch)
+- Mono zinc (black / white / grey only)
+- Fail-closed without native core → chip **MODEL MISSING**
+- Engine chip: `LOCAL` | `STUB` | `MODEL MISSING` | `REFUSED`
 
-## Native library drop (Release)
-Release builds `crates/salomon-core` for `aarch64-linux-android` and copies it to
-`app/src/main/jniLibs/arm64-v8a/libsalomon_core.so`. No binary is committed in M-A0.
+## Core wiring
+Platform C ABI in `libsalomon_core.so`:
+- `salomon_ask(prompt) → char*` JSON `{"status":"MissingModel|Stub|Local|Refused","text":...,"error":...|null}` — free with `salomon_free_string`
+- `salomon_version()`
+
+App ships a tiny JNI shim (`app/src/main/cpp/salomon_jni_shim.c` → `libsalomon_jni.so`) exporting:
+- `Java_ai_salomon_core_SalomonCore_nativeAskJson`
+- `Java_ai_salomon_core_SalomonCore_nativeVersion`
+
+Kotlin: `SalomonCore.ask(prompt): AskResult` (parses JSON) and `askJson(prompt): String`.
+
+Drop the `.so` at `app/src/main/jniLibs/arm64-v8a/libsalomon_core.so`. CMake shim builds only when that file exists.
 
 ## Build
-Requires Android SDK (compileSdk 35) and JDK 17. Wrapper jar is not committed; run once:
+```bash
+# from repo root (Release scripts when present)
+source .android-env.sh   # after NDK install
+./scripts/build_android_native.sh
+./scripts/assemble_apk.sh
 ```
-gradle wrapper --gradle-version 8.9
-./gradlew :app:assembleDebug
-```
+
+- NDK **r28** + AGP **≥8.5.1** (16 KB pages) preferred
+- ABI: **arm64-v8a only**
+- Debug stub opt-in: `-PsalomonAllowAskStub=true` (never release)
+
+## Not claimed
+On-device live GGUF, Play listing, M1 green, M2 mask, hybrid remote, Settings/REMOTE/Sources/Approvals in this shell.
