@@ -73,10 +73,10 @@ const short = (s: string | null) => (s ? s.split('/').pop()!.replace(/\.gguf$/i,
 /** Header chip — never softened: LOCAL | STUB | REMOTE | MODEL MISSING. */
 export function modeLabel(m: ModeInfo | null, preferRemote?: boolean) {
   if (!m) return { text: 'checking…', cls: 'border-zinc-800 text-zinc-500', who: 'Salomon' };
-  if (isRemote(m, preferRemote)) return { text: `REMOTE${m.gatewayModel ? ` · ${short(m.gatewayModel)}` : ''}`, cls: 'border-sky-900/60 text-sky-400', who: `Salomon · REMOTE (${m.gatewayModel})` };
+  if (isRemote(m, preferRemote)) return { text: `REMOTE${m.gatewayModel ? ` · ${short(m.gatewayModel)}` : ''}`, cls: 'border-zinc-600 text-zinc-200', who: `Salomon · REMOTE (${m.gatewayModel})` };
   switch (chipOf(m)) {
-    case 'local': return { text: `LOCAL${m.model ? ` · ${short(m.model)}` : ''}`, cls: 'border-emerald-900/60 text-emerald-400', who: 'Salomon · LOCAL' };
-    case 'stub': return { text: 'STUB', cls: 'border-amber-900/60 text-amber-400', who: 'Salomon · STUB' };
-    default: return { text: 'MODEL MISSING', cls: 'border-amber-700/70 bg-amber-500/10 text-amber-300', who: 'Salomon' };
+    case 'local': return { text: `LOCAL${m.model ? ` · ${short(m.model)}` : ''}`, cls: 'border-zinc-500 text-zinc-100', who: 'Salomon · LOCAL' };
+    case 'stub': return { text: 'STUB', cls: 'border-zinc-600 text-zinc-300', who: 'Salomon · STUB' };
+    default: return { text: 'MODEL MISSING', cls: 'border-zinc-500 bg-white/[0.04] text-zinc-200', who: 'Salomon' };
   }
 }

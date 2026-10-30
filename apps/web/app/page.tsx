@@ -167,7 +167,7 @@ export default function Research() {
           />
           <label className="mt-1 flex items-center gap-1.5 px-1 text-[11px] text-zinc-500">
             <input type="checkbox" checked={attach} onChange={(e) => setAttach(e.target.checked)} className="accent-zinc-400" />
-            Attach on send ({notes.length} chars){overCap ? <span className="text-amber-400/80"> · over 8k — trim</span> : null}
+            Attach on send ({notes.length} chars){overCap ? <span className="text-zinc-400"> · over 8k — trim</span> : null}
           </label>
         </div>
       )}
@@ -199,12 +199,12 @@ export default function Research() {
           </button>
           <label
             title={mode?.gatewayAvailable ? 'Sends masked text to a cloud model. Not local.' : 'No gateway key configured'}
-            className={`flex items-center gap-1.5 text-[11px] ${remote ? 'text-sky-400/80' : 'text-zinc-500'} ${mode?.gatewayAvailable ? '' : 'opacity-40'}`}
+            className={`flex items-center gap-1.5 text-[11px] ${remote ? 'text-zinc-200' : 'text-zinc-500'} ${mode?.gatewayAvailable ? '' : 'opacity-40'}`}
           >
-            <input type="checkbox" disabled={!mode?.gatewayAvailable || busy} checked={remote} onChange={(e) => setPreferRemote(e.target.checked)} className="accent-sky-500" />
+            <input type="checkbox" disabled={!mode?.gatewayAvailable || busy} checked={remote} onChange={(e) => setPreferRemote(e.target.checked)} className="accent-zinc-400" />
             REMOTE
           </label>
-          {remote && <span className="text-[11px] text-sky-400/70">not local</span>}
+          {remote && <span className="text-[11px] text-zinc-400">not local</span>}
         </div>
         {busy ? (
           <button type="button" onClick={() => stop()} aria-label="Stop" className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-[12px] text-zinc-200">■</button>
@@ -220,13 +220,13 @@ export default function Research() {
       <div className={`flex-1 ${messages.length === 0 ? 'flex flex-col justify-center pb-16 pt-8' : 'pb-48 pt-6'}`}>
         {messages.length === 0 ? (
           <div className="flex flex-col items-center text-center">
-            <div className="mb-4 rounded-full border border-emerald-400/15 bg-emerald-400/[0.05] px-3 py-1 text-[11px] text-emerald-300/80">🔒 Local-first research desk</div>
+            <div className="mb-4 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[11px] text-zinc-400">🔒 Local-first research desk</div>
             <h1 className="text-[2rem] font-semibold tracking-tight text-zinc-50 sm:text-[2.25rem]">What are you reporting on?</h1>
             <p className="mt-3 max-w-md text-[14px] leading-relaxed text-zinc-400">Ask about your story. Answers stay on this machine unless you switch on REMOTE. Names in notes may be masked before send — a <span className="text-zinc-300">demo heuristic, not real source-ID masking until M2</span>.</p>
             {missing && (
-              <div role="status" className="mt-7 w-full rounded-2xl border border-amber-700/50 bg-amber-500/[0.07] px-4 py-3 text-left">
-                <div className="font-mono text-[11px] uppercase tracking-wide text-amber-400">Model missing</div>
-                <p className="mt-1 text-[14px] leading-6 text-amber-200">Local model missing. Install GGUF (SALOMON_GGUF) or explicitly enable labeled REMOTE.</p>
+              <div role="status" className="mt-7 w-full rounded-2xl border border-zinc-600 bg-white/[0.03] px-4 py-3 text-left">
+                <div className="font-mono text-[11px] uppercase tracking-wide text-zinc-300">Model missing</div>
+                <p className="mt-1 text-[14px] leading-6 text-zinc-300">Local model missing. Install GGUF (SALOMON_GGUF) or explicitly enable labeled REMOTE.</p>
               </div>
             )}
             <div className="mt-9 w-full text-left">{composer}</div>
@@ -261,8 +261,8 @@ export default function Research() {
                 <article key={m.id}>
                   <div className="mb-1.5 text-[11px] text-zinc-500">{label.who}</div>
                   {refused ? (
-                    <div role="alert" className="rounded-xl border border-amber-700/50 bg-amber-500/[0.07] px-4 py-3 text-amber-200">
-                      <div className="font-mono text-[11px] uppercase tracking-wide text-amber-400">Refused{(/^Refused \(([^)]+)\)/.exec(shown)?.[1]) ? ` · ${/^Refused \(([^)]+)\)/.exec(shown)![1]}` : ''}</div>
+                    <div role="alert" className="rounded-xl border border-zinc-600 bg-white/[0.03] px-4 py-3 text-zinc-300">
+                      <div className="font-mono text-[11px] uppercase tracking-wide text-zinc-300">Refused{(/^Refused \(([^)]+)\)/.exec(shown)?.[1]) ? ` · ${/^Refused \(([^)]+)\)/.exec(shown)![1]}` : ''}</div>
                       <div className="mt-1 whitespace-pre-wrap text-[14px] leading-6">{shown.replace(/^Refused \([^)]+\):\s*/, '')}</div>
                     </div>
                   ) : (
@@ -278,7 +278,7 @@ export default function Research() {
               );
             })}
             {status === 'submitted' && <p className="animate-pulse text-[13px] text-zinc-500">Thinking…</p>}
-            {error && <p className="text-[13px] text-red-400/90">Request failed. Nothing was saved or sent. {error.message}</p>}
+            {error && <p className="text-[13px] text-zinc-300">Request failed. Nothing was saved or sent. {error.message}</p>}
             <div ref={end} />
           </div>
         )}

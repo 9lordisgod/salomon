@@ -41,7 +41,7 @@ export default function Sources() {
         <thead className="text-[11px] uppercase tracking-widest text-zinc-500"><tr><th className="py-2">Token</th><th>Type</th><th>Original (local only)</th></tr></thead>
         <tbody>
           {preview.map.map((e) => (
-            <tr key={e.token} className="border-t border-zinc-800"><td className="py-2 font-mono text-emerald-400">{e.token}</td><td className="text-zinc-400">{e.kind}</td><td className="font-mono text-zinc-300">{e.original}</td></tr>
+            <tr key={e.token} className="border-t border-zinc-800"><td className="py-2 font-mono text-zinc-200">{e.token}</td><td className="text-zinc-400">{e.kind}</td><td className="font-mono text-zinc-300">{e.original}</td></tr>
           ))}
           {preview.map.length === 0 && <tr><td colSpan={3} className="py-3 text-zinc-500">No matches in this demo heuristic — that does not mean none are present.</td></tr>}
         </tbody>
