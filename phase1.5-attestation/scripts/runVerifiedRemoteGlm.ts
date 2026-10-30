@@ -4,11 +4,11 @@ import fs from "node:fs"; import { createHash } from "node:crypto";
 import { AttestationClient, VerifiedCompletionClient, NobleResponseBinder, DigestLogger, type DigestLogRecord } from "../src/index.js";
 const MODEL = "z-ai/glm-5.3-flash";
 const NEG_MODELS = ["openai/privacy-filter"]; // real, non-abliterated, NOT allowlisted ⇒ must DENY
-const key = fs.readFileSync(new URL("../.env", import.meta.url), "utf8").match(/^NEAR_AI_CLOUD_API_KEY=["']?([^"'\r\n]+)/m)?.[1];
+const key = fs.readFileSync(new URL("../.env", import.meta.url), "utf8").match(/^ATTEST_API_KEY=["']?([^"'\r\n]+)/m)?.[1];
 if (!key) { console.log(JSON.stringify({ error: "key_missing_in_env" })); process.exit(2); }
 const sha = (s: string) => createHash("sha256").update(s).digest("hex");
 const records: DigestLogRecord[] = []; const logger = new DigestLogger((l) => records.push(typeof l === "string" ? JSON.parse(l) : l));
-const env = { NEAR_AI_CLOUD_API_KEY: key };
+const env = { ATTEST_API_KEY: key };
 const mk = () => new AttestationClient({ requireProductionPlugs: true, env, logger });
 const out: any = { run_started_utc: new Date().toISOString(), model_id: MODEL, measurements_sha256: sha(fs.readFileSync(new URL("../allowlist/measurements.json", import.meta.url), "utf8")) };
 const errInfo = (e: any) => ({ check: e?.check ?? null, reason: String(e?.reason ?? e?.message ?? "error").replaceAll(key, "[redacted]").slice(0, 200) });

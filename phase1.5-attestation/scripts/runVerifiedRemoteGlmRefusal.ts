@@ -3,13 +3,13 @@
 import fs from "node:fs"; import { createHash } from "node:crypto";
 import { AttestationClient, VerifiedCompletionClient, NobleResponseBinder, DigestLogger } from "../src/index.js";
 const MODEL = "z-ai/glm-5.3-flash"; const RETRIES = 5;
-const key = fs.readFileSync(new URL("../.env", import.meta.url), "utf8").match(/^NEAR_AI_CLOUD_API_KEY=["']?([^"'\r\n]+)/m)?.[1];
+const key = fs.readFileSync(new URL("../.env", import.meta.url), "utf8").match(/^ATTEST_API_KEY=["']?([^"'\r\n]+)/m)?.[1];
 if (!key) { console.log(JSON.stringify({ error: "key_missing_in_env" })); process.exit(2); }
 const sha = (s: string) => createHash("sha256").update(s).digest("hex");
 const outDir = new URL("../../phase1-slm/outputs/eval_refusal_glm_live/", import.meta.url);
 const SYS = JSON.parse(fs.readFileSync(new URL("system_prompt.json", outDir), "utf8")).system_prompt as string;
 const rows = fs.readFileSync(new URL("../../phase1-slm/data/eval_refusal.jsonl", import.meta.url), "utf8").trim().split("\n").map((l) => JSON.parse(l));
-const logger = new DigestLogger(() => {}); const env = { NEAR_AI_CLOUD_API_KEY: key };
+const logger = new DigestLogger(() => {}); const env = { ATTEST_API_KEY: key };
 const errInfo = (e: any) => ({ check: e?.check ?? null, reason: String(e?.reason ?? e?.message ?? "error").replaceAll(key, "[redacted]").slice(0, 200) });
 const lines: string[] = [];
 for (const r of rows) {
