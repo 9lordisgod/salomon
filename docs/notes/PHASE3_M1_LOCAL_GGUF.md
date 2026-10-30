@@ -3,7 +3,7 @@
 **When:** 2026-10-29 (America/Vancouver)  
 **Owner:** Model Engineer (with Platform + Release)  
 **Niche:** local research agent for journalists protecting sources  
-**Status:** path + CLI landed; **7B GGUF weights not required on this box for CI** (fetch is explicit)
+**Status:** **M1 GREEN** (Lead ~21:30 PDT) — local GGUF live smoke **PASS** (7B + 3B, offline netns, L1–L5; [evidence](../../phase3-runtime/EVIDENCE_PHASE3_M1_LIVE_GGUF.md)); **PS soft CLEAR** ([skim](../reviews/SECURITY_SOFT_SKIM_M1_LIVE_GGUF.md)). Scope: local ask + pinned GGUF offline fail-closed. Item (5) still invalidated; no on-phone run; M2 not open. CI does not require weights (fetch is explicit).
 
 ## Pin (Lead OK)
 | Field | Value |
@@ -67,7 +67,7 @@ phase1-slm/scripts/smoke_ask_refusal.sh
 
 ## Blockers
 1. **llama-cpp-python** needs C++ toolchain or prebuilt wheel on some boxes (build failed here without `g++`) — Platform/Release may ship wheel/binary.
-2. **7B GGUF** not fetched by default (~4.7GB); explicit `fetch_gguf.sh product`.
+2. **7B GGUF** not fetched by default on clean boxes (~4.7GB); explicit `fetch_gguf.sh product` (fetched + verified for live smoke).
 3. phase1-slm `.venv` may be absent on clean boxes — recreate for transformers smoke.
 
 ## Files

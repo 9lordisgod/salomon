@@ -1,6 +1,6 @@
 # Status — Salomon
 
-_Updated Thu Oct 29, 2026, ~21:22 PDT (America/Vancouver)._ Full dated log: [docs/notes/STATUS_HISTORY.md](notes/STATUS_HISTORY.md) · engineering log: [PROGRESS.md](PROGRESS.md).
+_Updated Thu Oct 29, 2026, ~21:30 PDT (America/Vancouver)._ Full dated log: [docs/notes/STATUS_HISTORY.md](notes/STATUS_HISTORY.md) · engineering log: [PROGRESS.md](PROGRESS.md).
 
 ## Product
 
@@ -15,12 +15,12 @@ Niche: [PRODUCT_NICHE](notes/PRODUCT_NICHE.md) · scope: [PRODUCT_SCOPE](notes/P
 
 ## Phase
 
-**Phase 3 — Professional Android MVP. M1 in flight (not GREEN).**
+**Phase 3 — Professional Android MVP.** **M1 GREEN** (Lead, ~21:30 PDT, on PS SOFT CLEAR) — local ask + pinned GGUF offline fail-closed (7B desktop default; 3B mobile only via explicit env); no remote fallback. [soft skim](reviews/SECURITY_SOFT_SKIM_M1_LIVE_GGUF.md) · [evidence](../phase3-runtime/EVIDENCE_PHASE3_M1_LIVE_GGUF.md)
 
 | Item | State |
 |---|---|
 | M0 — scope / niche lock | **Done** |
-| M1 — local `ask` end-to-end, fail closed | **In flight — not GREEN** — today on web companion (`POST /api/ask`); CLI secondary |
+| M1 — local `ask` end-to-end, fail closed | **GREEN** (scoped) — local ask + pinned GGUF offline fail-closed; PS SOFT CLEAR ([soft skim](reviews/SECURITY_SOFT_SKIM_M1_LIVE_GGUF.md) · [evidence](../phase3-runtime/EVIDENCE_PHASE3_M1_LIVE_GGUF.md)). Not Android/on-phone. |
 | M2 — document ingest + source-ID masking | **Gated** — criteria accepted, not opened, not shipped |
 | M3 — explicit export approval UX | **Gated** — not opened, not shipped |
 | Android app / Play / on-device phone inference | **Not shipped** — M-A0 scaffold only; **APK unsigned hold** |
@@ -37,21 +37,25 @@ Niche: [PRODUCT_NICHE](notes/PRODUCT_NICHE.md) · scope: [PRODUCT_SCOPE](notes/P
 
 ## Holds (honest)
 
-- **M1 not GREEN** — desk → `/api/ask` + offline smoke still open.
+- **M1 GREEN is scoped** — local ask + pinned GGUF offline fail-closed only; does not widen to Android, refusal eval, or M2.
+- **Item (5) INVALIDATED** — L4 live decline is heuristic only, not refusal-eval green.
+- **No Android / Play / on-phone shipped.**
+- **M-A0 unsigned APK soft-skim queued** (PS) before any external distribute.
+- **M2 eng NOT OPEN.**
 - **M-A0 unsigned hold** — Compose/Rust scaffold may proceed; no signed/public APK claim.
 - **Colab 8/8 pending** — privacy-domain refusal rebuild not re-run green; do not cite historical crypto 8/8 for product.
 
-Token-rotate pause **canceled** (Lead resume ~21:22 PDT). Parallel Solana work lives in `9lordisgod/salomon-solana` — **do not** reintroduce crypto into this repo.
+Token-rotate pause **canceled** (Lead resume ~21:22 PDT). Dual track: Parallel Solana work lives in `9lordisgod/salomon-solana` — **do not** reintroduce crypto into this repo.
 
 ## Next
 
-1. Turn M1 green: desk → `/api/ask` + offline smoke ([runbook](notes/PHASE3_MVP_RUNBOOK.md)).
-2. Privacy-domain Colab 8/8 rebuild (journalism must-not-echo).
+1. Privacy-domain Colab 8/8 rebuild (journalism must-not-echo).
+2. PS soft-skim of M-A0 unsigned APK; keystore.
 3. Open M2 (ingest + mask), then M3 (approvals), then signed Android build (after unsigned hold lifts).
 
 ## Recent tips (main)
 
-`eafc14d` docs move + LICENSE · `d5af5c4` org soft sync · `0f18c21` org pass · niche `f17f291` / `82a0d9d` / `7477723` · residual `527d8e9` / `2a402f0`.
+`e3b50fd` M1 soft skim + evidence · `ae3b41a` crypto hygiene · `eafc14d` docs move + LICENSE · `d5af5c4` org soft sync · `0f18c21` org pass · niche `f17f291` / `82a0d9d` / `7477723` · residual `527d8e9` / `2a402f0`.
 
 ## Links
 

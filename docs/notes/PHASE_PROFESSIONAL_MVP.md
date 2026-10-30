@@ -23,7 +23,7 @@
 
 Still held (honesty):
 
-- **M1 not GREEN**
+- **M1 GREEN** (scoped, ~21:30 PDT) — local ask + pinned GGUF offline fail-closed; PS soft CLEAR. Not Android/on-phone.
 - **M-A0 APK unsigned** — scaffold OK; no signed/public APK claim until hold lifts
 - **Colab 8/8 privacy rebuild pending** — do not claim historical crypto 8/8 for product
 
