@@ -20,7 +20,7 @@ export type CompletionFetch = (url: string, init: { method: string; headers: Rec
 export interface VerifiedCompletionClientOptions {
   attestation: Pick<AttestationClient, "assertReadyForRemoteInference">;
   binder: ResponseSignatureBinder;
-  /** Default https://cloud-api.near.ai */
+  /** Default: provider TEE host (ATTEST_API_BASE). */
   baseUrl?: string;
   fetch: CompletionFetch;
   apiKey?: string;
@@ -41,7 +41,8 @@ export interface VerifiedCompletion {
   responseHash: string;
 }
 
-export const NEAR_CLOUD_API_BASE = "https://cloud-api.near.ai";
+export { ATTEST_API_BASE } from "./fetchReport.js";
+import { ATTEST_API_BASE } from "./fetchReport.js";
 const sha = (b: Uint8Array | string) => createHash("sha256").update(b).digest("hex");
 const enc = new TextEncoder();
 
@@ -56,7 +57,7 @@ export class VerifiedCompletionClient {
   private readonly base: string; private readonly logger: DigestLogger;
   constructor(private readonly o: VerifiedCompletionClientOptions) {
     if (!o?.attestation || !o.binder || typeof o.fetch !== "function") throw new ResponseBindingError("client_misconfigured");
-    this.base = (o.baseUrl ?? NEAR_CLOUD_API_BASE).replace(/\/+$/, "");
+    this.base = (o.baseUrl ?? ATTEST_API_BASE).replace(/\/+$/, "");
     this.logger = o.logger ?? new DigestLogger();
   }
 

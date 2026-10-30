@@ -1,7 +1,7 @@
 export * from "./types.js";
 export { generateNonce } from "./nonce.js";
 export { DigestLogger, DigestLogError, nonceHash, type DigestLogRecord } from "./digestLog.js";
-export { fetchAttestationReport, NEAR_AI_CLOUD_BASE } from "./fetchReport.js";
+export { fetchAttestationReport, ATTEST_API_BASE, ATTEST_API_BASE_V1 } from "./fetchReport.js";
 export { StubFailClosedVerifier, MockQuoteVerifier, MockGatewayVerifier, type QuoteVerifier, type GpuVerifier, type GatewayVerifier } from "./quoteVerifier.js";
 export { loadAllowlist, parseAllowlist, matchPins, latestComposeUpFileSha256, checkComposeFilePins } from "./allowlist.js";
 export { verifyReport, replayRtmr, recomputeImr3Digests, imr3EventDigest, expectedMrConfigId, expectedReportData, DEFAULT_POLICY } from "./verify.js";
@@ -12,5 +12,5 @@ export { assertPlugsProductionReady, productionPlugsRequired, UNWIRED_PLUG_NAMES
 export { NobleResponseBinder, eip191Digest, ethAddress } from "./responseBinder.js";
 export { NRAS_GPU_URL, NRAS_JWKS_URL, NRAS_ALLOWED_ALGS, verifyNrasJwt, verifyJwkX5c, NRAS_LEAF_ORG, checkLeafOrg, NRAS_ISSUER, NRAS_X5C_PINNED_SPKI_SHA256, type NrasJwtOpts, nrasBodyOverallResult, cachedJwksFetch, type Jwk, type JwksFetch, loadDcapQvl, type NrasFetch, type GetCollateralAndVerify, type DcapVerifiedReport } from "./realPlugs.js";
 export { WIRED_PLUG_NAMES, isUnwiredPlugName } from "./productionGuard.js";
-export { VerifiedCompletionClient, extractChatId, NEAR_CLOUD_API_BASE, type CompletionFetch, type VerifiedCompletion, type VerifiedCompletionClientOptions } from "./verifiedCompletion.js";
+export { VerifiedCompletionClient, extractChatId, type CompletionFetch, type VerifiedCompletion, type VerifiedCompletionClientOptions } from "./verifiedCompletion.js";
 export { verifyComposeManager, summarizeComposeManager, expectedComposeManagerReportData, type ComposeManagerAttestation, type ComposeManagerSummary, type ComposeUpRecord } from "./composeManager.js";

@@ -13,6 +13,7 @@ import { DcapQuoteVerifier, DcapGatewayVerifier, NrasGpuVerifier } from "./realP
 import { NobleResponseBinder } from "./responseBinder.js";
 
 export const DEFAULT_ALLOWLIST_PATH = fileURLToPath(new URL("../allowlist/measurements.json", import.meta.url));
+// Legacy NEAR_SKIP_ATTEST stays banned. Old NEAR_AI_CLOUD_API_KEY / NEAR_ATTEST_* env names are unsupported (hard cut).
 const BANNED_SKIP_FLAGS = ["SKIP_ATTEST", "ALLOW_NO_ATTEST", "NEAR_SKIP_ATTEST", "ATTEST_SKIP"];
 
 export interface AttestationClientOptions extends FetchReportOptions {
@@ -21,7 +22,7 @@ export interface AttestationClientOptions extends FetchReportOptions {
   gatewayVerifier?: GatewayVerifier; // default: stub (deny)
   policy?: MeasurementPolicy;
   logger?: DigestLogger;
-  /** Path via config, else env NEAR_ATTEST_ALLOWLIST_PATH, else allowlist/measurements.json. */
+  /** Path via config, else env ATTEST_ALLOWLIST_PATH, else allowlist/measurements.json. */
   allowlistPath?: string;
   /** Must be exactly true to load test_only pins; ignored when NODE_ENV=production. */
   allowTestOnly?: boolean;
@@ -62,7 +63,7 @@ export class AttestationClient {
 
   private allowlist(): AllowlistEntry[] {
     const env = this.opts.env ?? process.env;
-    const path = this.opts.allowlistPath ?? env.NEAR_ATTEST_ALLOWLIST_PATH ?? DEFAULT_ALLOWLIST_PATH;
+    const path = this.opts.allowlistPath ?? env.ATTEST_ALLOWLIST_PATH ?? DEFAULT_ALLOWLIST_PATH;
     return loadAllowlist(path, { allowTestOnly: this.opts.allowTestOnly, env });
   }
 
