@@ -25,7 +25,7 @@ Live hero / niche / About have **zero** Solana / NEAR / Seed Vault / wallet / De
 
 1. **Present-tense hero:** README/STATUS niche say “Salomon **is** a local-first AI app for Android” while STATUS Framing fold claims “goal tense.” Prefer “aiming to be” / “goal” (prior S1 bar) — not-shipped callout keeps this from soft-deny.  
 2. **STATUS/PROGRESS eng history** still dense with retired NEAR/Intents/dataset crypto nouns (STATUS notes dated lines may). Re-skim after archive-delete tip.  
-3. **ROADMAP** still links `docs/archive/near/…` (M3 skim path).  
+3. **ROADMAP** still links removed archive (see git history / `docs/notes/CRYPTO_DOMAIN_REMOVED.md`) (M3 skim path).  
 4. **ARCHITECTURE** still journalist one-liner + broken `(retired)` archive links — fold to pure-AI / Android when Docs can.  
 5. Meta “Crypto scrubbed” wording in STATUS/PROGRESS banners is eng honesty, not a product claim.
 
@@ -52,7 +52,7 @@ PRODUCT_NICHE scrub section now says “Prior domain-specific product tracks” 
 
 ### Soft residuals (unchanged / non-blocking)
 1. Present-tense “is a local-first AI app for Android” is Product-locked paste; not-shipped callout adjacent — not a crypto soft-deny.  
-2. STATUS/PROGRESS eng history + ROADMAP `docs/archive/near/` link — re-skim after archive-delete tip.  
+2. STATUS/PROGRESS eng history + ROADMAP removed archive (see git history / `docs/notes/CRYPTO_DOMAIN_REMOVED.md`) link — re-skim after archive-delete tip.  
 3. ARCHITECTURE journalist one-liner lag (from `ed48792` set).
 
 Standing by for archive-delete tip.
@@ -63,18 +63,18 @@ Standing by for archive-delete tip.
 
 **Date:** 2026-10-29 ~19:08 America/Vancouver  
 **Reviewer:** Privacy & Safety  
-**Ask:** Docs Lead + Lead — primary re-skim after `docs/archive/` delete + STATUS/PROGRESS/ROADMAP fold. Prior soft tips `622b35a` / `dc28ddf` / narrative `9137931`+`ed48792`+`eed2f77` held.  
+**Ask:** Docs Lead + Lead — primary re-skim after removed archive (see git history / `docs/notes/CRYPTO_DOMAIN_REMOVED.md`) delete + STATUS/PROGRESS/ROADMAP fold. Prior soft tips `622b35a` / `dc28ddf` / narrative `9137931`+`ed48792`+`eed2f77` held.  
 **Evidence:** GitHub `9lordisgod/salomon` tips `ea4c23c9b352cde0e82a9d5c7d3426e5b5189d68`, `369d4b77fa7977ba62e515068db1760218a62eb1`, `ad290aa6786194b104e3206a5b70f30f60554c17` (box tree still lagged).
 
 ### Verdict: **SOFT CLEAR** (archive delete + STATUS/ROADMAP honesty)
 
-`docs/archive/` is gone at tip (contents 404; `docs/` entries: acceptance / notes / reviews / signoffs / threat-models only). R3 kept at `docs/signoffs/SECURITY_SIGNOFF_R3_NEARECHO_DELTA.md`. STATUS/PROGRESS/ROADMAP correctly mark item **(5) INVALIDATED for product claims**, M-A0 scaffold-only / app not shipped, no archive/near product links. PRODUCT_NICHE + docs/README index clean of archive folder and prior-domain hero.
+removed archive (see git history / `docs/notes/CRYPTO_DOMAIN_REMOVED.md`) is gone at tip (contents 404; `docs/` entries: acceptance / notes / reviews / signoffs / threat-models only). R3 kept at `docs/signoffs/SECURITY_SIGNOFF_R3_NEARECHO_DELTA.md`. STATUS/PROGRESS/ROADMAP correctly mark item **(5) INVALIDATED for product claims**, M-A0 scaffold-only / app not shipped, no archive/near product links. PRODUCT_NICHE + docs/README index clean of archive folder and prior-domain hero.
 
 ### Checklist
 
 | Surface | Result |
 |---------|--------|
-| `docs/archive/` removed | **CLEAR** |
+| removed archive (see git history / `docs/notes/CRYPTO_DOMAIN_REMOVED.md`) removed | **CLEAR** |
 | R3 at `docs/signoffs/` | **CLEAR** |
 | STATUS/PROGRESS Model REMOVED + item (5) INVALIDATED | **CLEAR** |
 | ROADMAP item (5) INVALIDATED + M-A0; no archive/near links | **CLEAR** |
@@ -87,7 +87,7 @@ Standing by for archive-delete tip.
 
 1. **README lag vs STATUS:** badges still `refusal eval 7B-8/8 signed off` + `Phase 1.5 privacy gate-SIGNED`; phase table row “items 1–5 | Signed”; body “refusal eval passes **8/8**”. Conflicts with STATUS/ROADMAP **INVALIDATED for product claims** — retarget badges/table/copy (historical / rebuild-pending), do not present as current product green.  
 2. README repo-map line still lists `archive ·` under `docs/` — drop.  
-3. Box checkout may still hold pre-delete `docs/archive/` — ignore local lag; tip is source of truth.  
+3. Box checkout may still hold pre-delete removed archive (see git history / `docs/notes/CRYPTO_DOMAIN_REMOVED.md`) — ignore local lag; tip is source of truth.  
 4. Separate track: DC privacy_rebuild eval drafts **ACCEPT WITH EDITS** (memo-pin + launder anti-echo) before live JSONL swap; item (5) stays INVALIDATED until re-run.
 
 ### Standing
