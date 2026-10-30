@@ -23,3 +23,5 @@ ask-local: ; python scripts/ask_local.py --prompt "$(PROMPT)"
 fetch-gguf-smoke: ; scripts/fetch_gguf.sh smoke
 fetch-gguf-product: ; scripts/fetch_gguf.sh product
 smoke-ask-refusal: ; scripts/smoke_ask_refusal.sh
+# Privacy-rebuild refusal gate on the pinned LOCAL GGUF (CPU, offline netns, product system prompt). See EVAL_REFUSAL_GGUF.md.
+eval-refusal-gguf: ; SALOMON_NETNS=1 unshare -rn .venv/bin/python scripts/eval_refusal_gguf.py --gguf $(or $(GGUF),models/gguf/salomon-qwen25-7b-instruct-Q4_K_M.gguf) --out outputs/eval_refusal_gguf_7b/results.jsonl --summary outputs/eval_refusal_gguf_7b/summary.md
