@@ -29,9 +29,12 @@ import { askLocal } from "../../../../near-privacy-ai/phase3-runtime/src/index";
 const r = await askLocal(body);
 return Response.json(r.ok ? r : { ok: false, reason: r.reason, message: r.message }, { status: r.ok ? 200 : r.status, headers: { "Cache-Control": "no-store" } });
 ```
-Next/Turbopack needs the parent dir in scope: set `turbopack.root` (or `outputFileTracingRoot`) to `/workspace` in `next.config.ts`, or add a tsconfig path alias `"salomon/runtime": ["../near-privacy-ai/phase3-runtime/src/index.ts"]`. I did **not** edit salomon-app (avoid breaking Frontend's build); Frontend owns that wiring. Enforce 16 KB body cap in the route before `askLocal`.
+Next/Turbopack needs the parent dir in scope: set `turbopack.root` (or `outputFileTracingRoot`) to `/workspace` in `next.config.ts`, or add a tsconfig path alias `"@salomon/runtime": ["../near-privacy-ai/phase3-runtime/src/index.ts"]`. I did **not** edit salomon-app (avoid breaking Frontend's build); Frontend owns that wiring. Enforce 16 KB body cap in the route before `askLocal`.
 
 ## Blockers / open
 - `ask_local.py --json` not landed (Model Engineer) → real path returns `local_model_unavailable`; 0.5B offline smoke + GGUF smoke pending. GGUF sha256 pin pending.
 - §7.8 route contract tests and §7.9 Python-side tests belong with Frontend / ME once their pieces exist.
 - PS review of sanitizer gate + prompt.
+
+## Soft — labelled password/passwd (2026-10-29)
+FE co-smoke: `my password: hunter22abc` previously hit 503 `local_model_unavailable` (no GGUF) instead of 422 `input_refused` because KEY_MATERIAL labelled-assignment omitted password/passwd. Soft patch: add `password|passwd` to phase2 `KEY_MATERIAL_RULES`; harness in m1 + m4. PS soft-ACCEPT 2026-10-29 — docs/reviews/SECURITY_SOFT_SKIM_PHASE3_M1_PASSWORD_KEYMATERIAL.md. Python `secret_heuristics` / SECRET_PATTERNS unchanged (parity vectors untouched).

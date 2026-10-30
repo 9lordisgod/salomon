@@ -73,7 +73,7 @@ describe("§7.4 sanitizer before complete", () => {
   });
   it("secret in input ⇒ 422 refused, model never called, no echo", async () => {
     const c = mockCompleter([{ content: "x" }]);
-    for (const q of [`my key is ${SECRET}`, "private_key = abcdefgh12345678", "-----BEGIN RSA PRIVATE KEY-----", "token sk-ABCDEFGHIJKLMNOPQRSTUV"]) {
+    for (const q of [`my key is ${SECRET}`, "private_key = abcdefgh12345678", "-----BEGIN RSA PRIVATE KEY-----", "token sk-ABCDEFGHIJKLMNOPQRSTUV", "my password: hunter22abc", "passwd: hunter22abc"]) {
       const r = await askLocal({ question: q }, { completer: c });
       expect(r).toMatchObject({ ok: false, reason: "input_refused", status: 422 }); expect(JSON.stringify(r)).not.toContain(SECRET);
     }
