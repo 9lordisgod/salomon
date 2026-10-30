@@ -9,3 +9,21 @@ phase1-slm/outputs/dryrun/
 phase1-slm/outputs/qlora-*/
 *.log
 .env
+
+# --- OSS hygiene: never commit secrets or large artifacts ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.jks
+*.keystore
+keystore/
+secrets/
+*keypair*.json
+id.json
+*.gguf
+node_modules/
+.expo/
+local.properties

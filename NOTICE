@@ -1,10 +1,9 @@
 Salomon
-Copyright (c) 2026 Anon Rothschild. All rights reserved.
+Copyright (c) 2026 Anon Rothschild
 
-This product may include third-party open-source software. Those components
-remain under their respective licenses (for example MIT, Apache-2.0, or
-model-weight terms from upstream providers). This NOTICE does not grant any
-license to Salomon itself beyond what LICENSE states.
+Licensed under the MIT License. See LICENSE.
 
-When distributing or publishing an open build in the future, list notable
-third-party attributions here.
+This project depends on third-party open-source software and, optionally,
+third-party model weights. Those components remain under their own licenses
+(for example MIT, Apache-2.0, or upstream model-weight terms). Model weights
+are never bundled in this repository; review each model's license before use.
