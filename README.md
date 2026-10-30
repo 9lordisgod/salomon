@@ -12,14 +12,16 @@
 
 ```mermaid
 flowchart LR
-  A["📝 Notes · transcripts · docs"] --> B["🛡️ Sanitizer<br/><sub>heuristic secret filter</sub>"]
-  B --> C["🧠 Local model<br/><sub>on your machine · no logs</sub>"]
-  C --> T["🧰 Read-only tools<br/><sub>hard caps · output untrusted</sub>"]
+  A[Notes, transcripts, docs] --> B[Sanitizer: secret filter]
+  B --> C[Local model on your machine]
+  C --> T[Read-only tools, hard caps]
   T --> B
-  C --> P{"📜 Policy"}
-  P -->|fail| X["⛔ blocked · plain-language reason"]
-  P -->|pass| H["✋ You approve<br/><sub>outside the model</sub>"]
+  C --> P{Policy}
+  P -->|fail| X[Blocked: plain-language reason]
+  P -->|pass| H[You approve outside the model]
 ```
+
+Flow in words: notes go through the sanitizer into a local model; read-only tools loop back through the sanitizer; policy either blocks with a plain reason or asks you to approve outside the model.
 
 ---
 
@@ -55,11 +57,19 @@ Exposing a source can end a career or put a person at risk. Most AI tools add le
 
 ```mermaid
 flowchart LR
-  P1["Phase 1<br/>Small model that refuses<br/>✅ gate · ⏸ dataset parked"] --> G{{"Phase 1.5<br/>privacy gate 1–5 ✅"}}
-  G --> P2["Phase 2<br/>Agent loop · sanitizer · caps<br/>🟩 M1–M3 green"]
-  P2 --> P3["Phase 3<br/>Journalist MVP · M1 in flight<br/>🟨"]
-  P3 --> P4["Phase 4<br/>Hardening · optional confidential compute<br/>⬜"]
+  P1["Phase 1: small model that refuses (gate done, dataset parked)"] --> G["Phase 1.5: privacy gate 1-5 signed"]
+  G --> P2["Phase 2: agent loop, sanitizer, caps (M1-M3 green)"]
+  P2 --> P3["Phase 3: journalist MVP (M1 in flight)"]
+  P3 --> P4["Phase 4: hardening, optional confidential compute"]
 ```
+
+| Phase | Status |
+|---|---|
+| Phase 1 — small model that refuses | Gate done; dataset parked |
+| Phase 1.5 — privacy gate items 1–5 | Signed |
+| Phase 2 — agent loop, sanitizer, caps | M1–M3 green |
+| Phase 3 — journalist MVP | M1 in flight (not green) |
+| Phase 4 — hardening, optional confidential compute | Not started |
 
 - **Phase 1 (gate done).** Qwen2.5-7B-Instruct + QLoRA harness. The refusal eval passes **8/8** on 7B (`docs/signoffs/SECURITY_SIGNOFF_REFUSAL_7B.md`), and the R3 near-echo delta is cleared. Dataset expansion is **parked** at 362 seed rows. When it unparks, the data gets refreshed toward sources, PII and secrets in journalism.
 - **Phase 1.5 (signed).** Threat model, fail-closed verified-remote client, sanitizer, policy stub and refusal eval: items (1)–(5) are signed off in `docs/signoffs/`.
