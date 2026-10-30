@@ -1,7 +1,7 @@
 // Captures genuine NEAR AI Cloud fixtures. Never prints/writes the API key.
 import fs from "node:fs"; import { createHash, randomBytes } from "node:crypto";
 const sha=(b)=>createHash("sha256").update(b).digest("hex");
-const k = fs.readFileSync(".env","utf8").match(/^NEAR_AI_CLOUD_API_KEY=["']?([^"'\r\n]+)/m)?.[1];
+const k = fs.readFileSync(".env","utf8").match(/^ATTEST_API_KEY=["']?([^"'\r\n]+)/m)?.[1];
 if(!k) throw new Error("key missing");
 const MODEL=process.argv[2]??"deepseek/deepseek-v3.2", slug=MODEL.replace(/[^A-Za-z0-9]+/g,"_")+(process.argv[3]??"");
 const B="https://cloud-api.near.ai/v1", out="fixtures/recorded", raw=out+"/raw";

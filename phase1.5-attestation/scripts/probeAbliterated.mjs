@@ -1,5 +1,5 @@
 import fs from "node:fs"; import { randomBytes } from "node:crypto";
-const k = fs.readFileSync(".env","utf8").match(/^NEAR_AI_CLOUD_API_KEY=["']?([^"'\r\n]+)/m)?.[1];
+const k = fs.readFileSync(".env","utf8").match(/^ATTEST_API_KEY=["']?([^"'\r\n]+)/m)?.[1];
 const ml = await (await fetch("https://cloud-api.near.ai/v1/models",{headers:{Authorization:`Bearer ${k}`}})).json().catch(()=>({}));
 const ms = (ml.data??[]).map(m=>m.id);
 for (const m of ms) {
