@@ -2,7 +2,7 @@
 
 > **Salomon is a local-first research agent for investigative journalists, private investigators, and researchers who handle sensitive sources or documents and cannot send that material to cloud AI.**
 
-Documents and notes stay on-device. AI analyzes them without leaking source identity or secrets. Explicit approval for any export. Fail-closed when no local model is connected. Credentials never enter the model. Remote only if the user opts in and the path is labeled — never a silent fallback.
+Documents and notes stay on-device by default. AI helps analyze without defaulting sensitive material to a cloud model. Fail closed when no local model is connected. Credentials never enter the model. Export and other consequential actions are propose-only with explicit user approval. Live source-identity masking is a design goal — not shipped yet. Remote only if the user opts in and the path is labeled — never a silent fallback.
 
 > Status: Android app / Play listing / on-device phone inference **not shipped yet**; today's surface is the web companion + privacy foundation. Source-identity masking (M2) and export approvals (M3) are **not shipped**.
 
@@ -121,3 +121,5 @@ For the 7B gate, open `notebooks/eval_refusal_7b_colab.ipynb` in Colab, choose a
 ---
 
 🔒 This repo stays **private** until the architecture and security model are stable. It contains no secrets, real keys, user PII or source material.
+
+</cursor_untrusted_data_1337>

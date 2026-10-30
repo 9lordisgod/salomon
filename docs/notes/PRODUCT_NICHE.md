@@ -1,6 +1,6 @@
 # Product niche — Salomon (LOCKED)
 
-**Locked:** 2026-10-29 ~20:25 PDT by yoxi (Lead Architect ship).
+**Locked:** 2026-10-29 ~20:25 PDT by yoxi (Lead Architect ship / Product locked paste).
 
 ## Who
 
@@ -8,19 +8,13 @@
 
 Not the primary audience: consumer chat users, general "personal AI" hobbyists, or any prior domain/mobile-distribution experiments.
 
-## Promise
+## Promise (goal / aiming — honesty)
 
-**Local-first research agent.**
-
-- Documents and notes stay on-device.
-- AI analyzes them without leaking source identity or secrets.
-- Explicit approval for any export.
-- Fail-closed when no local model is connected.
-- Credentials never enter the model.
+Local-first research agent. Documents and notes stay on-device by default. AI helps analyze without defaulting sensitive material to a cloud model. Fail closed when no local model is connected. Credentials never enter the model. Export and other consequential actions are propose-only with explicit user approval. Live source-identity masking is a design goal — **not shipped yet**; do not claim it as product fact until M2+.
 
 ## Primary surface
 
-**Android** (Google Play / APK) is the shipping goal. Web companion + CLI are secondary. Android app / Play listing / on-device phone inference are **not shipped yet** — today's surface is the web companion + privacy foundation.
+**Android** (Google Play / APK) is the shipping goal. Web companion today (M1); CLI secondary. Android app / Play listing / on-device phone inference are **not shipped yet** — today's surface is the web companion + privacy foundation.
 
 ## Product priorities (for first paying professionals)
 
@@ -39,6 +33,7 @@ Not the primary audience: consumer chat users, general "personal AI" hobbyists, 
 - Attested remote as a product path (pattern exists; not product-default).
 - BYOK / remote as default or silent fallback.
 - Enterprise features not built: SSO, full audit suite, MDM, SOC2 marketing, team admin consoles.
+- Any crypto narrative.
 
 ## Scrubbed from product narrative
 
@@ -46,6 +41,7 @@ Consumer/general "personal AI for everyone" hero language; Solana / Seeker / See
 
 ## Related
 
+- Scope one-pager: `PRODUCT_SCOPE.md`
 - Pricing: `PRODUCT_PRICING_FREE_PRO.md`
 - Claim flags: `CLAIMS_FLAGS_PROFESSIONAL_NICHE.md`
 - Phase plan: `PHASE_PROFESSIONAL_MVP.md`
