@@ -19,10 +19,10 @@ export default function Approvals() {
   return (
     <div>
       <h1 className="text-3xl text-zinc-50">Approvals</h1>
-      <p className="mt-1 text-sm text-zinc-400">Salomon proposes; you decide. Nothing is saved, exported, sent, or published until you approve it here.</p>
+      <p className="mt-1 text-sm text-zinc-400">Demo-only approvals UI (M3 dogfood). Salomon proposes; you decide. Nothing is saved, exported, sent, or published until you approve it here.</p>
       <p className="mt-1 text-xs text-zinc-400">Approvals UI is dogfood for M3 — not a shipped product gate yet.</p>
       <div className="mt-6 space-y-4">
-        {items.length === 0 && <p className="rounded border border-dashed border-zinc-800 p-8 text-center text-sm text-zinc-500">No proposals. Use “Propose save/export” on a Research answer.</p>}
+        {items.length === 0 && <p className="rounded border border-dashed border-zinc-800 p-8 text-center text-sm text-zinc-500">No proposals. Use “Propose save/export” on a chat answer.</p>}
         {items.map((p) => (
           <div key={p.id} className="rounded-lg border border-zinc-800 bg-[#0e1115] p-5">
             <div className="flex items-center gap-3 text-xs">

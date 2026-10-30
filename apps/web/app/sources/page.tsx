@@ -2,9 +2,9 @@
 import { maskText } from '@/lib/mask';
 import { useMaskMap, useNotes } from '@/lib/store';
 
-const SAMPLE = `Met Maria Lopez at the café on 5th. She works in procurement and says the contract was backdated.
-Reach her at maria.lopez@example.org or (604) 555-0142. Her colleague @dockworker_77 has copies.
-Source: "Heron" confirms the invoice dates. Follow up with Daniel Okafor at City Hall.`;
+const SAMPLE = `Met Alex Rivera at the café on 5th. They mentioned the contract was backdated.
+Reach them at alex.rivera@example.org or (604) 555-0142. Their colleague @dockworker_77 has copies.
+Note: "Heron" confirms the invoice dates. Follow up with Daniel Okafor at City Hall.`;
 
 export default function Sources() {
   const [notes, setNotes] = useNotes();
@@ -12,10 +12,10 @@ export default function Sources() {
   const preview = maskText(notes, map);
   return (
     <div>
-      <h1 className="text-3xl text-zinc-50">Sources</h1>
+      <h1 className="text-3xl text-zinc-50">Mask demo</h1>
       <p className="mt-1 text-sm text-zinc-400">
-        Demo mask heuristic in this browser — it can miss. Research may still use a labeled remote path when configured.
-        The mask map stays local; this is <strong>not</strong> M2 source-ID masking.
+        Demo-only redaction heuristic in this browser — it can miss. Chat may still use a labeled REMOTE path when configured.
+        The mask map stays local; this is <strong>not</strong> a shipped privacy guarantee.
       </p>
       <div className="mt-6 grid gap-6 lg:grid-cols-2">
         <div>
