@@ -1,0 +1,3 @@
+# Chart style
+
+All mermaid diagrams in this repo use the **zinc mono** palette — black, white, and greys only (no neon green, amber, or brand colors). Start each diagram with `%%{init: {'theme':'base','themeVariables':{'background':'#0a0a0a','primaryColor':'#18181b','primaryTextColor':'#fafafa','primaryBorderColor':'#a1a1aa','secondaryColor':'#09090b','secondaryBorderColor':'#71717a','tertiaryColor':'#27272a','lineColor':'#a1a1aa','textColor':'#fafafa','mainBkg':'#18181b','nodeBorder':'#a1a1aa','clusterBkg':'#000000','titleColor':'#fafafa','edgeLabelBackground':'#18181b'}}}%%` and style nodes with `classDef mono fill:#18181b,stroke:#a1a1aa,color:#fafafa`. Add a one-line "flow in words" under each chart for readers without mermaid rendering.
