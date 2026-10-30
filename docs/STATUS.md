@@ -1,6 +1,6 @@
 # Status — Salomon
 
-_Updated Fri Oct 30, 2026, ~10:10 PDT (America/Vancouver)._ Full dated log: [docs/notes/STATUS_HISTORY.md](notes/STATUS_HISTORY.md) · engineering log: [PROGRESS.md](PROGRESS.md).
+_Updated Fri Oct 30, 2026, ~14:15 PDT (America/Vancouver)._ Full dated log: [docs/notes/STATUS_HISTORY.md](notes/STATUS_HISTORY.md) · engineering log: [PROGRESS.md](PROGRESS.md).
 
 ## Product
 
@@ -38,18 +38,18 @@ Niche: [PRODUCT_NICHE](notes/PRODUCT_NICHE.md) · scope: [PRODUCT_SCOPE](notes/P
 ## Holds (honest)
 
 - **M1 GREEN is scoped** — local ask + pinned GGUF offline fail-closed only; does not widen to Android, refusal eval, or M2.
-- **Item (5) INVALIDATED** — L4 live decline is heuristic only, not refusal-eval green.
+- **Item (5): desktop 7B Soft CLEAR 8/8 only** (tip `a5762b7`); L4 live decline remains heuristic. **3B on-device HOLD 7/8.**
 - **No Android / Play / on-phone shipped.**
 - **M-A0 unsigned Compose APK: PS SOFT CLEAR** ([M-A0 skim](reviews/SECURITY_SOFT_SKIM_MA0_UNSIGNED_APK.md), sha256 `f2b7534…`) — OK for **internal dogfood only after user keystore**; **NOT Play / public**.
 - **M2 eng NOT OPEN.**
 - **M-A0 unsigned hold** — Compose/Rust scaffold may proceed; no signed/public APK claim.
-- **Privacy-rebuild refusal 7/8, NOT GREEN** — first real run on the shipped GGUF path (`make eval-refusal-gguf`, CPU, offline). Needs PS + Eval Lead decision: prompt paraphrase fix (Lead preferred) or fixture ruling on "disable safety". Do not cite 7/8 or historical crypto 8/8 for product.
+- **3B prompt-only fix unstable** — two candidate prompt lines scored 6/8 and 5/8 and one made R1-launder comply ([probe](reviews/EVAL_3B_R3_PROMPT_PROBE.md)). Product prompt unchanged. **User/PS decision needed:** deterministic output echo guard (Lead preferred) vs keep 3B HOLD vs 3B adapter.
 
 Token-rotate pause **canceled** (Lead resume ~21:22 PDT). Dual track: Parallel Solana work lives in `9lordisgod/salomon-solana` — **do not** reintroduce crypto into this repo.
 
 ## Next
 
-1. Privacy-rebuild refusal to 8/8: PS + Eval Lead decide the R3-source-memo fix (prompt paraphrase line vs fixture ruling), then re-run `make eval-refusal-gguf` on 7B (and 3B mobile). No GPU/Colab needed anymore.
+1. 3B on-device R3: PS + Eval Lead pick from [probe options](reviews/EVAL_3B_R3_PROMPT_PROBE.md) — Lead recommends a deterministic output echo guard in the ask path (scored separately; raw-model item (5) needle unchanged). Merge PR #2 (desktop 7B Soft CLEAR) when yoxi wants.
 2. User keystore → internal dogfood of M-A0 APK (not Play/public).
 3. Open M2 (ingest + mask), then M3 (approvals), then signed Android build (after unsigned hold lifts).
 
@@ -63,3 +63,4 @@ Token-rotate pause **canceled** (Lead resume ~21:22 PDT). Dual track: Parallel S
 
 - 2026-10-30 PDT: PS Soft CLEAR (A) landed — strengthened R3 paraphrase line in `phase1-slm/configs/source_care_system.txt` (sha256 d60de283…ac244493); (B) fixture change rejected. Item (5) remains INVALIDATED until Eval 7B+3B GGUF rerun hits 8/8 under this prompt hash. Stamp: `docs/reviews/SECURITY_SOFT_CLEAR_SOURCE_CARE_R3_PARAPHRASE.md`.
 - 2026-10-30 PDT: Item (5) desktop/privacy-rebuild Soft CLEAR on 7B 8/8 tip a5762b7; 3B on-device still HOLD (7/8). Not product-wide or mobile green. Stamps: `docs/reviews/SECURITY_SOFT_CLEAR_PRIVACY_REBUILD_GGUF_7B.md`, `docs/reviews/EVAL_GREEN_ITEM5_DESKTOP_GGUF_7B.md`.
+- 2026-10-30 ~14:15 PDT: 3B R3 prompt probe — candidates 6/8 and 5/8 (one caused R1-launder compliance); prompt-only path rejected; product prompt unchanged. Note: `docs/reviews/EVAL_3B_R3_PROMPT_PROBE.md`.
