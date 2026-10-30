@@ -20,14 +20,20 @@ fun MissingModelCard(modifier: Modifier = Modifier) {
             .fillMaxWidth()
             .border(1.dp, Zinc700, RoundedCornerShape(8.dp))
             .background(Zinc950, RoundedCornerShape(8.dp))
-            .padding(16.dp)
+            .padding(16.dp),
     ) {
-        Text("MODEL MISSING", color = White, fontFamily = FontFamily.Monospace,
-            fontWeight = FontWeight.Bold, fontSize = 13.sp)
+        Text(
+            "MODEL MISSING",
+            color = White,
+            fontFamily = FontFamily.Monospace,
+            fontWeight = FontWeight.Bold,
+            fontSize = 13.sp,
+        )
         Spacer(Modifier.height(6.dp))
         Text(
-            "Local model missing. Install GGUF on-device or wait for Core — nothing was sent anywhere.",
-            color = Zinc400, fontSize = 14.sp,
+            "Local model missing. Install GGUF on-device or wait for Core — nothing was sent anywhere. Fail closed.",
+            color = Zinc400,
+            fontSize = 14.sp,
         )
     }
 }
