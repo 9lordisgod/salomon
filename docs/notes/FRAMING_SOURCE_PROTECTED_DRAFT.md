@@ -9,9 +9,9 @@
 
 ## One-liner (locked framing — not yet the public hero)
 
-> **Source-protected research agent for journalists** — local by default; heavier work only on verified remote after mask, sanitization, and attestation.
+> **Source-protected research agent for investigative journalists, private investigators, and researchers** — local by default; heavier work only on verified remote after mask, sanitization, and attestation.
 
-Niche who/job unchanged: journalists and investigators; protect sources. Crypto remains parked.
+Niche who/job locked 2026-10-29 ~20:25 PDT: journalists / PIs / researchers who cannot use cloud AI; protect sources. Crypto remains parked. See `PRODUCT_NICHE.md`.
 
 ---
 
@@ -99,7 +99,7 @@ Dataset stays **PARKED** until Lead unparks (then journalism / source-protection
 ### Public hero
 STATUS fold + PS soft-clear done. Keep current public hero until Docs lands the migration one-liner:
 
-> Local research agent for journalists/investigators that protects sources.
+> Local research agent for investigative journalists, private investigators, and researchers that protects sources.
 
 Migration target (Docs, when Lead opens README): the PS-corrected one-liner at the top of this note.
 
