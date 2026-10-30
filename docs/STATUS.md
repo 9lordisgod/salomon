@@ -1,6 +1,6 @@
 # Status — Salomon
 
-_Updated Thu Oct 29, 2026, ~21:30 PDT (America/Vancouver)._ Full dated log: [docs/notes/STATUS_HISTORY.md](notes/STATUS_HISTORY.md) · engineering log: [PROGRESS.md](PROGRESS.md).
+_Updated Fri Oct 30, 2026, ~10:10 PDT (America/Vancouver)._ Full dated log: [docs/notes/STATUS_HISTORY.md](notes/STATUS_HISTORY.md) · engineering log: [PROGRESS.md](PROGRESS.md).
 
 ## Product
 
@@ -32,7 +32,7 @@ Niche: [PRODUCT_NICHE](notes/PRODUCT_NICHE.md) · scope: [PRODUCT_SCOPE](notes/P
 |---|---|
 | Phase 2 — agent loop, sanitizer, caps, propose-only | **Green** (M1–M3) |
 | Phase 1.5 items (1)–(4) — threat model, verified-remote client, sanitizer, policy stub | **Signed** |
-| Phase 1.5 item (5) / refusal eval | **Historical only** — invalidated for product claims; **Colab 8/8 privacy rebuild pending** |
+| Phase 1.5 item (5) / refusal eval | **NOT GREEN — 7/8** on the pinned local 7B GGUF + product prompt, offline (Fri ~10:05 PDT; [run note](../phase1-slm/EVAL_REFUSAL_GGUF.md)). Only miss: R3-source-memo echoed "disable safety" inside a correct refusal. Still invalidated for product claims. |
 | Phase 1 dataset | **Parked** — refresh toward source/PII/secret must-not-echo when unparked |
 
 ## Holds (honest)
@@ -43,13 +43,13 @@ Niche: [PRODUCT_NICHE](notes/PRODUCT_NICHE.md) · scope: [PRODUCT_SCOPE](notes/P
 - **M-A0 unsigned Compose APK: PS SOFT CLEAR** ([M-A0 skim](reviews/SECURITY_SOFT_SKIM_MA0_UNSIGNED_APK.md), sha256 `f2b7534…`) — OK for **internal dogfood only after user keystore**; **NOT Play / public**.
 - **M2 eng NOT OPEN.**
 - **M-A0 unsigned hold** — Compose/Rust scaffold may proceed; no signed/public APK claim.
-- **Colab 8/8 pending** — privacy-domain refusal rebuild not re-run green; do not cite historical crypto 8/8 for product.
+- **Privacy-rebuild refusal 7/8, NOT GREEN** — first real run on the shipped GGUF path (`make eval-refusal-gguf`, CPU, offline). Needs PS + Eval Lead decision: prompt paraphrase fix (Lead preferred) or fixture ruling on "disable safety". Do not cite 7/8 or historical crypto 8/8 for product.
 
 Token-rotate pause **canceled** (Lead resume ~21:22 PDT). Dual track: Parallel Solana work lives in `9lordisgod/salomon-solana` — **do not** reintroduce crypto into this repo.
 
 ## Next
 
-1. Privacy-domain Colab 8/8 rebuild (journalism must-not-echo).
+1. Privacy-rebuild refusal to 8/8: PS + Eval Lead decide the R3-source-memo fix (prompt paraphrase line vs fixture ruling), then re-run `make eval-refusal-gguf` on 7B (and 3B mobile). No GPU/Colab needed anymore.
 2. User keystore → internal dogfood of M-A0 APK (not Play/public).
 3. Open M2 (ingest + mask), then M3 (approvals), then signed Android build (after unsigned hold lifts).
 
