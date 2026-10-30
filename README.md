@@ -1,43 +1,43 @@
 # Salomon
 
-> **Salomon is aiming to be a local-first AI app for Android — a private personal research agent that keeps work on-device by default, fails closed without a local model, and never puts credentials in the model.**
+> **Salomon is a local-first research agent for investigative journalists, private investigators, and researchers who handle sensitive sources or documents and cannot send that material to cloud AI.**
 
-Private local AI for personal research. On-device by default; fail closed; credentials stay out of the model; refuse secrets. Remote only if the user opts in and the path is labeled — never a silent fallback.
+Documents and notes stay on-device. AI analyzes them without leaking source identity or secrets. Explicit approval for any export. Fail-closed when no local model is connected. Credentials never enter the model. Remote only if the user opts in and the path is labeled — never a silent fallback.
 
-> Status: Android app / Play listing / on-device phone inference **not shipped yet**; today's surface is the web companion + privacy foundation.
+> Status: Android app / Play listing / on-device phone inference **not shipped yet**; today's surface is the web companion + privacy foundation. Source-identity masking (M2) and export approvals (M3) are **not shipped**.
 
 1. **Local-first, fail closed (goal).** The model is designed to run on-device by default and fail closed when no local model is connected. Phase 3 M1 (local `ask`) is in flight; the current surface is a Next.js web app that may run in a labeled `DEMO · REMOTE` / `DEMO · stub` mode. Remote paths are opt-in and labeled — never silent, never default.
-2. **Secrets are refused, not stored.** The model won’t echo keys or sensitive material, and it never holds credentials or seed material. Anything that would sign, send or change something stays outside the model.
-3. **You decide every consequential step.** The agent proposes; policy and you approve before anything is sent, published, signed or changed.
+2. **Sources and secrets stay protected.** The model won’t echo keys or sensitive material, and it never holds credentials. Source-identity masking before the model is Phase 3 **M2 — criteria accepted, not opened, not shipped**.
+3. **You decide every consequential step.** The agent proposes; policy and you approve before anything is exported, sent, published, or changed.
 
 ```mermaid
-%%{init: {'theme':'dark','themeVariables':{'dark':'#0a0a0a','background':'#0a0a0a','primaryColor':'#003b00','primaryTextColor':'#39ff14','primaryBorderColor':'#39ff14','secondaryColor':'#001a00','secondaryTextColor':'#39ff14','secondaryBorderColor':'#00ff41','tertiaryColor':'#002200','lineColor':'#39ff14','textColor':'#39ff14','mainBkg':'#001a00','nodeBorder':'#39ff14','clusterBkg':'#000000','titleColor':'#39ff14','edgeLabelBackground':'#001a00'}}}%%
+%%{init: {'theme':'base','themeVariables':{'dark':'#0a0a0a','background':'#0a0a0a','primaryColor':'#18181b','primaryTextColor':'#fafafa','primaryBorderColor':'#a1a1aa','secondaryColor':'#09090b','secondaryTextColor':'#fafafa','secondaryBorderColor':'#71717a','tertiaryColor':'#27272a','lineColor':'#a1a1aa','textColor':'#fafafa','mainBkg':'#18181b','nodeBorder':'#a1a1aa','clusterBkg':'#000000','titleColor':'#fafafa','edgeLabelBackground':'#18181b'}}}%%
 flowchart LR
-  A[Notes and prompts] --> B[Sanitizer: secret filter]
+  A[Documents and notes] --> B[Sanitizer: secret filter]
   B --> C[Local model on device]
   C --> T[Read-only tools, hard caps]
   T --> B
   C --> P{Policy}
   P -->|fail| X[Blocked: plain-language reason]
-  P -->|pass| H[You approve outside the model]
+  P -->|pass| H[You approve export outside the model]
 
-  classDef neon fill:#001a00,stroke:#39ff14,color:#39ff14
-  class A,B,C,T,P,X,H neon
+  classDef mono fill:#18181b,stroke:#a1a1aa,color:#fafafa
+  class A,B,C,T,P,X,H mono
 ```
 
-Flow in words: notes go through the sanitizer into a local model; read-only tools loop back through the sanitizer; policy either blocks with a plain reason or asks you to approve outside the model.
+Flow in words: documents and notes go through the sanitizer into a local model; read-only tools loop back through the sanitizer; policy either blocks with a plain reason or asks you to approve export outside the model.
 
 ---
 
 ## Why Android
 
-Android (Google Play or APK) is the primary product path so a private agent can live on the phone people already use. The web app is a companion surface. The Android app is not shipped yet — this is the product direction.
+Android (Google Play or APK) is the primary product path so a source-protected research agent can live on the phone professionals already use in the field. The web app is a companion surface. The Android app is not shipped yet — this is the product direction.
 
 > Today's code is the privacy foundation (sanitizer, local ask path, refusal gates) plus the web companion. See [STATUS.md](STATUS.md).
 
 ## Who it's for
 
-People who want a private local AI / personal research agent on their phone and a web companion — professional, privacy-first. Niche: [docs/notes/PRODUCT_NICHE.md](docs/notes/PRODUCT_NICHE.md).
+Investigative journalists, private investigators, and researchers who work with sensitive sources or documents and cannot put that material into cloud AI. Niche lock: [docs/notes/PRODUCT_NICHE.md](docs/notes/PRODUCT_NICHE.md). Pricing proposal: [docs/notes/PRODUCT_PRICING_FREE_PRO.md](docs/notes/PRODUCT_PRICING_FREE_PRO.md). Phase plan: [docs/notes/PHASE_PROFESSIONAL_MVP.md](docs/notes/PHASE_PROFESSIONAL_MVP.md).
 
 ## How Salomon handles it
 
@@ -49,7 +49,7 @@ People who want a private local AI / personal research agent on their phone and 
 - **Plain-language refusals.** When Salomon refuses or strips something, it says why.
 - **Optional confidential compute (future).** If a bigger model is needed, remote calls go only to an environment that passes a fail-closed verification check. No proof means no call. No provider is named or required.
 
-**Salomon is not:** a cloud-by-default service, or an agent that acts without your approval.
+**Salomon is not:** a consumer chatbot, a cloud-by-default service, or an agent that exports or acts without your approval.
 
 ## Where we are
 
@@ -58,7 +58,7 @@ People who want a private local AI / personal research agent on their phone and 
 flowchart LR
   P1["Phase 1: small model that refuses (historical gate, dataset parked)"] --> G["Phase 1.5: (1)-(4) signed · (5) rebuild pending"]
   G --> P2["Phase 2: agent loop, sanitizer, caps (M1-M3 green)"]
-  P2 --> P3["Phase 3: Android MVP (M1 in flight)"]
+  P2 --> P3["Phase 3: Professional Android MVP (M1 in flight)"]
   P3 --> P4["Phase 4: hardening, optional confidential compute"]
 
   classDef neon fill:#001a00,stroke:#39ff14,color:#39ff14
@@ -70,7 +70,7 @@ flowchart LR
 | Phase 1 — small model that refuses | Historical gate; item (5) INVALIDATED for product claims; dataset parked |
 | Phase 1.5 — privacy gate | (1)–(4) signed; (5) historical only — rebuild pending |
 | Phase 2 — agent loop, sanitizer, caps | M1–M3 green |
-| Phase 3 — local ask MVP | M1 in flight (not green) |
+| Phase 3 — professional Android MVP | M1 in flight (not green); M2/M3 gated |
 | Phase 4 — hardening, optional confidential compute | Not started |
 
 - **Phase 1 (historical gate).** Qwen2.5-7B-Instruct + QLoRA harness. Prior refusal eval was **8/8** on 7B (`docs/signoffs/SECURITY_SIGNOFF_REFUSAL_7B.md`; R3 cleared at `docs/signoffs/SECURITY_SIGNOFF_R3_NEARECHO_DELTA.md`) — **INVALIDATED for product claims** after crypto-domain remove; refusal **NOT GREEN** until privacy rebuild re-run. See `docs/notes/CRYPTO_DOMAIN_REMOVED.md`. Dataset **parked** (`SEED=[]` rebuild path). When unparked, refresh toward general privacy (PII, secrets, keys).

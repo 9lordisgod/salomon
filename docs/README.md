@@ -10,4 +10,4 @@ Supporting records. Status of record lives in the root [STATUS.md](../STATUS.md)
 | [signoffs/](signoffs/) | Formal Privacy Security sign-offs (`SECURITY_SIGNOFF_*`) |
 | [notes/](notes/) | SLM notes/positions, Phase 1 script fixes, Phase 3 MVP runbook (`notes/PHASE3_MVP_RUNBOOK.md`) |
 
-Product framing: Salomon — local-first AI app for Android; private personal research agent; web companion — see root [README.md](../README.md) and [SECURITY.md](../SECURITY.md). Prior domain-specific product tracks are retired from the live narrative.
+Product framing: Salomon — local research agent for journalists/investigators that protects sources — see root [README.md](../README.md) and [SECURITY.md](../SECURITY.md). Records from before the 2026-10-29 AI-first pivot keep their original on-chain wording as history.
