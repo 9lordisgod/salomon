@@ -1,15 +1,17 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import { maskText } from '@/lib/mask';
-import { useMaskMap, useNotes, useProposals } from '@/lib/store';
+import { saveThread, useMaskMap, useNotes, useProposals, useThreads } from '@/lib/store';
 import { isRemote, modeLabel, useMode } from '@/lib/useMode';
 import { usePreferRemote } from '@/lib/preferRemote';
 
 type Msg = { id: string; role: 'user' | 'assistant'; text: string };
 
 const SUGGESTIONS = [
-  'Summarize what I know so far and flag gaps that need a second source.',
-  'Draft three neutral right-of-reply questions.',
+  { t: 'Find the gaps', q: 'Summarize what I know so far and flag gaps that need a second source.' },
+  { t: 'Right of reply', q: 'Draft three neutral right-of-reply questions.' },
+  { t: 'Build a timeline', q: 'Turn my notes into a dated timeline and mark anything unverified.' },
+  { t: 'Stress-test a claim', q: 'What would I need to verify before publishing this claim?' },
 ];
 
 export default function Research() {
@@ -33,6 +35,23 @@ export default function Research() {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   useEffect(() => { end.current?.scrollIntoView({ behavior: 'smooth', block: 'end' }); }, [messages]);
   useEffect(() => { inputRef.current?.focus(); }, []);
+
+  // Threads: auto-save current conversation; load when picked in the sidebar; clear on New chat.
+  const { activeId, ready } = useThreads();
+  const threadId = useRef<string>('');
+  useEffect(() => {
+    if (!ready || busy) return;
+    if (activeId === threadId.current) return;
+    if (!activeId) { threadId.current = ''; setMessages([]); setError(null); inputRef.current?.focus(); return; }
+    const t = JSON.parse(localStorage.getItem('salomon.threads') || '[]').find((x: { id: string }) => x.id === activeId);
+    threadId.current = activeId;
+    setMessages(t?.messages ?? []); setError(null);
+  }, [activeId, ready]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    if (status !== 'ready' || messages.length === 0) return;
+    if (!threadId.current) threadId.current = crypto.randomUUID();
+    saveThread(threadId.current, messages);
+  }, [messages, status]);
 
   const ask = (q: string) => {
     if (!q.trim() || busy) return;
@@ -92,15 +111,15 @@ export default function Research() {
   const overCap = attach && notes && (input.length + notes.length + 40) > 8000;
 
   const composer = (
-    <form onSubmit={(e) => { e.preventDefault(); ask(input); }} className="rounded-2xl border border-white/10 bg-[#16171a] p-2 shadow-lg shadow-black/20 focus-within:border-white/20">
+    <form onSubmit={(e) => { e.preventDefault(); ask(input); }} className="w-full rounded-3xl border border-white/10 bg-[#17181b] p-3 shadow-xl shadow-black/30 ring-1 ring-black/20 transition-colors focus-within:border-white/20">
       <textarea
         ref={inputRef}
         value={input}
-        rows={messages.length === 0 ? 3 : 2}
+        rows={messages.length === 0 ? 4 : 2}
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); ask(input); } }}
         placeholder="Ask anything about your reporting…"
-        className="block max-h-48 w-full resize-none bg-transparent px-2 py-2 text-[15px] text-zinc-100 outline-none placeholder:text-zinc-600"
+        className={`block max-h-60 w-full resize-none bg-transparent px-3 py-2 text-[16px] leading-relaxed text-zinc-100 outline-none placeholder:text-zinc-500 ${messages.length === 0 ? 'min-h-[7rem]' : 'min-h-[3.25rem]'}`}
       />
       {notesOpen && (
         <div className="mx-1 mb-2 rounded-xl border border-white/[0.06] bg-black/20 p-2">
@@ -117,7 +136,7 @@ export default function Research() {
           </label>
         </div>
       )}
-      <div className="flex items-center justify-between gap-2 px-1">
+      <div className="mt-1 flex items-center justify-between gap-2 px-1">
         <div className="flex flex-wrap items-center gap-2">
           <button
             type="button"
@@ -136,32 +155,34 @@ export default function Research() {
           {remote && <span className="text-[11px] text-sky-400/70">not local</span>}
         </div>
         {busy ? (
-          <button type="button" onClick={() => stop()} className="rounded-full border border-white/15 px-3 py-1 text-[12px] text-zinc-200">Stop</button>
+          <button type="button" onClick={() => stop()} aria-label="Stop" className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-[12px] text-zinc-200">■</button>
         ) : (
-          <button disabled={!input.trim()} className="rounded-full bg-zinc-100 px-3.5 py-1 text-[12px] font-medium text-zinc-900 disabled:opacity-30">Send</button>
+          <button disabled={!input.trim()} aria-label="Send" className="flex h-9 w-9 items-center justify-center rounded-full bg-zinc-100 text-[16px] font-semibold text-zinc-900 transition-opacity hover:bg-white disabled:opacity-25">↑</button>
         )}
       </div>
     </form>
   );
 
   return (
-    <div className="relative mx-auto flex min-h-[calc(100vh-7rem)] max-w-3xl flex-col">
-      <div className={`flex-1 ${messages.length === 0 ? 'flex flex-col justify-center pb-8' : 'pb-44'}`}>
+    <div className="relative mx-auto flex w-full max-w-[46rem] flex-1 flex-col">
+      <div className={`flex-1 ${messages.length === 0 ? 'flex flex-col justify-center pb-16 pt-8' : 'pb-48 pt-6'}`}>
         {messages.length === 0 ? (
           <div className="flex flex-col items-center text-center">
-            <h1 className="text-2xl font-medium tracking-tight text-zinc-100">What are you reporting on?</h1>
-            <p className="mt-2 max-w-sm text-[13px] text-zinc-500">Type a question. Answers stay local unless you turn on REMOTE.</p>
-            <div className="mt-8 w-full max-w-xl text-left">{composer}</div>
-            <div className="mt-4 flex w-full max-w-xl flex-wrap justify-center gap-2">
+            <div className="mb-4 rounded-full border border-emerald-400/15 bg-emerald-400/[0.05] px-3 py-1 text-[11px] text-emerald-300/80">🔒 Local-first research desk</div>
+            <h1 className="text-[2rem] font-semibold tracking-tight text-zinc-50 sm:text-[2.25rem]">What are you reporting on?</h1>
+            <p className="mt-3 max-w-md text-[14px] leading-relaxed text-zinc-400">Ask about your story. Answers stay on this machine unless you switch on REMOTE — names in your notes are masked before send.</p>
+            <div className="mt-9 w-full text-left">{composer}</div>
+            <div className="mt-5 grid w-full grid-cols-1 gap-2.5 sm:grid-cols-2">
               {SUGGESTIONS.map((s) => (
                 <button
-                  key={s}
+                  key={s.t}
                   type="button"
-                  onClick={() => ask(s)}
+                  onClick={() => ask(s.q)}
                   disabled={busy}
-                  className="rounded-full border border-white/[0.07] px-3 py-1.5 text-left text-[12px] text-zinc-500 hover:bg-white/[0.03] hover:text-zinc-300"
+                  className="rounded-2xl border border-white/[0.08] bg-white/[0.02] px-4 py-3 text-left shadow-sm shadow-black/20 transition-colors hover:border-white/15 hover:bg-white/[0.05]"
                 >
-                  {s}
+                  <div className="text-[13px] font-medium text-zinc-200">{s.t}</div>
+                  <div className="mt-0.5 text-[12px] leading-snug text-zinc-500">{s.q}</div>
                 </button>
               ))}
             </div>
@@ -199,7 +220,7 @@ export default function Research() {
       </div>
 
       {messages.length > 0 && (
-        <div className="sticky bottom-0 -mx-2 bg-gradient-to-t from-[#0e0f11] via-[#0e0f11] to-transparent px-2 pb-4 pt-6">
+        <div className="sticky bottom-0 -mx-2 bg-gradient-to-t from-[#0e0f11] via-[#0e0f11] to-transparent px-2 pb-3 pt-8">
           {composer}
         </div>
       )}
