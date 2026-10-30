@@ -1,6 +1,6 @@
 # Phase 2 readiness (Agent Engineer) — plan only, no code yet
 
-**Gate:** Do not implement until `STATUS.md` marks Phase 1 complete **and** Phase 1.5 is opened.
+**Gate:** Do not implement until `docs/STATUS.md` marks Phase 1 complete **and** Phase 1.5 is opened.
 **Last updated:** Wed Oct 28, 2026 (America/Vancouver, PDT)
 
 ## Ownership (Lead Architect)
