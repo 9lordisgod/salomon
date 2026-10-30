@@ -23,7 +23,22 @@ export default function Research() {
   const [status, setStatus] = useState<'ready' | 'submitted' | 'streaming'>('ready');
   const [error, setError] = useState<Error | null>(null);
   const abort = useRef<AbortController | null>(null);
-  const stop = () => abort.current?.abort();
+  const messagesRef = useRef<Msg[]>([]);
+  // Abort in-flight ask and drop orphan empty assistant (no leftover "Thinking…").
+  const cancelInFlight = () => {
+    if (abort.current) { abort.current.abort(); abort.current = null; }
+    setStatus('ready');
+    setError(null);
+    const ms = messagesRef.current;
+    const last = ms[ms.length - 1];
+    if (last?.role === 'assistant' && !last.text.trim()) {
+      const pruned = ms.slice(0, -1);
+      messagesRef.current = pruned;
+      setMessages(pruned);
+      if (threadId.current && pruned.length) saveThread(threadId.current, pruned);
+    }
+  };
+  const stop = () => cancelInFlight();
   const [input, setInput] = useState('');
   const [map, setMap] = useMaskMap();
   const [notes, setNotes] = useNotes();
@@ -33,19 +48,30 @@ export default function Research() {
   const busy = status === 'submitted' || status === 'streaming';
   const end = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const threadId = useRef<string>('');
+  messagesRef.current = messages;
   useEffect(() => { end.current?.scrollIntoView({ behavior: 'smooth', block: 'end' }); }, [messages]);
   useEffect(() => { inputRef.current?.focus(); }, []);
 
   // Threads: auto-save current conversation; load when picked in the sidebar; clear on New chat.
+  // Abort any in-flight ask on New chat / thread switch so we never leave orphan Thinking….
   const { activeId, ready } = useThreads();
-  const threadId = useRef<string>('');
   useEffect(() => {
-    if (!ready || busy) return;
+    if (!ready) return;
     if (activeId === threadId.current) return;
-    if (!activeId) { threadId.current = ''; setMessages([]); setError(null); inputRef.current?.focus(); return; }
+    cancelInFlight();
+    if (!activeId) {
+      threadId.current = '';
+      setMessages([]);
+      messagesRef.current = [];
+      inputRef.current?.focus();
+      return;
+    }
     const t = JSON.parse(localStorage.getItem('salomon.threads') || '[]').find((x: { id: string }) => x.id === activeId);
     threadId.current = activeId;
-    setMessages(t?.messages ?? []); setError(null);
+    const ms = (t?.messages ?? []) as Msg[];
+    setMessages(ms);
+    messagesRef.current = ms;
   }, [activeId, ready]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (status !== 'ready' || messages.length === 0) return;
@@ -102,7 +128,14 @@ export default function Research() {
         patch(aid, () => (j.ok ? String(j.answer ?? '') : `Refused (${j.reason}): ${j.message}`));
       }
     } catch (e) {
-      if ((e as Error).name !== 'AbortError') setError(e as Error);
+      if ((e as Error).name === 'AbortError') {
+        setMessages((ms) => {
+          const last = ms[ms.length - 1];
+          const pruned = last?.role === 'assistant' && !last.text.trim() ? ms.slice(0, -1) : ms;
+          messagesRef.current = pruned;
+          return pruned;
+        });
+      } else setError(e as Error);
     } finally { setStatus('ready'); abort.current = null; }
   };
   const propose = (content: string, action: 'save' | 'export') =>
