@@ -42,10 +42,10 @@ Owners: Privacy Security owns gate acceptance and reviews every Phase 2 PR touch
 - [x] **M4 propose-only pattern** — G1+G2 ACCEPTED; G3 never opened; settlement target archived → `docs/archive/near/` · `docs/archive/crypto-near-track.md`
 - [ ] **M4 G3** — execute/sign/simulate — **NOT opened**
 
-## Phase 3 — Local research agent for journalists (MVP)
+## Phase 3 — Android local AI MVP
 > Product niche locked (`docs/notes/PRODUCT_NICHE.md`). Success bar: no cloud-by-default · no secret echo · no silent exposure · source-ID masked before model (M2) · credentials outside model · plain refuse/mask reasons.
 >
-> **M0 DONE** — Scope lock: Lead approved the Phase 3 journalist MVP brief.
+> **M0 DONE** — Scope lock: Phase 3 brief locked (journalist MVP historical; Android primary as of ~18:46 PDT).
 > **M1 IN FLIGHT** — Local run path: offline/local `ask` end-to-end (fail closed if model missing). **Primary surface = Next.js web app + API** (`POST /api/ask` → `askLocal`); **CLI secondary**. Runbook: `docs/notes/PHASE3_MVP_RUNBOOK.md`. Web stack: `docs/notes/PHASE3_WEB_STACK.md`.
 >
 > Later: **M2** ingest + source-identity masking · **M3** propose-only save/export + approval UX · **M4** dogfood cut. Dataset **PARKED**. Do not claim M2/M3 as shipped.

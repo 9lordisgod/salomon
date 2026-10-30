@@ -13,6 +13,7 @@ On-device by default. Optional remote only if the user opts in and the path is l
 3. **You decide every consequential step.** The agent proposes; policy and you approve before anything is sent, published, signed or changed.
 
 ```mermaid
+%%{init: {'theme':'dark','themeVariables':{'dark':'#0a0a0a','background':'#0a0a0a','primaryColor':'#003b00','primaryTextColor':'#39ff14','primaryBorderColor':'#39ff14','secondaryColor':'#001a00','secondaryTextColor':'#39ff14','secondaryBorderColor':'#00ff41','tertiaryColor':'#002200','lineColor':'#39ff14','textColor':'#39ff14','mainBkg':'#001a00','nodeBorder':'#39ff14','clusterBkg':'#000000','titleColor':'#39ff14','edgeLabelBackground':'#001a00'}}}%%
 flowchart LR
   A[Notes and prompts] --> B[Sanitizer: secret filter]
   B --> C[Local model on device]
@@ -21,6 +22,9 @@ flowchart LR
   C --> P{Policy}
   P -->|fail| X[Blocked: plain-language reason]
   P -->|pass| H[You approve outside the model]
+
+  classDef neon fill:#001a00,stroke:#39ff14,color:#39ff14
+  class A,B,C,T,P,X,H neon
 ```
 
 Flow in words: notes go through the sanitizer into a local model; read-only tools loop back through the sanitizer; policy either blocks with a plain reason or asks you to approve outside the model.
@@ -52,11 +56,15 @@ Primary: users who want private local research / a personal agent on Android —
 ## Where we are
 
 ```mermaid
+%%{init: {'theme':'dark','themeVariables':{'dark':'#0a0a0a','background':'#0a0a0a','primaryColor':'#003b00','primaryTextColor':'#39ff14','primaryBorderColor':'#39ff14','secondaryColor':'#001a00','secondaryTextColor':'#39ff14','secondaryBorderColor':'#00ff41','tertiaryColor':'#002200','lineColor':'#39ff14','textColor':'#39ff14','mainBkg':'#001a00','nodeBorder':'#39ff14','clusterBkg':'#000000','titleColor':'#39ff14','edgeLabelBackground':'#001a00'}}}%%
 flowchart LR
   P1["Phase 1: small model that refuses (gate done, dataset parked)"] --> G["Phase 1.5: privacy gate 1-5 signed"]
   G --> P2["Phase 2: agent loop, sanitizer, caps (M1-M3 green)"]
-  P2 --> P3["Phase 3: local ask MVP (M1 in flight)"]
+  P2 --> P3["Phase 3: Android MVP (M1 in flight)"]
   P3 --> P4["Phase 4: hardening, optional confidential compute"]
+
+  classDef neon fill:#001a00,stroke:#39ff14,color:#39ff14
+  class P1,G,P2,P3,P4 neon
 ```
 
 | Phase | Status |
