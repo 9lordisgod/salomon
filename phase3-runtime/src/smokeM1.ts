@@ -15,7 +15,17 @@ const bump = (orig: any) => function (this: any, ...a: any[]) { network++; retur
 (http as any).request = bump(http.request); (https as any).request = bump(https.request); (dns as any).lookup = bump(dns.lookup);
 if (globalThis.fetch) (globalThis as any).fetch = bump(globalThis.fetch);
 
-const walk = (d: string, out: string[] = []): string[] => { for (const n of readdirSync(d)) { if (n === "node_modules" || n === ".git") continue; const p = join(d, n); try { statSync(p).isDirectory() ? walk(p, out) : out.push(p); } catch {} } return out; };
+/** Skip build/cache junk so M1-08 no_prompt_transcript stays fail-closed on real new files only. */
+const SKIP_DIRS = new Set(["node_modules", ".git", "__pycache__", ".pytest_cache", ".mypy_cache", ".ruff_cache", ".tox", "dist", "build", ".next", "coverage"]);
+const isCacheJunk = (n: string) => /\.(pyc|pyo|tsbuildinfo)$/i.test(n) || n === ".DS_Store";
+const walk = (d: string, out: string[] = []): string[] => {
+  for (const n of readdirSync(d)) {
+    if (SKIP_DIRS.has(n) || isCacheJunk(n)) continue;
+    const p = join(d, n);
+    try { statSync(p).isDirectory() ? walk(p, out) : out.push(p); } catch {}
+  }
+  return out;
+};
 const seen: any[] = []; const kinds: string[] = [];
 function mock(script: (n: number) => any): LocalCompleterLike & { calls: number } {
   const c = { kind: "local" as const, calls: 0, async complete(_m: string, body: any) { c.calls++; kinds.push(c.kind); seen.push(JSON.parse(JSON.stringify(body)));
