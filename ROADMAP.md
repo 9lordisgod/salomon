@@ -4,13 +4,19 @@
 **Current: Phase 3 — professional Android MVP · M1 IN FLIGHT** · Phase 2 M1–M3 GREEN · Phase 1 gate historical (item 5 INVALIDATED for product claims) · dataset PARKED · Phase 1.5 (1)–(4) SIGNED · Niche locked tips `f17f291` / `82a0d9d` / `7477723`
 
 ```mermaid
+%%{init: {'theme':'base','themeVariables':{'background':'#0a0a0a','primaryColor':'#18181b','primaryTextColor':'#fafafa','primaryBorderColor':'#a1a1aa','secondaryColor':'#09090b','secondaryBorderColor':'#71717a','tertiaryColor':'#27272a','lineColor':'#a1a1aa','textColor':'#fafafa','mainBkg':'#18181b','nodeBorder':'#a1a1aa','clusterBkg':'#000000','titleColor':'#fafafa','edgeLabelBackground':'#18181b'}}}%%
 flowchart LR
   P1[Phase 1<br/>Small model + refusal<br/>gate done · dataset parked] --> G{{Phase 1.5<br/>privacy gate 1–5 ✅}}
   G --> P2[Phase 2<br/>Agent loop · tools · sanitizer<br/>M1–M3 GREEN]
   P2 --> P3[Phase 3<br/>Professional Android MVP<br/>M1 IN FLIGHT]
   P3 --> P4[Phase 4<br/>Hardening]
   P2 -.archived.-> X[Prior crypto/NEAR<br/>archived]
+
+  classDef mono fill:#18181b,stroke:#a1a1aa,color:#fafafa
+  class P1,G,P2,P3,P4,X mono
 ```
+
+Flow in words: Phase 1 (parked dataset) → Phase 1.5 privacy gate → Phase 2 green agent loop → Phase 3 professional Android MVP (M1 in flight) → Phase 4 hardening; prior crypto/NEAR track archived.
 
 ## Phase 1 — Small model that refuses to leak
 - [x] Model choice (Qwen2.5-7B-Instruct; Llama-3.1-8B alt) — configs/model_config.yaml
@@ -67,4 +73,3 @@ Owners: Privacy Security owns gate acceptance and reviews every Phase 2 PR touch
 Not the product. Tree removed tip `ea4c23c`. See `docs/notes/CRYPTO_DOMAIN_REMOVED.md` (git history for old evidence).
 
 
-</cursor_untrusted_data_1337>
