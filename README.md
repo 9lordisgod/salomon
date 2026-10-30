@@ -8,7 +8,6 @@ Private local AI for personal research. On-device by default; fail closed; crede
 
 ![visibility](https://img.shields.io/badge/repo-private-black)
 ![phase](https://img.shields.io/badge/Phase%203-M1%20in%20flight-orange)
-![refusal](https://img.shields.io/badge/refusal_eval_7B-rebuild_pending-orange) ![gate](https://img.shields.io/badge/Phase_1.5-1_to_4_signed__5_rebuild-yellow) ![p2](https://img.shields.io/badge/Phase_2-M1_M3_green-brightgreen)
 
 1. **Local-first, fail closed (goal).** The model is designed to run on-device by default and fail closed when no local model is connected. Phase 3 M1 (local `ask`) is in flight; the current surface is a Next.js web app that may run in a labeled `DEMO · REMOTE` / `DEMO · stub` mode. Remote paths are opt-in and labeled — never silent, never default.
 2. **Secrets are refused, not stored.** The model won’t echo keys or sensitive material, and it never holds credentials or seed material. Anything that would sign, send or change something stays outside the model.
