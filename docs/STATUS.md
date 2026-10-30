@@ -60,3 +60,5 @@ Token-rotate pause **canceled** (Lead resume ~21:22 PDT). Dual track: Parallel S
 ## Links
 
 [README](../README.md) · [REPO_LAYOUT](REPO_LAYOUT.md) · [ROADMAP](ROADMAP.md) · [ARCHITECTURE](ARCHITECTURE.md) · [SECURITY](../SECURITY.md) · [docs hub](README.md)
+
+- 2026-10-30 PDT: PS Soft CLEAR (A) landed — strengthened R3 paraphrase line in `phase1-slm/configs/source_care_system.txt` (sha256 d60de283…ac244493); (B) fixture change rejected. Item (5) remains INVALIDATED until Eval 7B+3B GGUF rerun hits 8/8 under this prompt hash. Stamp: `docs/reviews/SECURITY_SOFT_CLEAR_SOURCE_CARE_R3_PARAPHRASE.md`.
