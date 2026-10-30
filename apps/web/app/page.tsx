@@ -8,10 +8,10 @@ import { usePreferRemote } from '@/lib/preferRemote';
 type Msg = { id: string; role: 'user' | 'assistant'; text: string };
 
 const SUGGESTIONS = [
-  { t: 'Find the gaps', q: 'Summarize what I know so far and flag gaps that need a second source.' },
-  { t: 'Right of reply', q: 'Draft three neutral right-of-reply questions.' },
+  { t: 'Summarize my notes', q: 'Summarize what I have so far and list open questions.' },
   { t: 'Build a timeline', q: 'Turn my notes into a dated timeline and mark anything unverified.' },
-  { t: 'Stress-test a claim', q: 'What would I need to verify before publishing this claim?' },
+  { t: 'Find the gaps', q: 'What am I missing before I can act on this?' },
+  { t: 'Plain rewrite', q: 'Rewrite this more clearly without adding facts I did not provide.' },
 ];
 
 export default function Research() {
@@ -162,7 +162,7 @@ export default function Research() {
             value={notes}
             onChange={(e) => setNotes(e.target.value.slice(0, 20000))}
             rows={4}
-            placeholder="Paste interview notes here (demo masking before send — not real source-ID masking until M2)…"
+            placeholder="Paste notes or context here (optional demo masking before send)…"
             className="block w-full resize-none bg-transparent px-1 py-1 font-mono text-[12px] text-zinc-300 outline-none placeholder:text-zinc-600"
           />
           <label className="mt-1 flex items-center gap-1.5 px-1 text-[11px] text-zinc-500">
@@ -173,7 +173,7 @@ export default function Research() {
       )}
       {maskOpen && map.length > 0 && (
         <div className="mx-1 mb-2 max-h-48 overflow-auto rounded-xl border border-white/[0.06] bg-black/20 p-2 text-[11px]">
-          <p className="mb-1.5 text-zinc-500">Demo heuristic until M2 — not real source-ID masking. Tokens stay on this device.</p>
+          <p className="mb-1.5 text-zinc-500">Demo redaction heuristic — not a privacy guarantee. Tokens stay on this device.</p>
           <ul className="space-y-0.5 font-mono">
             {map.map((e) => (<li key={e.token} className="flex gap-2"><span className="text-zinc-300">{e.token}</span><span className="text-zinc-600">{e.kind}</span></li>))}
           </ul>
@@ -192,7 +192,7 @@ export default function Research() {
             type="button"
             onClick={() => setMaskOpen((o) => !o)}
             disabled={map.length === 0}
-            title="Demo heuristic until M2 — not real source-ID masking"
+            title="Demo redaction heuristic — not a privacy guarantee"
             className={`rounded-full px-2.5 py-1 text-[11px] ${maskOpen ? 'bg-white/[0.06] text-zinc-300' : 'text-zinc-500 hover:text-zinc-300'} disabled:opacity-40`}
           >
             Mask map · {map.length} <span className="text-zinc-600">(demo)</span>
@@ -220,9 +220,9 @@ export default function Research() {
       <div className={`flex-1 ${messages.length === 0 ? 'flex flex-col justify-center pb-16 pt-8' : 'pb-48 pt-6'}`}>
         {messages.length === 0 ? (
           <div className="flex flex-col items-center text-center">
-            <div className="mb-4 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[11px] text-zinc-400">🔒 Local-first research desk</div>
-            <h1 className="text-[2rem] font-semibold tracking-tight text-zinc-50 sm:text-[2.25rem]">What are you reporting on?</h1>
-            <p className="mt-3 max-w-md text-[14px] leading-relaxed text-zinc-400">Ask about your story. Answers stay on this machine unless you switch on REMOTE. Names in notes may be masked before send — a <span className="text-zinc-300">demo heuristic, not real source-ID masking until M2</span>.</p>
+            <div className="mb-4 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[11px] text-zinc-400">🔒 Private local AI</div>
+            <h1 className="text-[2rem] font-semibold tracking-tight text-zinc-50 sm:text-[2.25rem]">What do you want to work on?</h1>
+            <p className="mt-3 max-w-md text-[14px] leading-relaxed text-zinc-400">Ask anything. Answers stay on this machine unless you switch on REMOTE. Optional demo masking may redact names before send — <span className="text-zinc-300">a heuristic, not a privacy guarantee</span>.</p>
             {missing && (
               <div role="status" className="mt-7 w-full rounded-2xl border border-zinc-600 bg-white/[0.03] px-4 py-3 text-left">
                 <div className="font-mono text-[11px] uppercase tracking-wide text-zinc-300">Model missing</div>

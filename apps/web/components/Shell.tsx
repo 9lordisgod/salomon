@@ -53,7 +53,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </header>
         <main className="flex w-full flex-1 flex-col px-4 sm:px-6">{children}</main>
         <footer className="px-5 pb-3 text-center text-[11px] text-zinc-600">
-          Local by default · REMOTE is always labeled · masking is a demo heuristic, not real source-ID masking until M2
+          Local by default · REMOTE is always labeled · credentials stay out of the model
         </footer>
       </div>
     </div>

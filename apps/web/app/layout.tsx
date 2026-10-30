@@ -3,8 +3,8 @@ import './globals.css';
 import { AppShell } from '@/components/Shell';
 
 export const metadata: Metadata = {
-  title: 'Salomon — local research for journalists',
-  description: 'A local research agent for journalists and investigators. Phase 3 M1 dogfood — masking is a demo heuristic until M2.',
+  title: 'Salomon — private local AI',
+  description: 'A private local AI / personal research agent. Phase 3 M1 dogfood — web companion; on-device by default.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
