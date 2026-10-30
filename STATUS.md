@@ -8,7 +8,9 @@
 - **M0 DONE** — Scope lock: Lead approved the Phase 3 journalist MVP brief (`docs/notes/PRODUCT_NICHE.md`, Product brief).
 - **M1 IN FLIGHT** — Local run path: offline/local `ask` end-to-end (fail closed if model missing). **Primary surface = Next.js web + API** (`POST /api/ask`); CLI secondary. Runbook: `docs/notes/PHASE3_MVP_RUNBOOK.md`.
 
-**Latest (~16:26 PDT):** NEAR docs scrub tip **`bd86890`** (STATUS/README/ARCHITECTURE/ROADMAP `a2e8882`; SECURITY/PROGRESS/phase2/README `bd86890`; purge base `03ded0a`). Crypto/NEAR/Intents archived at `docs/archive/near/` + `docs/archive/crypto-near-track.md`. Live docs AI framing only. Framing A unchanged; README hero held; M1 not green; M2 eng NOT OPEN; hybrid not shipped. Residual: apps/web = salomon-app confirm.
+**Latest (~17:34 PDT):** M1 honesty: tip **`6579432`** (+ status API **`899d5b2`**). GET `/api/status` + header chips LOCAL|STUB|REMOTE|MODEL MISSING; demo-mask map visible; empty GGUF card; amber refusals; `/api/ask` primary — no M2/M3 claims. Framing A unchanged; README hero held; M1 not green; M2 eng NOT OPEN; hybrid not shipped. Residual: apps/web = salomon-app confirm.
+
+**Prior (~16:26 PDT):** NEAR docs scrub tip **`bd86890`** (STATUS/README/ARCHITECTURE/ROADMAP `a2e8882`; SECURITY/PROGRESS/phase2/README `bd86890`; purge base `03ded0a`). Crypto/NEAR/Intents archived at `docs/archive/near/` + `docs/archive/crypto-near-track.md`. Live docs AI framing only. Framing A unchanged; README hero held; M1 not green; M2 eng NOT OPEN; hybrid not shipped. Residual: apps/web = salomon-app confirm.
 
 **Prior (~16:25 PDT):** NEAR/chain purge tip **`03ded0a`** (`03ded0abda98dbc778d98caa1c28bda4076ced64`). Crypto/NEAR/Intents track archived at [`docs/archive/near/`](docs/archive/near/) + [`docs/archive/crypto-near-track.md`](docs/archive/crypto-near-track.md). Docs scrub: README / ARCHITECTURE / ROADMAP / SECURITY / STATUS / PROGRESS + `phase2/README` — AI framing only; no live NEAR tool/Intents narrative (handed to Lead; not pushed). Framing A unchanged; README hero still held; M1 not green; M2 eng NOT OPEN; hybrid not shipped. Residual: apps/web = salomon-app confirm.
 
