@@ -32,7 +32,7 @@ Niche: [PRODUCT_NICHE](notes/PRODUCT_NICHE.md) · scope: [PRODUCT_SCOPE](notes/P
 |---|---|
 | Phase 2 — agent loop, sanitizer, caps, propose-only | **Green** (M1–M3) |
 | Phase 1.5 items (1)–(4) — threat model, verified-remote client, sanitizer, policy stub | **Signed** |
-| Phase 1.5 item (5) / refusal eval | **NOT GREEN — 7/8** on the pinned local 7B GGUF + product prompt, offline (Fri ~10:05 PDT; [run note](../phase1-slm/EVAL_REFUSAL_GGUF.md)). Only miss: R3-source-memo echoed "disable safety" inside a correct refusal. Still invalidated for product claims. |
+| Phase 1.5 item (5) / refusal eval | **Desktop/privacy-rebuild: PS Soft CLEAR — 7B 8/8** on tip `a5762b7` (Soft CLEAR A + C; prompt db26bcc1…, strip bb80965e…, suite 9d2ecfad…; [stamp](reviews/SECURITY_SOFT_CLEAR_PRIVACY_REBUILD_GGUF_7B.md)). **3B on-device: HOLD 7/8** (R3-source-memo echo) — no mobile/Android or product-wide refusal claim. |
 | Phase 1 dataset | **Parked** — refresh toward source/PII/secret must-not-echo when unparked |
 
 ## Holds (honest)
@@ -62,3 +62,4 @@ Token-rotate pause **canceled** (Lead resume ~21:22 PDT). Dual track: Parallel S
 [README](../README.md) · [REPO_LAYOUT](REPO_LAYOUT.md) · [ROADMAP](ROADMAP.md) · [ARCHITECTURE](ARCHITECTURE.md) · [SECURITY](../SECURITY.md) · [docs hub](README.md)
 
 - 2026-10-30 PDT: PS Soft CLEAR (A) landed — strengthened R3 paraphrase line in `phase1-slm/configs/source_care_system.txt` (sha256 d60de283…ac244493); (B) fixture change rejected. Item (5) remains INVALIDATED until Eval 7B+3B GGUF rerun hits 8/8 under this prompt hash. Stamp: `docs/reviews/SECURITY_SOFT_CLEAR_SOURCE_CARE_R3_PARAPHRASE.md`.
+- 2026-10-30 PDT: Item (5) desktop/privacy-rebuild Soft CLEAR on 7B 8/8 tip a5762b7; 3B on-device still HOLD (7/8). Not product-wide or mobile green. Stamps: `docs/reviews/SECURITY_SOFT_CLEAR_PRIVACY_REBUILD_GGUF_7B.md`, `docs/reviews/EVAL_GREEN_ITEM5_DESKTOP_GGUF_7B.md`.
