@@ -1,6 +1,13 @@
 # Progress Log
 
+> **Latest niche (~18:46 PDT):** local-first Android AI (Play/APK primary, goal tense). Solana Mobile optional/secondary. Android app not shipped; M1 not green.
+
 > **Niche (main `f9d75fd`, 2026-10-29):** Salomon is a local research agent for journalists and investigators that protects sources. Crypto/NEAR track archived: `docs/archive/near/` · `docs/archive/crypto-near-track.md`. Entries below remain history.
+
+## Thu Oct 29, 2026, ~16:39 PDT — Product GGUF PASS (Release) + Model local confirm
+- Release: `salomon-qwen25-7b-instruct-Q4_K_M.gguf` on disk; sha256 `65b8fcd92af6b4fefa935c625d1ac27ea29dcb6ee14589c55a8f115ceaaa1423`; 4683074240 B.
+- Paths: `phase3-runtime/artifacts/…` + hardlink `phase1-slm/models/gguf/…` (same inode). `verify_gguf_lock.sh` OK.
+- Model: local sha+size confirm PASS; no re-fetch. Runtime smoke stood down until tomorrow. **Do not claim M1 green.**
 
 ## Thu Oct 29, 2026, ~16:25 PDT — NEAR purge tip `03ded0a` + docs scrub (Docs Lead; handed to Lead, not pushed)
 - Lead purge tip **`03ded0abda98dbc778d98caa1c28bda4076ced64`**: intents/NEAR tools deleted; evidence moved to `docs/archive/near/` (11 files); track note `docs/archive/crypto-near-track.md`.
@@ -305,3 +312,11 @@
 - Conceptual smoke: `test_safety_unit` 20/20; secret scrub exit 2. No item-(5) re-sign. 7B GGUF fetch explicit; llama-cpp-python may need wheel/toolchain.
 - Platform wraps ask_local; Release checksums primary filename `Qwen2.5-7B-Instruct-Q4_K_M.gguf`.
 - 2026-10-29 Model: ask_local.py --json + source_care prompt path landed for Runtime LocalCompleter (spawn-per-ask; exits 0/2/3/4).
+
+## Thu Oct 29, 2026 ~18:15 PDT — M1 live GGUF smoke PASS (Lead routine)
+- New `phase3-runtime/src/liveGgufSmoke.ts` + `npm run smoke:m1:live` — real model, no mocks, run inside `unshare -rn` (no network interfaces).
+- 3B mobile `9c9f56a3…` and 7B desktop `65b8fcd9…`: **5/5 each** (real answer; password + BIP-39 refused 422 pre-model; unmask-a-source declined; 0 network). Reports `phase3-runtime/out/live_gguf_{3b,7b}.json`.
+- Web: temp salomon-app copy on :3011 with 3B — `/api/status` LOCAL·gguf, `/api/ask` 200 real answer, password 422. Copy removed; Frontend :3000 untouched.
+- Fix: answers loaded from the 3B file were labelled 7B. `phase2/src/localModel.ts` (+3B pin), `phase3-runtime/src/localModel.ts` (`localModelForEnv`), `askLocal.ts`, test `test/m1.modelLabel.test.ts`. phase3-runtime 26/26, phase2 24/24, tsc clean.
+- Evidence `phase3-runtime/EVIDENCE_PHASE3_M1_LIVE_GGUF.md`. Not pushed.
+- Next: PS soft-skim → M1 GREEN; Frontend env for dogfood; Lead push; then M2 local sanitizer + must-not-echo evals.
