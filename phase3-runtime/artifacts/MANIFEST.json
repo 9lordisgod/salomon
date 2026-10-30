@@ -13,7 +13,12 @@
     "runtime": "llama-cpp-python",
     "source_repo": "bartowski/Qwen2.5-7B-Instruct-GGUF",
     "source_filename": "Qwen2.5-7B-Instruct-Q4_K_M.gguf",
-    "reject": ["abliterated", "uncensored", "no-refuse", "split-shard"]
+    "reject": [
+      "abliterated",
+      "uncensored",
+      "no-refuse",
+      "split-shard"
+    ]
   },
   "artifact": {
     "filename": "salomon-qwen25-7b-instruct-Q4_K_M.gguf",
@@ -30,5 +35,30 @@
     ],
     "refuse_glob": "*-of-*"
   },
-  "notes": "Platform locked to this MANIFEST name. Refuse *-of-* on discovery and explicit SALOMON_GGUF. Fetch renames bartowski upstream → salomon-qwen25-7b-instruct-Q4_K_M.gguf."
+  "notes": "Desktop default remains salomon-qwen25-7b-instruct-Q4_K_M.gguf (artifact + discovery). Mobile-size 3B is artifacts.mobile_primary with role=mobile for on-device Android/Play. Refuse *-of-* on discovery and explicit SALOMON_GGUF.",
+  "artifacts": {
+    "desktop_default": {
+      "filename": "salomon-qwen25-7b-instruct-Q4_K_M.gguf",
+      "sha256": "65b8fcd92af6b4fefa935c625d1ac27ea29dcb6ee14589c55a8f115ceaaa1423",
+      "bytes": 4683074240,
+      "single_file": true,
+      "role": "m1_desktop_default"
+    },
+    "mobile_primary": {
+      "filename": "salomon-qwen25-3b-instruct-Q4_K_M.gguf",
+      "sha256": "9c9f56a391a3abbd5b89d0245bf6106081bcc3173119d4229235dd9d23253f94",
+      "bytes": 1929903264,
+      "single_file": true,
+      "role": "mobile",
+      "base_id": "Qwen/Qwen2.5-3B-Instruct",
+      "source_repo": "bartowski/Qwen2.5-3B-Instruct-GGUF",
+      "source_filename": "Qwen2.5-3B-Instruct-Q4_K_M.gguf",
+      "paths": [
+        "phase3-runtime/artifacts/salomon-qwen25-3b-instruct-Q4_K_M.gguf",
+        "phase1-slm/models/gguf/salomon-qwen25-3b-instruct-Q4_K_M.gguf"
+      ],
+      "channel": "android_play",
+      "notes": "On-device Android / Play mobile-size artifact; does not replace desktop 7B default."
+    }
+  }
 }
