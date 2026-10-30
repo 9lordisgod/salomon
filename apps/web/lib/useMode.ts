@@ -8,9 +8,11 @@ export type ModeInfo = {
 };
 /** Server chip; derive from Runtime fields if chip is absent. */
 export function chipOf(m: ModeInfo): Chip {
-  if (m.chip) return m.chip;
+  // Lead: MODEL MISSING when !available; LOCAL when gguf/transformers; STUB when stub.
+  if (!m.available) return 'missing';
   if (m.backend === 'stub') return 'stub';
-  return m.available ? 'local' : 'missing';
+  if (m.backend === 'gguf' || m.backend === 'transformers') return 'local';
+  return 'missing';
 }
 /** Fetches /api/status on load and polls every 15s. */
 export function useMode() {
