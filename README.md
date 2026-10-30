@@ -6,9 +6,6 @@ Private local AI for personal research. On-device by default; fail closed; crede
 
 > Status: Android app / Play listing / on-device phone inference **not shipped yet**; today's surface is the web companion + privacy foundation.
 
-![visibility](https://img.shields.io/badge/repo-private-black)
-![phase](https://img.shields.io/badge/Phase%203-M1%20in%20flight-orange)
-
 1. **Local-first, fail closed (goal).** The model is designed to run on-device by default and fail closed when no local model is connected. Phase 3 M1 (local `ask`) is in flight; the current surface is a Next.js web app that may run in a labeled `DEMO · REMOTE` / `DEMO · stub` mode. Remote paths are opt-in and labeled — never silent, never default.
 2. **Secrets are refused, not stored.** The model won’t echo keys or sensitive material, and it never holds credentials or seed material. Anything that would sign, send or change something stays outside the model.
 3. **You decide every consequential step.** The agent proposes; policy and you approve before anything is sent, published, signed or changed.
