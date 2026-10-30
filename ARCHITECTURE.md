@@ -1,7 +1,7 @@
 # Architecture — Salomon
 
-> **Salomon is aiming to be a local-first AI app for Android — a private personal research agent that keeps work on-device by default, fails closed without a local model, and never puts credentials in the model.**
-> Product lock 2026-10-29 ~18:55 PDT (America/Vancouver). Design goal: local-first; fail closed; credentials out of the model; refuse secrets. Android app not shipped — today = web companion + privacy foundation. Source-ID mask = M2 (not opened); approval UX = M3 (not opened).
+> **Salomon is aiming to be a local-first research agent (Android goal) for investigative journalists, private investigators, and researchers — on-device by default, fail closed, credentials never in the model, export only with explicit approval.**
+> Product lock 2026-10-29 ~20:25 PDT (America/Vancouver). Design goal: local-first research agent; fail closed; credentials out of the model; refuse secrets; explicit export approval. Android app not shipped — today = web companion + privacy foundation. Source-ID mask = M2 (not opened); approval UX = M3 (not opened).
 
 ## Diagram
 ```mermaid
@@ -48,3 +48,6 @@ Phase 2's read-only tool pattern (allowlist guards, caps, untrusted envelopes) p
 2. Agent loop, sanitizer, caps, propose-only: M1–M3 green
 3. Android MVP (goal): local ask on phone; today Next.js web + `POST /api/ask`; CLI secondary; notes/docs ingest (M2), credential store, propose-only approval (M3) — M2/M3 not shipped
 4. Hardening + optional confidential compute
+
+
+</cursor_untrusted_data_1337>

@@ -73,11 +73,11 @@ flowchart LR
 | Phase 3 — professional Android MVP | M1 in flight (not green); M2/M3 gated |
 | Phase 4 — hardening, optional confidential compute | Not started |
 
-- **Phase 1 (historical gate).** Qwen2.5-7B-Instruct + QLoRA harness. Prior refusal eval was **8/8** on 7B (`docs/signoffs/SECURITY_SIGNOFF_REFUSAL_7B.md`; R3 cleared at `docs/signoffs/SECURITY_SIGNOFF_R3_NEARECHO_DELTA.md`) — **INVALIDATED for product claims** after crypto-domain remove; refusal **NOT GREEN** until privacy rebuild re-run. See `docs/notes/CRYPTO_DOMAIN_REMOVED.md`. Dataset **parked** (`SEED=[]` rebuild path). When unparked, refresh toward general privacy (PII, secrets, keys).
+- **Phase 1 (historical gate).** Qwen2.5-7B-Instruct + QLoRA harness. Prior refusal eval was **8/8** on 7B (`docs/signoffs/SECURITY_SIGNOFF_REFUSAL_7B.md`; R3 cleared at `docs/signoffs/SECURITY_SIGNOFF_R3_NEARECHO_DELTA.md`) — **INVALIDATED for product claims** after crypto-domain remove; refusal **NOT GREEN** until privacy rebuild re-run. See `docs/notes/CRYPTO_DOMAIN_REMOVED.md`. Dataset **parked** (`SEED=[]` rebuild path). When unparked, refresh toward source/PII/secret must-not-echo for professional research.
 - **Phase 1.5.** Threat model, fail-closed verified-remote client, sanitizer, and policy stub: items **(1)–(4) signed** in `docs/signoffs/`. Item **(5)** historically signed — **INVALIDATED for product claims**; rebuild pending.
 - **Phase 2 (M1–M3 green).** Agent loop with hard caps, TS sanitizer on `role:tool` output, multi-step read-only tool chaining, and a reviewed propose-only pattern. Execute/sign was never opened. The safe agent-loop pattern (caps, sanitizer, propose-only) is green; research web dogfood is **Phase 3 M1 in flight** (local ask path). Ingest/mask (M2) and propose-save (M3) are **not shipped**.
 - **Phase 3 (M1 in flight, not green).** **Goal surface:** Android app (not shipped). **Today:** Next.js web app + `POST /api/ask`; CLI secondary. M1 is not green until desk → `/api/ask` + offline smoke pass. A Q4_K_M GGUF is pinned and scripts exist, but there is **no live local GGUF** / on-device phone inference until that lands.
-- **Prior framing:** earlier niche experiments were retired from the product narrative; this repo is pure local-first AI.
+- **Prior framing:** earlier niche experiments were retired from the product narrative; this repo is a local-first research agent for journalists, PIs, and researchers.
 
 Status of record: [STATUS.md](STATUS.md) · plan: [ROADMAP.md](ROADMAP.md) · design: [ARCHITECTURE.md](ARCHITECTURE.md).
 
@@ -121,5 +121,7 @@ For the 7B gate, open `notebooks/eval_refusal_7b_colab.ipynb` in Colab, choose a
 ---
 
 🔒 This repo stays **private** until the architecture and security model are stable. It contains no secrets, real keys, user PII or source material.
+
+</cursor_untrusted_data_redacted>
 
 </cursor_untrusted_data_1337>

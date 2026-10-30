@@ -2,14 +2,10 @@
 
 > **Niche (locked ~20:25 PDT):** Salomon is **aiming to be** a local-first research agent on Android for **investigative journalists, private investigators, and researchers** who cannot send sensitive sources/docs to cloud AI — on-device by default; fail closed; credentials never in the model; explicit export approval. Niche: `docs/notes/PRODUCT_NICHE.md`. Pricing: `docs/notes/PRODUCT_PRICING_FREE_PRO.md`. Phase plan: `docs/notes/PHASE_PROFESSIONAL_MVP.md`. Prior consumer/general and domain tracks scrubbed from live narrative.
 
-**Latest (~20:25 PDT — Lead + Docs residual):** Professional niche retarget on main tips `f17f291` / `82a0d9d`. Docs soft residual fold: Promise honesty (source-ID mask = design goal / M2 not shipped); STATUS niche banner repair; Phase header scrub. About for yoxi: `Local-first research agent for journalists & investigators — sensitive work on-device by default. (Android app not shipped yet.)`
+**Latest (~20:32 PDT — Docs soft residual scan):** Tip stack `f17f291` / `82a0d9d` / `e40389b` / `7477723`. Soft fold: README/ARCHITECTURE/ROADMAP/PROGRESS consumer leftovers; STATUS prior-niche compress. About (Product): `Local-first research AI for journalists and investigators — on-device by default. (App not shipped yet.)`
 
 
-> **Prior niche (Solana Mobile, ~17:41 PDT, tip `b3b4b43`/`f0e8fa1`):** local-first AI agent for Solana Mobile (direction; app / Seed Vault / chain actions not shipped).
-
-> **Prior niche (historical, main `f9d75fd`):** Salomon is a local research agent for journalists and investigators that protects sources. Crypto/NEAR track archived (removed from tree; see git history / tip `ea4c23c`).
-
-**Product (historical, pre-pivot):** Salomon: *A local research agent for journalists and investigators that protects sources.* Who: investigative reporters, newsroom researchers, fact-checkers, independent investigators, NGO researchers. Job: read, summarize and cross-reference sensitive material on the reporter's own machine. Promise (target across M1–M3; M1 = local ask only): sources, contacts and identifying details never leave the device, never get echoed into output, and never reach a remote model without verification. Product niche locked: `docs/notes/PRODUCT_NICHE.md` (main `f9d75fd`). Crypto/NEAR track archived (removed from tree; see git history / tip `ea4c23c`).
+> **Prior niches (historical only):** Solana Mobile / Seeker (~17:41–18:46 PDT) and earlier consumer/general framings — retired. See `docs/notes/CRYPTO_DOMAIN_REMOVED.md` and git history (`ea4c23c`).
 
 **Phase:** **3 (Professional Android MVP — journalists / PIs / researchers) — M1 IN FLIGHT.** Phase 1 gate historically signed (7B 8/8) — **INVALIDATED for product claims** after crypto-domain remove; refusal **NOT GREEN** until privacy rebuild. Dataset **PARKED** (SEED=[] rebuild path). Phase 1.5 (1)–(4) SIGNED; (5) historical only. Phase 2 M1–M3 **GREEN**. M4 propose-only pattern (G1+G2 ACCEPTED, salomon `79c0f99`) reused for approvals; G3 never opened.
 - **M0 DONE** — Scope lock: Product niche locked (professional — journalists / PIs / researchers; Android goal). `docs/notes/PRODUCT_NICHE.md`.
@@ -47,7 +43,7 @@
 
 ## Lead answers (2026-10-29)
 1. Product docs say generic **verified-remote** / unnamed confidential compute; the archived provider is named only in archive sections.
-2. When the dataset unparks → refresh toward **general privacy AI** (not crypto).
+2. When the dataset unparks → refresh toward **source/PII/secret must-not-echo for professional research** (not crypto).
 3. SECURITY.md + phase READMEs reframed in this follow-up pass.
 
 ## Team (Lead rename 2026-10-29)
@@ -274,5 +270,7 @@ docs/notes/PHASE1_SCRIPT_FIXES.md items 1–3 are implemented. Smoke/dry-run sta
 
 - 2026-10-29 18:58 PDT — Model: **crypto domain REMOVED** (Lead order). model_config.yaml system_prompt replaced (no "privacy-first crypto analyst"; now private local AI / personal research agent, credentials never in model, same refusal mechanics). prepare_domain_data.py: inline crypto SEED emptied (file-only from data/extra), rows tagged near/crypto/onchain/cypherpunk skipped. Prior 362-row seed_prompts.jsonl is crypto-heavy and **no longer authoritative**; file left in place for Data Curator to regenerate after their delete/replace list. eval_refusal.jsonl / eval_prompts.jsonl untouched pending Privacy Security skim of DC drafts. Crypto-domain eval outputs under phase1-slm/outputs/ are **historical / invalidated**. Dataset was PARKED — now crypto REMOVED + **privacy rebuild OPEN with Data Curator**. **7B 8/8 (Phase 1.5 item 5) signoff INVALIDATED for product claims (2026-10-29, Lead ACK): it was earned on a crypto-tuned system prompt + crypto-heavy 362-row seed. Historical evidence only; refusal is NOT GREEN until re-run on the privacy rebuild.** Unit tests 20/20 (fixtures unchanged). See docs/notes/CRYPTO_DOMAIN_REMOVED.md.
 
+
+</cursor_untrusted_data_redacted>
 
 </cursor_untrusted_data_1337>
